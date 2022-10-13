@@ -36,19 +36,27 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Button.cs" />
      <Compile Include="Assets\Scripts\Elements\Node\OneShotEffect.cs" />
      <Compile Include="Assets\Node.cs" />
      <Compile Include="Assets\ScrollMenu.cs" />
      <Compile Include="Assets\Scripts\Global\Settings.cs" />
+     <Compile Include="Assets\Scripts\Elements\SeqList\VisualizedSeqList.cs" />
      <Compile Include="Assets\Scripts\Global\Global.cs" />
-     <Compile Include="Assets\NodeRoot.cs" />
-     <Compile Include="Assets\MyCamera.cs" />
-     <Compile Include="Assets\FloatingText.cs" />
-     <Compile Include="Assets\MenuItem.cs" />
-     <Compile Include="Assets\Scripts\Util\LinkStack\LinkStack.cs" />
      <Compile Include="Assets\Scripts\Util\SeqList\SeqListAlgorithm.cs" />
-     <Compile Include="Assets\Scripts\Util\SeqList\SeqList.cs" />
+     <Compile Include="Assets\Scripts\Util\LinkStack\LinkStack.cs" />
+     <Compile Include="Assets\Scripts\Elements\SeqList\VisualizedSeqElement.cs" />
+     <Compile Include="Assets\NodeRoot.cs" />
+     <Compile Include="Assets\MenuItem.cs" />
+     <Compile Include="Assets\Scripts\Util\SeqList\UtilSeqList.cs" />
+     <Compile Include="Assets\MyCamera.cs" />
      <Compile Include="Assets\Scripts\Util\Graph\Graph.cs" />
+     <Compile Include="Assets\MouseManager.cs" />
+     <Compile Include="Assets\GraphMouse.cs" />
+     <Compile Include="Assets\FloatingText.cs" />
+     <Compile Include="Assets\Scripts\Util\AnimationBuffer.cs" />
+     <Compile Include="Assets\Scripts\Util\Initializer.cs" />
+     <Compile Include="Assets\Scripts\Util\Tween.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

@@ -8,7 +8,12 @@ public class Node : MonoBehaviour
     Vector2 scale0;
     [SerializeField]
     float size = 1.0f;
-    bool mouseHovering;
+    bool mouseHovering
+    {
+        get{
+            return parent.mouseHovering;
+        }
+    }
     [SerializeField]
     GameObject ripple;
     [SerializeField]
@@ -16,12 +21,14 @@ public class Node : MonoBehaviour
     bool isRippling;
     Transform root;
     Animator animator;
+    NodeRoot parent;
+
     void Start()
     {
         scale0 = transform.localScale;
-        mouseHovering = false;
         isRippling = false;
         root = transform.parent;
+        parent = root.GetComponent<NodeRoot>();
         animator = GetComponent<Animator>();
         animator.enabled = true;
         animator.SetBool("mouseHovering", false);
@@ -36,14 +43,10 @@ public class Node : MonoBehaviour
 
     public void OnMouseEnter()
     {
-        //size = 1.2f;
-        mouseHovering = true;
         animator.SetBool("mouseHovering", true);
     }
     public void OnMouseExit()
     {
-        //size = 1;
-        mouseHovering = false;
         animator.SetBool("mouseHovering", false);
     }
     IEnumerator Rippling()
