@@ -49,16 +49,21 @@ using System.Runtime.InteropServices;
         }
         public void PopOut(bool order = true)
         {
-            image.PopOut(order);
+            image.PopOut_Birth(order);
         }
-        public void SetHighlight(bool flag = true, bool order = true)
+        public void SetColor(VisualizedSeqElement.ColorType colorType, bool order = true)
         {
-            image.SetHighlight(flag, order);
+            image.SetColor(image.colors[(int)colorType], order);
+        }
+        public void Highlight(bool pop, VisualizedSeqElement.ColorType colorType)
+        {
+            if (pop) image.PopOut_Emphasize();
+            SetColor(colorType);
         }
         public void UpdateValue(float value)
         {
             this.value = value;
-            image.UpdateValue(value);
+            image.UpdateText(value.ToString("f0"));
         }
         public void Destroy()
         {
@@ -310,38 +315,52 @@ using System.Runtime.InteropServices;
             QuickSort(0, count - 1);
             isOrdered = true;
         }
+        void SetPointer(ref int pointer, int target)
+        {
+            if (pointer >= 0 && pointer < Size() && pointer != target)
+                array[pointer].SetColor(VisualizedSeqElement.ColorType.Normal);
+            pointer = target;
+            array[pointer].Highlight(true, VisualizedSeqElement.ColorType.Pointed);
+        }
         private void QuickSort(int l, int r)
         {
             if (l >= r) return;
+
+            array[l].Highlight(true, VisualizedSeqElement.ColorType.Pointed);
+            if ((l+r)/2 != l) array[(l+r)/2].Highlight(true, VisualizedSeqElement.ColorType.Pointed);
+            Wait(1f);
             Swap(l, (l+r)/2);
             Wait(1f);
+            array[l].SetColor(VisualizedSeqElement.ColorType.Normal);
+            if ((l+r)/2 != l) array[(l+r)/2].SetColor(VisualizedSeqElement.ColorType.Normal);
+
             SeqElement pivot = array[l];
-            int i = l, j = r;
-            array[i].SetHighlight(true);
-            array[j].SetHighlight(true);
+            array[l].Highlight(true, VisualizedSeqElement.ColorType.Pivot);
+            Wait(1f);
+            int i = -1, j = -1;
+            SetPointer(ref i, l + 1);
+            SetPointer(ref j, r);
             Wait(1f);
             while (i < j)
             {
                 while (i < j && array[i].value <= pivot.value) {
-                    array[i].SetHighlight(false);
-                    i++;
-                    array[i].SetHighlight(true);
+                    SetPointer(ref i, i + 1);
                     Wait(1f);
                 }
                 while (i < j && array[j].value >= pivot.value) {
-                    array[j].SetHighlight(false);
-                    j--;
-                    array[j].SetHighlight(true);
+                    SetPointer(ref j, j - 1);
                     Wait(1f);
                 }
                 Swap(i, j);
-                array[i].SetHighlight(false);
-                array[j].SetHighlight(false);
+                array[i].SetColor(VisualizedSeqElement.ColorType.Normal);
+                array[j].SetColor(VisualizedSeqElement.ColorType.Normal);
                 Wait(1f);
             }
-
+            array[i].SetColor(VisualizedSeqElement.ColorType.Normal);
+            array[j].SetColor(VisualizedSeqElement.ColorType.Normal);
             int mid = i;
             if (array[mid].value > pivot.value) mid--;
+            array[l].SetColor(VisualizedSeqElement.ColorType.Normal);
             Swap(l, mid);
             Wait(1f);
             QuickSort(l, mid - 1);

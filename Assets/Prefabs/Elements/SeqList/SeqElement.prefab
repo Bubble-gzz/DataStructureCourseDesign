@@ -230,10 +230,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 585f15e624665d742b2f3f0d3c9c46db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 0
   animationBuffer: {fileID: 0}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  highlightColor: {r: 0.13719928, g: 0.4021393, b: 0.9339623, a: 1}
+  colors:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.9245283, g: 0.6482958, b: 0.26664293, a: 1}
+  - {r: 0.22303307, g: 0.52713096, b: 0.9245283, a: 1}
 --- !u!1 &7122140941406757257
 GameObject:
   m_ObjectHideFlags: 0

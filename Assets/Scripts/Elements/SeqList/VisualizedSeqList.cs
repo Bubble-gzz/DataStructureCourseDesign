@@ -45,12 +45,12 @@ public class VisualizedSeqList : MonoBehaviour
     }
     SeqElement NewElement(float value = 0)
     {
-        SeqElement newElement = new SeqElement(value);
+        SeqElement newElement = new SeqElement();
         GameObject newVisualizedElement = Instantiate(visualizedSeqElementPrefab, transform);
-        newVisualizedElement.GetComponent<VisualizedSeqElement>().value = value;
         newVisualizedElement.GetComponent<VisualizedSeqElement>().animationBuffer = animationBuffer;
         //newVisualizedElement.GetComponent<SpriteRenderer>().enabled = false;
         newElement.image = newVisualizedElement.GetComponent<VisualizedSeqElement>();
+        newElement.UpdateValue(value);
         return newElement;
     }
     void Append(float value = 0)
