@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualizedSeqElementPrefab: {fileID: 3895644821360590943, guid: 109ee9115c3cb114fb6834d4c098928e, type: 3}
+  visualizedPointerPrefab: {fileID: 6790114855102505723, guid: a36b71458079af341940f8b0cb994db3, type: 3}
+  sortDelay: 0
 --- !u!114 &8442002894844085265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,4 +74,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bd89a50553c3ff418dc8fee94c45a29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  block: 0
   sec: 0

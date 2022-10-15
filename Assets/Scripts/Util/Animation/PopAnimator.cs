@@ -22,7 +22,7 @@ public class PopAnimator : Animation
         sprite = GetComponent<SpriteRenderer>();
         canvas = transform.Find("Canvas").GetComponent<Canvas>();
     }
-    private IEnumerator ChangeSize(float start, float end, float sec, EaseFunc easeFunc)
+    private IEnumerator ChangeSize(float start, float end, float sec, int myOrder, EaseFunc easeFunc)
     {
         float size = start, timer = 0;
         transform.localScale = originScale * size;
@@ -31,6 +31,7 @@ public class PopAnimator : Animation
             timer += Time.deltaTime;
             size = start + (end - start) * easeFunc(timer / sec);
             transform.localScale = originScale * size;
+            if (!animationOrder.isLatest(myOrder)) yield break;
             yield return null;
         }
         size = end;
@@ -46,22 +47,22 @@ public class PopAnimator : Animation
         
         if (type == Type.Appear)
         {
-            sprite.enabled = true;
-            canvas.enabled = true;
-            yield return ChangeSize(0, 1.5f, 0.15f, Tween.EaseInOut);
-            yield return ChangeSize(1.5f, 0.8f, 0.15f, Tween.EaseInOut);
-            yield return ChangeSize(0.8f, 1.0f, 0.15f, Tween.EaseInOut);
+            if (sprite != null) sprite.enabled = true;
+            if (canvas != null) canvas.enabled = true;
+            yield return ChangeSize(0, 1.5f, 0.15f, myOrder, Tween.EaseInOut);
+            yield return ChangeSize(1.5f, 0.8f, 0.15f, myOrder, Tween.EaseInOut);
+            yield return ChangeSize(0.8f, 1.0f, 0.15f, myOrder, Tween.EaseInOut);
         }
         else if (type == Type.Emphasize)
         {
-            yield return ChangeSize(1.0f, 1.5f, 0.15f, Tween.EaseInOut);
-            yield return ChangeSize(1.5f, 0.8f, 0.15f, Tween.EaseInOut);
-            yield return ChangeSize(0.8f, 1.0f, 0.15f, Tween.EaseInOut);
+            yield return ChangeSize(1.0f, 1.5f, 0.15f, myOrder, Tween.EaseInOut);
+            yield return ChangeSize(1.5f, 0.8f, 0.15f, myOrder, Tween.EaseInOut);
+            yield return ChangeSize(0.8f, 1.0f, 0.15f, myOrder, Tween.EaseInOut);
         }
         else if (type == Type.Disappear)
         {
-            yield return ChangeSize(1.0f, 1.15f, 0.15f, Tween.EaseInOut);
-            yield return ChangeSize(1.15f, 0.0f, 0.15f, Tween.EaseInOut);
+            yield return ChangeSize(1.0f, 1.15f, 0.15f, myOrder, Tween.EaseInOut);
+            yield return ChangeSize(1.15f, 0.0f, 0.15f, myOrder, Tween.EaseInOut);
         }
         if (block) info.completed = true;
     }

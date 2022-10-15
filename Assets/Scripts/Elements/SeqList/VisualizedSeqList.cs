@@ -8,16 +8,31 @@ public class VisualizedSeqList : MonoBehaviour
     SeqList list;
     [SerializeField]
     GameObject visualizedSeqElementPrefab;
+    [SerializeField]
+    GameObject visualizedPointerPrefab;
     int debugCount;
     AnimationBuffer animationBuffer;
     [SerializeField]
     float sortDelay;
+
     void Start()
     {
         list = new SeqList(); 
         animationBuffer = GetComponent<AnimationBuffer>();
         list.animationBuffer = animationBuffer;
         list.image = gameObject;
+        
+        list.pointer_i = Instantiate(visualizedPointerPrefab, transform).GetComponent<VisualizedPointer>();
+        list.pointer_i.SetText("i");
+        list.pointer_j = Instantiate(visualizedPointerPrefab, transform).GetComponent<VisualizedPointer>();
+        list.pointer_j.SetText("j");
+        list.pointer_pivot = Instantiate(visualizedPointerPrefab, transform).GetComponent<VisualizedPointer>();
+        list.pointer_pivot.SetText("p");
+        list.pointer_l = Instantiate(visualizedPointerPrefab, transform).GetComponent<VisualizedPointer>();
+        list.pointer_l.SetText("l");
+        list.pointer_r = Instantiate(visualizedPointerPrefab, transform).GetComponent<VisualizedPointer>();
+        list.pointer_r.SetText("r");
+
         debugCount = 0;
     }
 
