@@ -6,16 +6,15 @@ public class Initializer : MonoBehaviour
 {
     // Start is called before the first frame update
     AnimationBuffer animationBuffer;
+    public static int frameID;
     void Start()
     {
-        animationBuffer = GameObject.Find("AnimationBuffer").GetComponent<AnimationBuffer>();
-        animationBuffer.order = 0;
-        animationBuffer.latestOrder = -1;
+        frameID = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        frameID = (frameID + 1) % 1000;
     }
 }

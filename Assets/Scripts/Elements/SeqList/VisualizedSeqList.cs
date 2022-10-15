@@ -10,11 +10,14 @@ public class VisualizedSeqList : MonoBehaviour
     GameObject visualizedSeqElementPrefab;
     int debugCount;
     AnimationBuffer animationBuffer;
+    [SerializeField]
+    float sortDelay;
     void Start()
     {
-        list = new SeqList();
-        animationBuffer = GameObject.Find("AnimationBuffer").GetComponent<AnimationBuffer>();
+        list = new SeqList(); 
+        animationBuffer = GetComponent<AnimationBuffer>();
         list.animationBuffer = animationBuffer;
+        list.image = gameObject;
         debugCount = 0;
     }
 
@@ -47,10 +50,10 @@ public class VisualizedSeqList : MonoBehaviour
     {
         SeqElement newElement = new SeqElement();
         GameObject newVisualizedElement = Instantiate(visualizedSeqElementPrefab, transform);
-        newVisualizedElement.GetComponent<VisualizedSeqElement>().animationBuffer = animationBuffer;
-        //newVisualizedElement.GetComponent<SpriteRenderer>().enabled = false;
-        newElement.image = newVisualizedElement.GetComponent<VisualizedSeqElement>();
-        newElement.UpdateValue(value);
+        newElement.value = value;
+        newElement.image = newVisualizedElement;
+        newElement.imageInfo = newVisualizedElement.GetComponent<VisualizedSeqElement>();
+        newVisualizedElement.GetComponent<VisualizedSeqElement>().SetText(value.ToString("f0"));
         return newElement;
     }
     void Append(float value = 0)
@@ -70,6 +73,6 @@ public class VisualizedSeqList : MonoBehaviour
     }
     void Sort()
     {
-        list.Sort();
+        list.Sort(sortDelay);
     }
 }

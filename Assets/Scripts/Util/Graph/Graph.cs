@@ -420,7 +420,7 @@ namespace DataStructureCourseDesign.GraphSpace
                         if (nodes[j] != null)
                             if (g[i, j])
                                 edgeWeights.Append(new SeqElement(d[i ,j], new Edge(nodes[i], nodes[j], d[i, j])));
-            edgeWeights.Sort();
+            edgeWeights.Sort(0);
             father = new int[size];
             for (int i = 0; i < size; i++) father[i] = i;
             for (int i = 0; i < edgeWeights.Size(); i++)

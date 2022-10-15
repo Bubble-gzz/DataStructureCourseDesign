@@ -6,7 +6,7 @@ public class Button : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
-    int zoneLevel = 1;
+   // int zoneLevel = 1;
     Vector2 scale0;
     bool hovering;
     void Start()

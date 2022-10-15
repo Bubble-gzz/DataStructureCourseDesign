@@ -33,8 +33,8 @@ public class MenuItem : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
-            if (Distance(Input.mousePosition, mouseLastPosition) < 0.01f)
-                ;
+       //     if (Distance(Input.mousePosition, mouseLastPosition) < 0.01f)
+       //         ;
         }
     }
     float Distance(Vector2 A, Vector2 B) {

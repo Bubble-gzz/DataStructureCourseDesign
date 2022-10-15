@@ -14,7 +14,9 @@ using System.Runtime.InteropServices;
         public object myObject;
         private const int Inf = (int)2e9;
         private float x, y;
-        public VisualizedSeqElement image;
+//        public VisualizedSeqElement image;
+        public GameObject image;
+        public VisualizedSeqElement imageInfo;
         public SeqElement()
         {
             value = 0;
@@ -45,30 +47,36 @@ using System.Runtime.InteropServices;
             this.pos = pos;
             x = list.x + list.interval * pos;
             y = list.y;
-            image.UpdatePos(new Vector2(x, y), order);
+            if (image == null) return ;
+            list.animationBuffer.Add(new UpdatePosAnimatorInfo(image, new Vector2(x, y), order));
         }
-        public void PopOut(bool order = true)
+        public void PopOut()
         {
-            image.PopOut_Birth(order);
+            if (image == null) return ;
+            list.animationBuffer.Add(new PopAnimatorInfo(image, PopAnimator.Type.Appear));
         }
         public void SetColor(VisualizedSeqElement.ColorType colorType, bool order = true)
         {
-            image.SetColor(image.colors[(int)colorType], order);
+            if (image == null) return ;
+            list.animationBuffer.Add(new ChangeColorAnimatorInfo(image, imageInfo.colors[(int)colorType], order));
         }
         public void Highlight(bool pop, VisualizedSeqElement.ColorType colorType)
         {
-            if (pop) image.PopOut_Emphasize();
+            if (image == null) return ;
+            if (pop) list.animationBuffer.Add(new PopAnimatorInfo(image, PopAnimator.Type.Emphasize));
             SetColor(colorType);
         }
         public void UpdateValue(float value)
         {
             this.value = value;
-            image.UpdateText(value.ToString("f0"));
+            if (image == null) return ;
+            list.animationBuffer.Add(new ChangeTextAnimatorInfo(image, value.ToString("f0")));
         }
         public void Destroy()
         {
             this.exist = false;
-            image.SelfDestroy();
+            if (image == null) return ;
+            list.animationBuffer.Add(new SelfDestroyAnimatorInfo(image, true));
         }
         public static bool operator < (SeqElement A, SeqElement B)
         {
@@ -94,9 +102,11 @@ using System.Runtime.InteropServices;
         private SeqElement[] array;
         public float x, y, interval;
         public AnimationBuffer animationBuffer;
+        public GameObject image;
         private void Wait(float sec)
         {
-            animationBuffer.Wait(sec);
+            animationBuffer.Add(new WaitAnimatorInfo(image, sec));
+            //Wait(sec);
         }
         public void MoveFromTo(int i, int j)
         {
@@ -157,7 +167,9 @@ using System.Runtime.InteropServices;
             if (!RoomAvailable()) return;
             array[count] = newElement;
             newElement.list = this;
+           // Debug.Log("Append");
             newElement.UpdatePos(count, false);
+            Wait(0.03f);
             newElement.PopOut();
             count++;
         }
@@ -172,11 +184,12 @@ using System.Runtime.InteropServices;
             for (int i = count; i > pos; i--)
             {
                 MoveFromTo(i-1, i);
-                Wait(0.05f);
+                Wait(0.07f);
             }
             array[pos] = newElement;
             
             newElement.list = this;
+            Wait(0.05f);
             newElement.UpdatePos(pos, false);
             newElement.PopOut();
             count++;
@@ -206,10 +219,11 @@ using System.Runtime.InteropServices;
 #endif
             if (!IsPositionValid(pos)) return;
             if (destroy) array[pos].Destroy();
+            Wait(0.2f);
             for (int i = pos; i < count - 1; i++)
             {
                 MoveFromTo(i + 1, i);
-                Wait(0.05f);
+                Wait(0.07f);
             }
             count--;
         }
@@ -310,9 +324,9 @@ using System.Runtime.InteropServices;
             array[i].UpdatePos(i); array[j].UpdatePos(j);
         }
 
-        public void Sort()
+        public void Sort(float sortDelay)
         {
-            QuickSort(0, count - 1);
+            QuickSort(0, count - 1, sortDelay);
             isOrdered = true;
         }
         void SetPointer(ref int pointer, int target)
@@ -322,39 +336,40 @@ using System.Runtime.InteropServices;
             pointer = target;
             array[pointer].Highlight(true, VisualizedSeqElement.ColorType.Pointed);
         }
-        private void QuickSort(int l, int r)
+        float sortDelay;
+        private void QuickSort(int l, int r, float sortDelay)
         {
             if (l >= r) return;
 
             array[l].Highlight(true, VisualizedSeqElement.ColorType.Pointed);
             if ((l+r)/2 != l) array[(l+r)/2].Highlight(true, VisualizedSeqElement.ColorType.Pointed);
-            Wait(1f);
+            Wait(sortDelay);
             Swap(l, (l+r)/2);
-            Wait(1f);
+            Wait(sortDelay);
             array[l].SetColor(VisualizedSeqElement.ColorType.Normal);
             if ((l+r)/2 != l) array[(l+r)/2].SetColor(VisualizedSeqElement.ColorType.Normal);
 
             SeqElement pivot = array[l];
             array[l].Highlight(true, VisualizedSeqElement.ColorType.Pivot);
-            Wait(1f);
+            Wait(sortDelay);
             int i = -1, j = -1;
             SetPointer(ref i, l + 1);
             SetPointer(ref j, r);
-            Wait(1f);
+            Wait(sortDelay);
             while (i < j)
             {
                 while (i < j && array[i].value <= pivot.value) {
                     SetPointer(ref i, i + 1);
-                    Wait(1f);
+                    Wait(sortDelay);
                 }
                 while (i < j && array[j].value >= pivot.value) {
                     SetPointer(ref j, j - 1);
-                    Wait(1f);
+                    Wait(sortDelay);
                 }
                 Swap(i, j);
                 array[i].SetColor(VisualizedSeqElement.ColorType.Normal);
                 array[j].SetColor(VisualizedSeqElement.ColorType.Normal);
-                Wait(1f);
+                Wait(sortDelay);
             }
             array[i].SetColor(VisualizedSeqElement.ColorType.Normal);
             array[j].SetColor(VisualizedSeqElement.ColorType.Normal);
@@ -362,8 +377,9 @@ using System.Runtime.InteropServices;
             if (array[mid].value > pivot.value) mid--;
             array[l].SetColor(VisualizedSeqElement.ColorType.Normal);
             Swap(l, mid);
-            Wait(1f);
-            QuickSort(l, mid - 1);
-            QuickSort(mid + 1, r);
+            Wait(sortDelay);
+            QuickSort(l, mid - 1, sortDelay);
+            QuickSort(mid + 1, r, sortDelay);
         }
+        
     }
