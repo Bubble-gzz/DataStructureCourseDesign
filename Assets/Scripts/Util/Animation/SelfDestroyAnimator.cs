@@ -16,7 +16,7 @@ class SelfDestroyAnimator : Animation
         popAnimatorInfo.block = true;
         objectAnimationBuffer.Add(popAnimatorInfo);
         while (!popAnimatorInfo.completed) {
-            Debug.Log("popAnimatorInfo.completed = " + popAnimatorInfo.completed);
+            //Debug.Log("popAnimatorInfo.completed = " + popAnimatorInfo.completed);
             yield return null;
         }
         Destroy(gameObject);

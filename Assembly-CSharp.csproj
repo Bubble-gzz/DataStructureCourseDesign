@@ -36,43 +36,47 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Elements\Node\OneShotEffect.cs" />
      <Compile Include="Assets\Scripts\UI\FloatingText.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\ChangeColorAnimator.cs" />
+     <Compile Include="Assets\Scripts\Global\Global.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\PopAnimator.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\Palette.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\AnimationInfo.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\WaitAnimatorInfo.cs" />
+     <Compile Include="Assets\Scripts\Elements\VisualizedPointer.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\SelfDestroyAnimatorInfo.cs" />
+     <Compile Include="Assets\Scripts\Util\SeqList\UtilSeqList.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\AnimationOrder.cs" />
+     <Compile Include="Assets\Scripts\Elements\Graph\VisualizedGraph.cs" />
+     <Compile Include="Assets\Scripts\Elements\Graph\legacy\Node_legacy.cs" />
+     <Compile Include="Assets\Scripts\Util\Graph\Graph.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\UpdatePosAnimatorInfo.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\PopAnimatorInfo.cs" />
+     <Compile Include="Assets\Scripts\Util\DataElement.cs" />
+     <Compile Include="Assets\Scripts\Elements\Graph\legacy\OneShotEffect.cs" />
+     <Compile Include="Assets\Scripts\Elements\Graph\VisualizedNode.cs" />
      <Compile Include="Assets\Scripts\Util\Animation\AnimationBuffer.cs" />
-     <Compile Include="Assets\Scripts\Elements\Node\Node.cs" />
      <Compile Include="Assets\Scripts\UI\MenuItem.cs" />
-     <Compile Include="Assets\Scripts\Elements\Node\NodeRoot.cs" />
      <Compile Include="Assets\Scripts\Global\Settings.cs" />
      <Compile Include="Assets\Scripts\Elements\SeqList\VisualizedSeqList.cs" />
-     <Compile Include="Assets\Scripts\Global\Global.cs" />
-     <Compile Include="Assets\Scripts\GraphMouse.cs" />
      <Compile Include="Assets\Scripts\MyCamera.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\ChangeTextAnimatorInfo.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\ChangeTextAnimator.cs" />
      <Compile Include="Assets\Scripts\Util\SeqList\SeqListAlgorithm.cs" />
      <Compile Include="Assets\Scripts\Util\LinkStack\LinkStack.cs" />
      <Compile Include="Assets\Scripts\Elements\SeqList\VisualizedSeqElement.cs" />
-     <Compile Include="Assets\Scripts\Elements\VisualizedPointer.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\Animation.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\ChangeColorAnimatorInfo.cs" />
+     <Compile Include="Assets\Scripts\Elements\Graph\GraphNodeDragArea.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\SelfDestroyAnimator.cs" />
      <Compile Include="Assets\Scripts\Util\Animation\Tween.cs" />
-     <Compile Include="Assets\Scripts\Util\SeqList\UtilSeqList.cs" />
-     <Compile Include="Assets\Scripts\MouseManager.cs" />
-     <Compile Include="Assets\Scripts\UI\Button.cs" />
-     <Compile Include="Assets\Scripts\Util\Graph\Graph.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\UpdatePosAnimator.cs" />
+     <Compile Include="Assets\Scripts\Util\Animation\WaitAnimator.cs" />
+     <Compile Include="Assets\Scripts\Elements\Graph\VisualizedEdge.cs" />
      <Compile Include="Assets\Scripts\UI\ScrollMenu.cs" />
      <Compile Include="Assets\Scripts\Util\Initializer.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\UpdatePosAnimator.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\Animation.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\AnimationOrder.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\AnimationInfo.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\UpdatePosAnimatorInfo.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\WaitAnimator.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\WaitAnimatorInfo.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\ChangeTextAnimator.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\ChangeTextAnimatorInfo.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\SelfDestroyAnimator.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\SelfDestroyAnimatorInfo.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\ChangeColorAnimator.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\ChangeColorAnimatorInfo.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\PopAnimator.cs" />
-     <Compile Include="Assets\Scripts\Util\Animation\PopAnimatorInfo.cs" />
+     <Compile Include="Assets\Scripts\Elements\Graph\VisualizedEdgePro.cs" />
+     <Compile Include="Assets\EdgeText.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -676,11 +680,17 @@
     <Reference Include="Unity.2D.PixelPerfect">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.2D.PixelPerfect.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.Tilemap.Editor">
-        <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+        <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+        <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="PsdPlugin">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Editor">
+        <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
@@ -694,6 +704,9 @@
     <Reference Include="Unity.TextMeshPro">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Searcher.Editor">
+        <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.IK.Editor">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.2D.IK.Editor.dll</HintPath>
     </Reference>
@@ -706,8 +719,8 @@
     <Reference Include="Unity.2D.Path.Editor">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.2D.Path.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.InternalAPIEditorBridge.001">
-        <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+        <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
@@ -718,14 +731,26 @@
     <Reference Include="Unity.Rider.Editor">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+        <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEditorBridge.001">
+        <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.IK.Runtime">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+        <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+        <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Triangle.Runtime">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
@@ -735,6 +760,12 @@
     </Reference>
     <Reference Include="Unity.2D.PixelPerfect.Editor">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.2D.PixelPerfect.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+        <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+        <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
@@ -750,6 +781,9 @@
     </Reference>
     <Reference Include="Unity.2D.Common.Editor">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.2D.Common.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+        <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.SpriteShape.Runtime">
         <HintPath>C:\Users\l\Desktop\desktop\programming\Unity\Paradise of Data Structure\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>

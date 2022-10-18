@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+public class VisualizedNode : MonoBehaviour
+{
+    [SerializeField]
+    public List<Color> colors = new List<Color>();
+    public string initialText;
+    protected TMP_Text text;
+    protected SpriteRenderer sprite;
+    protected Canvas canvas;
+    public AnimationBuffer animationBuffer;
+    public GraphNodeDragArea dragArea;
+    Camera mainCam;
+    public VisualizedGraph graph;
+    public GraphNode node;
+    void Awake()
+    {
+        Transform child = transform.Find("Canvas/Text");
+        text = child.GetComponent<TMP_Text>();
+        sprite = GetComponent<SpriteRenderer>();
+        sprite.enabled = false;
+        canvas = transform.Find("Canvas").GetComponent<Canvas>();
+        canvas.enabled = false;
+        animationBuffer = gameObject.AddComponent<AnimationBuffer>();
+        gameObject.AddComponent<UpdatePosAnimator>();
+        gameObject.AddComponent<ChangeColorAnimator>();
+        gameObject.AddComponent<ChangeTextAnimator>();
+        gameObject.AddComponent<PopAnimator>();
+        gameObject.AddComponent<SelfDestroyAnimator>();
+        gameObject.AddComponent<WaitAnimator>();
+    }
+    public void SetText(string newText)
+    {
+        text.text = newText;
+        mainCam = Global.mainCamera;
+        transform.position = (Vector2)mainCam.ScreenToWorldPoint(Input.mousePosition);
+    }
+    public void DFS()
+    {
+        graph.DFS(node);
+    }
+}

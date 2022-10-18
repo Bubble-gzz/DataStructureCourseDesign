@@ -67,7 +67,7 @@ public class VisualizedSeqList : MonoBehaviour
         GameObject newVisualizedElement = Instantiate(visualizedSeqElementPrefab, transform);
         newElement.value = value;
         newElement.image = newVisualizedElement;
-        newElement.imageInfo = newVisualizedElement.GetComponent<VisualizedSeqElement>();
+        newElement.colors = newVisualizedElement.GetComponent<VisualizedSeqElement>().colors;
         newVisualizedElement.GetComponent<VisualizedSeqElement>().SetText(value.ToString("f0"));
         return newElement;
     }

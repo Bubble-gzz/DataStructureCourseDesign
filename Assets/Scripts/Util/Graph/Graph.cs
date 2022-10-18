@@ -2,19 +2,16 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using DataStructureCourseDesign.SeqListSpace;
+using UnityEngine;
 
-namespace DataStructureCourseDesign.GraphSpace
-{
-    public class GraphNode
+    public class GraphNode : DataElement
     {
-        public float x, y;
         public string name;
         public int id;
         
         public Graph graph;
         public Edge firstEdge;
         public Edge backTrace;
-        
         
         public bool flag;
         public float weight;
@@ -41,13 +38,16 @@ namespace DataStructureCourseDesign.GraphSpace
         }
         
     }
-    public class Edge
+    public class Edge : DataElement
     {
         public GraphNode startNode, endNode;
-        public float length;
+        public float length {
+            set { this.value = value; }
+            get { return this.value; }
+        }
         public Edge nextEdge;
         public bool flag;
-
+        public VisualizedEdgePro imageInfo;
         public bool selected {
             set { flag = value; }
             get { return flag; }
@@ -56,7 +56,7 @@ namespace DataStructureCourseDesign.GraphSpace
         public Edge()
         {
             startNode = endNode = null;
-            length = 0;
+            value = 0;
         }
         public Edge(GraphNode _startNode, GraphNode _endNode, float _length)
         {
@@ -67,6 +67,8 @@ namespace DataStructureCourseDesign.GraphSpace
     }
     public class Graph
     {
+        public GameObject image;
+        public AnimationBuffer animationBuffer;
         private const float inf = (float)2e9;
         public GraphNode[] nodes;
         private bool[] used;
@@ -120,11 +122,15 @@ namespace DataStructureCourseDesign.GraphSpace
             int index = GetNewIndex();
             if (index == -1) return false;
             newNode.id = index;
+            newNode.animationBuffer = this.animationBuffer;
             if (string.IsNullOrEmpty(newNode.name))
                 newNode.name = newNode.id.ToString();
             Console.WriteLine("Add new node: " + newNode.name);
             newNode.graph = this;
             nodes[index] = newNode;
+            newNode.SetText(newNode.name);
+            newNode.PopOut();
+            
             return true;
         }
 
@@ -199,40 +205,48 @@ namespace DataStructureCourseDesign.GraphSpace
             Console.WriteLine();
         }
 
-        private void MyAddEdge(int i, int j, float dist = 0)
+        private bool MyAddEdge(int i, int j, GameObject edgeImage, float dist = 0)
         {
             if (nodes[i] == null || nodes[j] == null)
             {
                 Console.WriteLine("Cannot add edge with nonexistent node!");
-                return;
+                return false;
             }
             if (g[i, j])
             {
                 Console.WriteLine("There have already been an edge from Node: {0} to Node: {1}", nodes[i].name, nodes[j].name);
-                return;
+                return false;
             }
             g[i, j] = true;
             d[i, j] = dist;
             Edge newEdge = new Edge(nodes[i], nodes[j], dist);
+            newEdge.image = edgeImage;
+           // newEdge.imageInfo = edgeImage.GetComponent<VisualizedEdgePro>();
+            newEdge.animationBuffer = this.animationBuffer;
+            newEdge.colors = edgeImage.GetComponent<VisualizedEdgePro>().colors;
             newEdge.nextEdge = nodes[i].firstEdge;
+            newEdge.UpdateValue(dist);
             nodes[i].firstEdge = newEdge;
             edgeCount++;
+            return true;
         }
 
-        public void AddEdge(int i, int j, float dist = 0)
+        public bool AddEdge(int i, int j, GameObject edgeImage = null, float dist = 0)
         {
             if (nodes[i] == null || nodes[j] == null)
             {
                 Console.WriteLine("Cannot add edge with nonexistent node!");
-                return;
+                return false;
             }
             if (g[i, j])
             {
                 Console.WriteLine("There have already been an edge from [Node: {0}] to [Node: {1}]", nodes[i].name, nodes[j].name);
-                return;
+                return false;
             }
-            MyAddEdge(i, j, dist);
-            if (!directed) MyAddEdge(j, i, dist);
+            bool status = true;
+            status &= MyAddEdge(i, j, edgeImage, dist);
+            if (!directed) status &= MyAddEdge(j, i, edgeImage, dist);
+            return status;
         }
         
         bool MyDeleteEdge(int i, int j)
@@ -289,21 +303,38 @@ namespace DataStructureCourseDesign.GraphSpace
             if (!directed) MyEditEdge(j, i, newLength);
             return true;
         }
+        
+        private void Wait(float sec)
+        {
+            animationBuffer.Add(new WaitAnimatorInfo(image, sec));
+        }
         public void DFS(GraphNode startNode)
         {
             for (int i = 0; i < size; i++)
                 if (nodes[i] != null) nodes[i].visited = false;
             Console.WriteLine();
             Console.Write("DFS: ");
-            MyDFS(startNode);
+            MyDFS(startNode, null, null);
         }
-        private void MyDFS(GraphNode cur)
+        private void MyDFS(GraphNode cur, GraphNode from, Edge lastEdge)
         {
             cur.visited = true;
+            cur.Highlight(true, Palette.Emphasize);
+            if (lastEdge != null) lastEdge.SetColor(Palette.Visited);
+            Wait(1f);
             Console.Write("[Node:{0}] ",cur.name);
             for (Edge edge = cur.firstEdge; edge != null; edge = edge.nextEdge)
+            {
+                //Debug.Log("edge.animationBuffer : " + edge.animationBuffer);
+                if (edge.endNode == from) continue;
+                edge.Highlight(true, Palette.Emphasize, true);
                 if (!edge.endNode.visited)
-                    MyDFS(edge.endNode);
+                {
+                    cur.SetColor(Palette.Visited);
+                    MyDFS(edge.endNode, cur, edge);
+                }
+                Wait(1f);
+            }
         }
 
         private GraphNode[] queue;
@@ -486,4 +517,3 @@ namespace DataStructureCourseDesign.GraphSpace
             return endNode.minDist;
         }
     }
-}

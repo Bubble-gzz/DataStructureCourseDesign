@@ -24,7 +24,7 @@ class VisualizedPointer : MonoBehaviour
     }
     public void SetText(string newText)
     {
-        Debug.Log(newText);
+        //Debug.Log(newText);
         text.text = newText;
     }
 }

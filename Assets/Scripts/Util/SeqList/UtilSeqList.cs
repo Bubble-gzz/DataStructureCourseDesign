@@ -5,18 +5,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-    class SeqElement
-    {
-        public float value;
-        public SeqList list;
+    class SeqElement : DataElement
+    {        public SeqList list;
         public int pos;
-        public bool exist;
-        public object myObject;
         private const int Inf = (int)2e9;
-        private float x, y;
-//        public VisualizedSeqElement image;
-        public GameObject image;
-        public VisualizedSeqElement imageInfo;
         public SeqElement()
         {
             value = 0;
@@ -42,7 +34,7 @@ using System.Runtime.InteropServices;
         {
             return new SeqElement(-Inf);
         }
-        public Vector2 Position() {
+        override public Vector2 Position() {
             return new Vector2(list.x + list.interval * pos, list.y);
         }
         public void UpdatePos(int pos, bool order = true)
@@ -52,34 +44,6 @@ using System.Runtime.InteropServices;
             y = list.y;
             if (image == null) return ;
             list.animationBuffer.Add(new UpdatePosAnimatorInfo(image, new Vector2(x, y), order));
-        }
-        public void PopOut()
-        {
-            if (image == null) return ;
-            list.animationBuffer.Add(new PopAnimatorInfo(image, PopAnimator.Type.Appear));
-        }
-        public void SetColor(VisualizedSeqElement.ColorType colorType, bool order = true)
-        {
-            if (image == null) return ;
-            list.animationBuffer.Add(new ChangeColorAnimatorInfo(image, imageInfo.colors[(int)colorType], order));
-        }
-        public void Highlight(bool pop, VisualizedSeqElement.ColorType colorType)
-        {
-            if (image == null) return ;
-            if (pop) list.animationBuffer.Add(new PopAnimatorInfo(image, PopAnimator.Type.Emphasize));
-            SetColor(colorType);
-        }
-        public void UpdateValue(float value)
-        {
-            this.value = value;
-            if (image == null) return ;
-            list.animationBuffer.Add(new ChangeTextAnimatorInfo(image, value.ToString("f0")));
-        }
-        public void Destroy()
-        {
-            this.exist = false;
-            if (image == null) return ;
-            list.animationBuffer.Add(new SelfDestroyAnimatorInfo(image, true));
         }
         public static bool operator < (SeqElement A, SeqElement B)
         {
@@ -164,6 +128,14 @@ using System.Runtime.InteropServices;
 
             return true;
         }
+        private void AddElement(SeqElement newElement, int pos, float delay)
+        {
+            newElement.list = this;
+            newElement.animationBuffer = this.animationBuffer;
+            newElement.UpdatePos(pos, false);
+            Wait(delay);
+            newElement.PopOut();
+        }
         public void Append(SeqElement newElement)
         {
 #if LogInfo
@@ -171,11 +143,7 @@ using System.Runtime.InteropServices;
 #endif
             if (!RoomAvailable()) return;
             array[count] = newElement;
-            newElement.list = this;
-           // Debug.Log("Append");
-            newElement.UpdatePos(count, false);
-            Wait(0.03f);
-            newElement.PopOut();
+            AddElement(newElement, count, 0.03f);
             count++;
         }
 
@@ -193,10 +161,7 @@ using System.Runtime.InteropServices;
             }
             array[pos] = newElement;
             
-            newElement.list = this;
-            Wait(0.05f);
-            newElement.UpdatePos(pos, false);
-            newElement.PopOut();
+            AddElement(newElement, pos, 0.05f);
             count++;
         }
 
@@ -380,9 +345,9 @@ using System.Runtime.InteropServices;
         void SetPointer(ref int pointer, int target)
         {
             if (pointer >= 0 && pointer < Size() && pointer != target)
-                array[pointer].SetColor(VisualizedSeqElement.ColorType.Normal);
+                array[pointer].SetColor(Palette.Normal);
             pointer = target;
-            array[pointer].Highlight(true, VisualizedSeqElement.ColorType.Pointed);
+            array[pointer].Highlight(true, Palette.Pointed);
         }
         float sortDelay;
         private void QuickSort(int l, int r)
@@ -391,7 +356,7 @@ using System.Runtime.InteropServices;
             UpdatePointerPos(pointer_l, array[l].Position(), true);
             UpdatePointerPos(pointer_r, array[r].Position(), true);
             UpdatePointerPos(pointer_pivot, array[(l+r)/2].Position(), true);
-            array[(l+r)/2].Highlight(true, VisualizedSeqElement.ColorType.Pivot);
+            array[(l+r)/2].Highlight(true, Palette.Pivot);
             Wait(sortDelay);
             if (l!=(l+r)/2) {
                 Swap(l, (l+r)/2);
@@ -422,12 +387,12 @@ using System.Runtime.InteropServices;
                     Wait(sortDelay);
                 }
                 Swap(i, j);
-                array[i].SetColor(VisualizedSeqElement.ColorType.Normal);
-                array[j].SetColor(VisualizedSeqElement.ColorType.Normal);
+                array[i].SetColor(Palette.Normal);
+                array[j].SetColor(Palette.Normal);
                 Wait(sortDelay);
             }
-            array[i].SetColor(VisualizedSeqElement.ColorType.Normal);
-            array[j].SetColor(VisualizedSeqElement.ColorType.Normal);
+            array[i].SetColor(Palette.Normal);
+            array[j].SetColor(Palette.Normal);
 
             PointerDisappear(pointer_j);
             
@@ -441,8 +406,8 @@ using System.Runtime.InteropServices;
             }
             Swap(l, mid);
             Wait(sortDelay);
-            array[mid].SetColor(VisualizedSeqElement.ColorType.Normal);
-            array[l].SetColor(VisualizedSeqElement.ColorType.Normal);
+            array[mid].SetColor(Palette.Normal);
+            array[l].SetColor(Palette.Normal);
             PointerDisappear(pointer_i);
             Wait(sortDelay);
             QuickSort(l, mid - 1);

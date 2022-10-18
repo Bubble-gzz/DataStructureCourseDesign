@@ -11,7 +11,7 @@ class ChangeColorAnimator : Animation
     protected override void Awake()
     {
         base.Awake();
-        sprite = GetComponent<SpriteRenderer>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     protected override IEnumerator Animate()
