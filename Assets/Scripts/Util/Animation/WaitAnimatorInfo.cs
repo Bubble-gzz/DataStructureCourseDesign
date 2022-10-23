@@ -5,10 +5,12 @@ using UnityEngine;
 public class WaitAnimatorInfo : AnimationInfo
 {
     float sec;
-    public WaitAnimatorInfo(GameObject _gameObject, float _sec)
+    bool useSetting;
+    public WaitAnimatorInfo(GameObject _gameObject, float _sec, bool _useSetting = true)
     {
         this.gameObject = _gameObject;
         this.sec = _sec;
+        this.useSetting = _useSetting;
     }
     public override void Invoke()
     {
@@ -19,6 +21,7 @@ public class WaitAnimatorInfo : AnimationInfo
             return;
         }
         animator.sec = sec;
+        animator.useSetting = useSetting;
         animator.Invoke();
     }
 }

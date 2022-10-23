@@ -12,8 +12,6 @@ public class VisualizedSeqList : MonoBehaviour
     GameObject visualizedPointerPrefab;
     int debugCount;
     AnimationBuffer animationBuffer;
-    [SerializeField]
-    float sortDelay;
 
     void Start()
     {
@@ -88,6 +86,6 @@ public class VisualizedSeqList : MonoBehaviour
     }
     void Sort()
     {
-        list.Sort(sortDelay);
+        list.Sort();
     }
 }

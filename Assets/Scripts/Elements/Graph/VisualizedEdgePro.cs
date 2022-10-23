@@ -12,7 +12,7 @@ public class VisualizedEdgePro : MonoBehaviour
     Camera mainCam;
     [SerializeField]
     public List<Color> colors = new List<Color>();
-    bool playingDrawAnimation;
+    //bool playingDrawAnimation;
     enum State{
         Hover,
         Drawn
@@ -38,7 +38,7 @@ public class VisualizedEdgePro : MonoBehaviour
         ends.Add(new Vector2(0, 0));
         nodes = new List<GameObject>();
         nodes.Add(null); nodes.Add(null);
-        playingDrawAnimation = false;
+        //playingDrawAnimation = false;
         
 
         sprite = normalLine.GetComponent<SpriteRenderer>();
@@ -138,7 +138,7 @@ public class VisualizedEdgePro : MonoBehaviour
     IEnumerator DrawAnimation()
     {
         float progress = 0, speed = 7;
-        playingDrawAnimation = true;
+       // playingDrawAnimation = true;
         normalLine.enabled = true;
         Vector2 start = ends[0], end = ends[1];
         while (1 - progress > Time.deltaTime * speed)
@@ -148,7 +148,7 @@ public class VisualizedEdgePro : MonoBehaviour
             yield return null;
         }
         dashedLine.enabled = false;
-        playingDrawAnimation = false;
+        //playingDrawAnimation = false;
     }
     public void Delete()
     {

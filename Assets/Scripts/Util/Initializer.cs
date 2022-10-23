@@ -6,7 +6,8 @@ public class Initializer : MonoBehaviour
 {
     AnimationBuffer animationBuffer;
     public static int frameID;
-    int count;
+    bool pressCoolingDown;
+    //int count;
    // [SerializeField]
    // public float animationTimeScale = 1.0f;
     void Awake()
@@ -17,12 +18,23 @@ public class Initializer : MonoBehaviour
     {
         frameID = 0;
         Global.mouseOverUI = false;
-        count = 0;
+        pressCoolingDown = false;
     }
 
     void Update()
     {
         frameID = (frameID + 1) % 1000;
-        //Settings.animationTimeScale = this.animationTimeScale;
+        Global.pressEventConsumed = false;
+        //if (Global.pressEventConsumed && !pressCoolingDown)
+        //    StartCoroutine(PressCoolDown());
+        //Debug.Log("[frame:"+ Time.frameCount +"]");
+        //if (Input.anyKeyDown) Debug.Log("[frame:"+ Time.frameCount +"] anyKeyDown = true");
+    }
+    IEnumerator PressCoolDown()
+    {
+        pressCoolingDown = true;
+        while (Input.anyKey) yield return null;
+        Global.pressEventConsumed = false;
+        pressCoolingDown = false;
     }
 }

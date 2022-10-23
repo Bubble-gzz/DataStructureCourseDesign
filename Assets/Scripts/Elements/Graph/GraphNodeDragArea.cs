@@ -15,7 +15,7 @@ public class GraphNodeDragArea : MonoBehaviour
     [SerializeField]
     GameObject panelPrefab;
     [SerializeField]
-    Vector2 panelOffset = new Vector2(1,1);
+    Vector3 panelOffset = new Vector3(1,1,-1);
     Initializer initializer;
     void Awake()
     {
@@ -96,7 +96,7 @@ public class GraphNodeDragArea : MonoBehaviour
         root.animationBuffer.Add(new PopAnimatorInfo(root.gameObject, PopAnimator.Type.PopBack));
         GameObject newPanel = Instantiate(panelPrefab);
         newPanel.GetComponentInChildren<NodePanel>().node = root.gameObject;
-        newPanel.transform.position = (Vector2)transform.position + panelOffset;
+        newPanel.transform.position = transform.position + (Vector3)panelOffset;
     }
     void OnMouseDown()
     {

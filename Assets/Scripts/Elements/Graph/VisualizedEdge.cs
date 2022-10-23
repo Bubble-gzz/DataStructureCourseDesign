@@ -9,7 +9,7 @@ public class VisualizedEdge : MonoBehaviour
     LineRenderer dashedLine, normalLine;
     List<Vector2> ends;
     Camera mainCam;
-    bool playingDrawAnimation;
+    //bool playingDrawAnimation;
     enum State{
         Hover,
         Drawn
@@ -31,7 +31,7 @@ public class VisualizedEdge : MonoBehaviour
         ends.Add(new Vector2(0, 0));
         nodes = new List<GameObject>();
         nodes.Add(null); nodes.Add(null);
-        playingDrawAnimation = false;
+        //playingDrawAnimation = false;
     }
     void Start()
     {
@@ -97,7 +97,7 @@ public class VisualizedEdge : MonoBehaviour
     IEnumerator DrawAnimation()
     {
         float progress = 0, speed = 7;
-        playingDrawAnimation = true;
+        //playingDrawAnimation = true;
         normalLine.enabled = true;
         while (1 - progress > Time.deltaTime * speed)
         {
@@ -106,7 +106,7 @@ public class VisualizedEdge : MonoBehaviour
             yield return null;
         }
         dashedLine.enabled = false;
-        playingDrawAnimation = false;
+        //playingDrawAnimation = false;
     }
     
 }

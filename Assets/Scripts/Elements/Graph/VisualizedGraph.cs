@@ -10,7 +10,7 @@ public class VisualizedGraph : MonoBehaviour
     GameObject visualizedNodePrefab;
     [SerializeField]
     GameObject visualizedPointerPrefab;
-    int debugCount;
+    //int debugCount;
     AnimationBuffer animationBuffer;
     Camera mainCam;
     void Awake()
@@ -25,7 +25,7 @@ public class VisualizedGraph : MonoBehaviour
         graph.pointer_cur.SetText("cur");
         graph.pointer_cur.offset = new Vector2(0,1);
         
-        debugCount = 0;
+        //debugCount = 0;
     }
     void Start()
     {

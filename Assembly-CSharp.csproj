@@ -53,6 +53,7 @@
      <Compile Include="Assets\EdgeText.cs" />
      <Compile Include="Assets\Scripts\Elements\Graph\legacy\Node_legacy.cs" />
      <Compile Include="Assets\Scripts\UI\NodePanel.cs" />
+     <Compile Include="Assets\AnimationSpeedSlider.cs" />
      <Compile Include="Assets\Scripts\Util\Graph\Graph.cs" />
      <Compile Include="Assets\Scripts\Util\Animation\UpdatePosAnimatorInfo.cs" />
      <Compile Include="Assets\Scripts\Util\Animation\PopAnimatorInfo.cs" />
@@ -84,7 +85,7 @@
      <Compile Include="Assets\Scripts\Elements\Graph\VisualizedEdge.cs" />
      <Compile Include="Assets\Scripts\UI\ScrollMenu.cs" />
      <Compile Include="Assets\Scripts\Util\Initializer.cs" />
-     <Compile Include="Assets\AnimationSpeedSlider.cs" />
+     <Compile Include="Assets\Message.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

@@ -25,7 +25,7 @@ public class EdgePanel : MonoBehaviour
         }
         catch (Exception e)
         {
-
+            Debug.Log(e);
         }
     }
 }

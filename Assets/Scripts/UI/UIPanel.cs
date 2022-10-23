@@ -6,49 +6,60 @@ using UnityEngine.EventSystems;
 public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     // Start is called before the first frame update
-    bool show;
-    CanvasGroup canvasGroup;
+    //bool show;
+    protected CanvasGroup canvasGroup;
     [SerializeField]
     GameObject rootObject;
     bool mouseEntered;
-    bool safeZone = true;
-    void Awake()
+    [SerializeField]
+
+    bool brandNew = true;
+    [SerializeField]
+    protected bool blockMouse = true;
+    [SerializeField]
+    protected bool hovering = true;
+    protected bool fadingOut = false;
+    protected virtual void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
     }
-    void Start()
+    protected virtual void Start()
     {
-        transform.parent.GetComponent<Canvas>().worldCamera = Global.mainCamera.GetComponent<Camera>();
-        show = false;
+        //transform.parent.GetComponent<Canvas>().worldCamera = Global.mainCamera.GetComponent<Camera>();
         canvasGroup.alpha = 0;
         mouseEntered = false;
-        StartCoroutine(SafeCountDown());
+        StartCoroutine(BrandNewCountDown());
         FadeIn();
     }
 
     // Update is called once per frame
-    IEnumerator SafeCountDown()
+    IEnumerator BrandNewCountDown()
     {
+        //Debug.Log("[frame:"+ Time.frameCount +"] enterBrandNewCountDown");
         yield return null;
-        safeZone = false;
+        //Debug.Log("[frame:"+ Time.frameCount +"] enterBrandNewCountDownAgain");
+        brandNew = false;
     }
-    void Update()
+    protected virtual void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !mouseEntered && !safeZone)
-            FadeOut();
+        if (hovering)
+        {
+            if (Input.GetMouseButtonDown(0) && !mouseEntered && !brandNew)
+                FadeOut();
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Global.mouseOverUI = true;
+        if (blockMouse) Global.mouseOverUI = true;
         mouseEntered = true;
         //Debug.Log("eventData.position" + eventData.position);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (blockMouse) Global.mouseOverUI = false;
         mouseEntered = false;
-        Global.mouseOverUI = false;
     }
     public void FadeIn()
     {
@@ -73,6 +84,7 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     IEnumerator _FadeOut()
     {
         float progress = 1, speed = 5f;
+        fadingOut = true;
         canvasGroup.alpha = progress;
         while (progress + speed * Time.deltaTime > 0)
         {

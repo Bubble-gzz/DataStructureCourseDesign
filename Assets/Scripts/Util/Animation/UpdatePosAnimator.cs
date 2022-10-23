@@ -14,7 +14,7 @@ public class UpdatePosAnimator : Animation
         bool block = this.block;
         UpdatePosAnimatorInfo info = this.info;
         int myOrder = animationOrder.NewOrder();
-        Debug.Log("updatePos.block: " + block);
+        //Debug.Log("updatePos.block: " + block);
         if (!block) info.completed = true;
         if (animated)
         {
