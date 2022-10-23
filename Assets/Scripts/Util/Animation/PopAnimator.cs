@@ -47,27 +47,6 @@ public class PopAnimator : Animation
         if (!widthOnly) transform.localScale = originScale * size;   
         else transform.localScale = new Vector2(originScale.x, originScale.y * size);       
     }
-    /*
-    private IEnumerator ChangeWidth(float start, float end, float sec, int myOrder, EaseFunc easeFunc)
-    {
-        float size, timer = 0;
-
-        if (start < 0) start = transform.localScale.x / originScale.x; // continue with current size
-        size = start;
-        //Debug.Log("localScale = " + transform.localScale);
-
-        while (timer + Time.deltaTime < sec)
-        {
-            timer += Time.deltaTime;
-            size = start + (end - start) * easeFunc(timer / sec);
-
-            if (!animationOrder.isLatest(myOrder)) yield break;
-            yield return null;
-        }
-        size = end;
-     
-    }
-    */
     protected override IEnumerator Animate()
     {
         Type type = this.type;

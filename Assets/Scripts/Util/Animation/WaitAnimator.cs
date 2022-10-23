@@ -9,8 +9,8 @@ public class WaitAnimator : Animation
 
     protected override IEnumerator Animate()
     {
-        float sec = this.sec;
         WaitAnimatorInfo info = this.info;
+        float sec = this.sec * Settings.animationTimeScale;
         yield return new WaitForSeconds(sec);
         info.completed = true;
     }

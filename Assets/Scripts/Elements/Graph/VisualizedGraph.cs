@@ -79,6 +79,10 @@ public class VisualizedGraph : MonoBehaviour
         if (!flag) Debug.Log("repetitive edge or self-loop!");
         return flag;
     }
+    public void DeleteEdge(VisualizedNode U, VisualizedNode V)
+    {
+        graph.DeleteEdge(U.node.id, V.node.id);
+    }
     public void DFS(GraphNode startNode)
     {
         graph.DFS(startNode);

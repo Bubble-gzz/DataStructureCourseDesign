@@ -11,6 +11,7 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField]
     GameObject rootObject;
     bool mouseEntered;
+    bool safeZone = true;
     void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -21,26 +22,19 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         show = false;
         canvasGroup.alpha = 0;
         mouseEntered = false;
+        StartCoroutine(SafeCountDown());
         FadeIn();
     }
 
     // Update is called once per frame
+    IEnumerator SafeCountDown()
+    {
+        yield return null;
+        safeZone = false;
+    }
     void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if (show) {
-                FadeOut();
-                show = false;
-            }
-            else {
-                FadeIn();
-                show = true;
-            }
-        }
-        */
-        if (Input.GetMouseButtonDown(0) && !mouseEntered)
+        if (Input.GetMouseButtonDown(0) && !mouseEntered && !safeZone)
             FadeOut();
     }
 
@@ -48,7 +42,7 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         Global.mouseOverUI = true;
         mouseEntered = true;
-        Debug.Log("eventData.position" + eventData.position);
+        //Debug.Log("eventData.position" + eventData.position);
     }
 
     public void OnPointerExit(PointerEventData eventData)

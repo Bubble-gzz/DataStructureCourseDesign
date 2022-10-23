@@ -81,7 +81,6 @@ using UnityEngine;
         private int edgeCount;
         bool[,] vis;
         public VisualizedPointer pointer_cur;
-        public float animationDelay = 0.7f;
         
         public Graph(int _size = 100, bool _directed = false)
         {
@@ -254,6 +253,7 @@ using UnityEngine;
             d[i, j] = dist;
             Edge newEdge = new Edge(nodes[i], nodes[j], dist);
             newEdge.image = edgeImage;
+            edgeImage.GetComponent<VisualizedEdgePro>().info = newEdge;
             newEdge.normalLineImage = edgeImage.GetComponent<VisualizedEdgePro>().normalLine.gameObject;
            // newEdge.imageInfo = edgeImage.GetComponent<VisualizedEdgePro>();
             newEdge.animationBuffer = this.animationBuffer;
@@ -283,7 +283,7 @@ using UnityEngine;
             return status;
         }
         
-        bool MyDeleteEdge(int i, int j)
+        bool MyDeleteEdge(int i, int j, bool destroyImage = false)
         {
             g[i, j] = false;
             d[i, j] = inf;
@@ -291,6 +291,8 @@ using UnityEngine;
             for (Edge edge = nodes[i].firstEdge; edge != null; lastEdge = edge, edge = edge.nextEdge)
                 if (edge.endNode == nodes[j])
                 {
+                    if (destroyImage)
+                        edge.Destroy();
                     if (lastEdge == null) nodes[i].firstEdge = edge.nextEdge;
                     else lastEdge.nextEdge = edge.nextEdge;
                     Console.WriteLine("Delete the edge from [Node:{0}] to [Node:{1}]", nodes[i].name, nodes[j].name);
@@ -308,7 +310,7 @@ using UnityEngine;
                 return;
             }
 
-            MyDeleteEdge(i, j);
+            MyDeleteEdge(i, j, true);
             if (!directed) MyDeleteEdge(j, i);
         }
 
@@ -387,7 +389,7 @@ using UnityEngine;
             if (lastEdge != null) lastEdge.SetColor(Palette.Visited);
 
             Console.Write("[Node:{0}] ",cur.name);
-            Wait(animationDelay);
+            Wait(1);
             for (Edge edge = cur.firstEdge; edge != null; edge = edge.nextEdge)
             {
                 //Debug.Log("edge.animationBuffer : " + edge.animationBuffer);
@@ -400,15 +402,15 @@ using UnityEngine;
                 
                 if (!edge.endNode.visited)
                 {
-                    Wait(animationDelay);
+                    Wait(1);
                     cur.SetColor(Palette.Visited);
                     MyDFS(edge.endNode, edge);
                     ChangePointerPos(pointer_cur.gameObject, new Vector2(cur.x, cur.y));
-                    Wait(animationDelay / 2);
+                    Wait(0.5f);
                 }
-                else Wait(animationDelay / 2);
+                else Wait(0.5f);
             }
-            Wait(animationDelay / 2);
+            Wait(0.5f);
             cur.SetColor(Palette.Visited);
         }
 

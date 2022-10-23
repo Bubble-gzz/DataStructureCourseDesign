@@ -24,6 +24,7 @@ public class VisualizedEdgePro : MonoBehaviour
     TMP_Text text;
     Canvas canvas;
     GameObject textObject;
+    public Edge info;
     void Awake()
     {
         dashedLine = transform.Find("DashedLine").GetComponent<LineRenderer>();
@@ -43,7 +44,7 @@ public class VisualizedEdgePro : MonoBehaviour
         sprite = normalLine.GetComponent<SpriteRenderer>();
         sprite.enabled = false;
         textObject = transform.Find("TextObject").gameObject;
-        canvas = transform.Find("TextObject/Canvas").GetComponent<Canvas>();
+        canvas = textObject.transform.Find("Canvas").GetComponent<Canvas>();
         canvas.enabled = false;
         text = GetComponentInChildren<TMP_Text>();
 
@@ -148,5 +149,11 @@ public class VisualizedEdgePro : MonoBehaviour
         }
         dashedLine.enabled = false;
         playingDrawAnimation = false;
+    }
+    public void Delete()
+    {
+        VisualizedNode U = nodes[0].GetComponent<VisualizedNode>();
+        VisualizedNode V = nodes[1].GetComponent<VisualizedNode>();
+        U.graph.DeleteEdge(U, V);
     }
 }
