@@ -48,6 +48,7 @@ using UnityEngine;
         public Edge nextEdge;
         public bool flag;
         public VisualizedEdgePro imageInfo;
+        public GameObject normalLineImage;
         public bool selected {
             set { flag = value; }
             get { return flag; }
@@ -78,6 +79,9 @@ using UnityEngine;
         private float[,] d;
         private int size;
         private int edgeCount;
+        bool[,] vis;
+        public VisualizedPointer pointer_cur;
+        public float animationDelay = 0.7f;
         
         public Graph(int _size = 100, bool _directed = false)
         {
@@ -89,6 +93,7 @@ using UnityEngine;
             queue = new GraphNode[size];
             g = new bool[size, size];
             d = new float[size, size];
+            vis = new bool[size, size];
             for (int i = 0; i < size; i++)
             {
                 used[i] = false;
@@ -191,6 +196,34 @@ using UnityEngine;
             nodes[node.id] = null;
             Console.WriteLine("Delete Node: {0} successfully.", node.name);
             DiscardIndex(node.id);
+            node.Destroy();
+            for (Edge edge = node.firstEdge; edge != null; edge = edge.nextEdge)
+                edge.Destroy(true);
+            for (int i = 0; i < size; i++)
+                if (nodes[i] != null)
+                {
+                    GraphNode curNode = nodes[i];
+                    Edge firstNotNullEdge = null, lastEdge = null;
+                    for (Edge edge = curNode.firstEdge; edge != null; edge = edge.nextEdge)
+                    {
+                        if (edge.endNode == node)
+                        {
+                            if (lastEdge != null) lastEdge.nextEdge = edge.nextEdge;
+                        }
+                        else {
+                            lastEdge = edge;
+                            if (firstNotNullEdge == null) firstNotNullEdge = edge;
+                        }
+                    }
+                    curNode.firstEdge = firstNotNullEdge;
+                }
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
+                if (i == node.id || j == node.id)
+                {
+                    g[i, j] = false;
+                    d[i, j] = inf;
+                }
         }
 
         public void ListNodes()
@@ -221,6 +254,7 @@ using UnityEngine;
             d[i, j] = dist;
             Edge newEdge = new Edge(nodes[i], nodes[j], dist);
             newEdge.image = edgeImage;
+            newEdge.normalLineImage = edgeImage.GetComponent<VisualizedEdgePro>().normalLine.gameObject;
            // newEdge.imageInfo = edgeImage.GetComponent<VisualizedEdgePro>();
             newEdge.animationBuffer = this.animationBuffer;
             newEdge.colors = edgeImage.GetComponent<VisualizedEdgePro>().colors;
@@ -308,33 +342,74 @@ using UnityEngine;
         {
             animationBuffer.Add(new WaitAnimatorInfo(image, sec));
         }
+        void PointerAppear(GameObject pointer)
+        {
+            if (pointer == null) return;
+            animationBuffer.Add(new PopAnimatorInfo(pointer, PopAnimator.Type.Appear));
+        }
+        void ChangePointerPos(GameObject pointer, Vector2 newPos, bool animated = true)
+        {
+            if (pointer == null) return;
+            Vector2 offset = pointer.GetComponent<VisualizedPointer>().offset;
+            UpdatePosAnimatorInfo info = new UpdatePosAnimatorInfo(pointer, MyMath.LocaltoWorldPosition(pointer.transform, newPos + offset), animated);
+            info.block = true;
+            animationBuffer.Add(info);
+        }
+        void PointerDisappear(GameObject pointer)
+        {
+            if (pointer == null) return;
+            animationBuffer.Add(new PopAnimatorInfo(pointer, PopAnimator.Type.Disappear));
+        }
         public void DFS(GraphNode startNode)
         {
             for (int i = 0; i < size; i++)
-                if (nodes[i] != null) nodes[i].visited = false;
+                if (nodes[i] != null) {
+                    nodes[i].visited = false;
+                    nodes[i].SetColor(Palette.Normal);
+                    for (Edge edge = nodes[i].firstEdge; edge != null; edge = edge.nextEdge)
+                        edge.SetColor(Palette.Normal);
+                }
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
+                    vis[i, j] = false;
             Console.WriteLine();
             Console.Write("DFS: ");
-            MyDFS(startNode, null, null);
+            ChangePointerPos(pointer_cur.gameObject, new Vector2(startNode.x, startNode.y), false);
+            PointerAppear(pointer_cur.gameObject);
+            MyDFS(startNode, null);
+            PointerDisappear(pointer_cur.gameObject);
         }
-        private void MyDFS(GraphNode cur, GraphNode from, Edge lastEdge)
+        private void MyDFS(GraphNode cur, Edge lastEdge)
         {
             cur.visited = true;
+            ChangePointerPos(pointer_cur.gameObject, new Vector2(cur.x, cur.y));
             cur.Highlight(true, Palette.Emphasize);
             if (lastEdge != null) lastEdge.SetColor(Palette.Visited);
-            Wait(1f);
+
             Console.Write("[Node:{0}] ",cur.name);
+            Wait(animationDelay);
             for (Edge edge = cur.firstEdge; edge != null; edge = edge.nextEdge)
             {
                 //Debug.Log("edge.animationBuffer : " + edge.animationBuffer);
-                if (edge.endNode == from) continue;
-                edge.Highlight(true, Palette.Emphasize, true);
+                if (vis[cur.id, edge.endNode.id]) continue;
+                //if (edge.endNode == from) continue;
+
+                edge.Highlight(true, Palette.Emphasize, true, edge.normalLineImage);
+                vis[cur.id, edge.endNode.id] = true;
+                vis[edge.endNode.id, cur.id] = true;
+                
                 if (!edge.endNode.visited)
                 {
+                    Wait(animationDelay);
                     cur.SetColor(Palette.Visited);
-                    MyDFS(edge.endNode, cur, edge);
+                    MyDFS(edge.endNode, edge);
+                    ChangePointerPos(pointer_cur.gameObject, new Vector2(cur.x, cur.y));
+                    Wait(animationDelay / 2);
                 }
-                Wait(1f);
+                else Wait(animationDelay / 2);
             }
+            Wait(animationDelay / 2);
+            cur.SetColor(Palette.Visited);
         }
 
         private GraphNode[] queue;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-class VisualizedPointer : MonoBehaviour
+public class VisualizedPointer : MonoBehaviour
 {
     public Canvas canvas;
     public Vector2 offset;

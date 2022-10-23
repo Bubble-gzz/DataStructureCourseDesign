@@ -14,8 +14,7 @@ public class ChangeTextAnimator : Animation
     protected override void Awake()
     {
         base.Awake();
-        if (text == null)
-            text = transform.Find("Canvas/Text").GetComponent<TMP_Text>();
+        if (text == null) text = GetComponentInChildren<TMP_Text>();
     }
     protected override IEnumerator Animate()
     {

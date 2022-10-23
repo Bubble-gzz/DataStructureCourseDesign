@@ -32,6 +32,14 @@ class VisualizedSeqElement : MonoBehaviour
         gameObject.AddComponent<SelfDestroyAnimator>();
         gameObject.AddComponent<WaitAnimator>();
     }
+    void Update()
+    {
+        /*if (Input.GetKeyDown(KeyCode.M))
+        {
+            Global.initializer.CreateButton();
+        }
+        */
+    }
     public void SetText(string newText)
     {
         text.text = newText;

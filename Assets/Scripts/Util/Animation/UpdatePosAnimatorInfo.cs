@@ -22,6 +22,7 @@ public class UpdatePosAnimatorInfo : AnimationInfo
         }
         animator.target = target;
         animator.animated = animated;
+        animator.block = block;
         animator.Invoke();
     }
 }

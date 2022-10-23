@@ -11,12 +11,11 @@ public class MyCamera : MonoBehaviour
     }
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 }

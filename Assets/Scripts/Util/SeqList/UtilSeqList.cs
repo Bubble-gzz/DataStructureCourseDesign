@@ -329,7 +329,6 @@ using System.Runtime.InteropServices;
             UpdatePointerPos(pointer_pivot, array[(count-1)/2].Position(), false);
             UpdatePointerPos(pointer_l, array[0].Position(), false);
             UpdatePointerPos(pointer_r, array[count - 1].Position(), false);
-
         }
         public void Sort(float sortDelay)
         {

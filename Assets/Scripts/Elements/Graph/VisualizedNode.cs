@@ -15,6 +15,7 @@ public class VisualizedNode : MonoBehaviour
     Camera mainCam;
     public VisualizedGraph graph;
     public GraphNode node;
+    Initializer initializer;
     void Awake()
     {
         Transform child = transform.Find("Canvas/Text");
@@ -31,14 +32,35 @@ public class VisualizedNode : MonoBehaviour
         gameObject.AddComponent<SelfDestroyAnimator>();
         gameObject.AddComponent<WaitAnimator>();
     }
+    void Start()
+    {
+        initializer = Global.initializer;
+    }
+    void Update()
+    {
+        if (node != null)
+        {
+            node.x = transform.localPosition.x;
+            node.y = transform.localPosition.y;
+        }
+        sprite.enabled = true;
+    }
     public void SetText(string newText)
     {
         text.text = newText;
         mainCam = Global.mainCamera;
-        transform.position = (Vector2)mainCam.ScreenToWorldPoint(Input.mousePosition);
+        //transform.position = (Vector2)mainCam.ScreenToWorldPoint(Input.mousePosition);
+    }
+    public void SetPosition(Vector2 newPos)
+    {
+        transform.position = newPos;
     }
     public void DFS()
     {
         graph.DFS(node);
+    }
+    public void Delete()
+    {
+        graph.DeleteNode(node);
     }
 }

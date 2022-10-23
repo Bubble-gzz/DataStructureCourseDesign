@@ -13,4 +13,6 @@ public class Global
         DFS
     }
     static public MouseMode mouseMode;
+    static public bool mouseOverUI;
+    static public Initializer initializer;
 }

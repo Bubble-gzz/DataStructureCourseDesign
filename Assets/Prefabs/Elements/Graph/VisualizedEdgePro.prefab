@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &417011232844045617
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9053387785398814068}
+  m_Layer: 0
+  m_Name: TextObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9053387785398814068
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417011232844045617}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 5632975134128689487}
+  m_Father: {fileID: 6123776191420405971}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &487561682069133026
 GameObject:
   m_ObjectHideFlags: 0
@@ -35,7 +66,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 1, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4634722900520283266
 CanvasRenderer:
@@ -65,7 +96,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 123
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 26ef4ab77691bf54ab03bf407111ea9b, type: 2}
   m_sharedMaterial: {fileID: -301280492185613149, guid: 26ef4ab77691bf54ab03bf407111ea9b, type: 2}
@@ -166,13 +197,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6081757848459822030}
-  m_Father: {fileID: 6123776191420405971}
-  m_RootOrder: 2
+  m_Father: {fileID: 9053387785398814068}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6610340842353421722
 MonoBehaviour:
@@ -278,7 +309,7 @@ Transform:
   m_Children:
   - {fileID: 6123776191961317944}
   - {fileID: 317700340620680194}
-  - {fileID: 5632975134128689487}
+  - {fileID: 9053387785398814068}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -294,6 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f43d546b794ad4c993fc2a3ebe9226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalLine: {fileID: 0}
   colors:
   - {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 0.69411767}
   - {r: 1, g: 0.74735665, b: 0.22237194, a: 0.69411767}

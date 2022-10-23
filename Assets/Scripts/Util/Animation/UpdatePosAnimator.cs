@@ -11,8 +11,10 @@ public class UpdatePosAnimator : Animation
     {
         Vector2 target = this.target;
         bool animated = this.animated;
+        bool block = this.block;
         UpdatePosAnimatorInfo info = this.info;
         int myOrder = animationOrder.NewOrder();
+        Debug.Log("updatePos.block: " + block);
         if (!block) info.completed = true;
         if (animated)
         {

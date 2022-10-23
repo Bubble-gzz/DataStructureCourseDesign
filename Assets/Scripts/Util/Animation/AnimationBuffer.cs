@@ -24,6 +24,8 @@ public class AnimationBuffer : MonoBehaviour{
             AnimationInfo info = queue.Peek();
             info.Invoke();
             while (!info.completed) yield return null;
+            //if (gameObject.GetComponent<VisualizedGraph>() != null)
+            //    Debug.Log("complete " + head + " : " + info);
             queue.Dequeue();
             head++;
         }
@@ -32,5 +34,7 @@ public class AnimationBuffer : MonoBehaviour{
     {
         queue.Enqueue(info);
         tail++;
+        //if (gameObject.GetComponent<VisualizedGraph>() != null)
+        //    Debug.Log(tail + " : " + info);
     }
 }

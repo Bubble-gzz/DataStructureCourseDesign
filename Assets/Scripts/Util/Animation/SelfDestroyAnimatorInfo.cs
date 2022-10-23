@@ -5,10 +5,12 @@ using UnityEngine;
 public class SelfDestroyAnimatorInfo : AnimationInfo
 {
     bool animated;
-    public SelfDestroyAnimatorInfo(GameObject _gameObject, bool _animated = true)
+    bool widthOnly;
+    public SelfDestroyAnimatorInfo(GameObject _gameObject, bool _animated = true, bool widthOnly = false)
     {
         this.gameObject = _gameObject;
         this.animated = _animated;
+        this.widthOnly = widthOnly;
     }
     public override void Invoke()
     {
@@ -19,6 +21,7 @@ public class SelfDestroyAnimatorInfo : AnimationInfo
             return;
         }
         animator.animated = animated;
+        animator.widthOnly = widthOnly;
         animator.Invoke();
     }
 }

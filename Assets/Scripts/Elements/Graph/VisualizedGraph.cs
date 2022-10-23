@@ -13,8 +13,6 @@ public class VisualizedGraph : MonoBehaviour
     int debugCount;
     AnimationBuffer animationBuffer;
     Camera mainCam;
-    [SerializeField]
-
     void Awake()
     {
         graph = new Graph(); 
@@ -22,6 +20,11 @@ public class VisualizedGraph : MonoBehaviour
         graph.animationBuffer = animationBuffer;
         graph.image = gameObject;
         gameObject.AddComponent<WaitAnimator>();
+
+        graph.pointer_cur = Instantiate(visualizedPointerPrefab, transform).GetComponent<VisualizedPointer>();
+        graph.pointer_cur.SetText("cur");
+        graph.pointer_cur.offset = new Vector2(0,1);
+        
         debugCount = 0;
     }
     void Start()
@@ -47,6 +50,7 @@ public class VisualizedGraph : MonoBehaviour
             Global.mouseMode = Global.MouseMode.DFS;
         }
     }
+
     GraphNode NewNode(float value = 0)
     {
         GraphNode newNode = new GraphNode();
@@ -55,6 +59,7 @@ public class VisualizedGraph : MonoBehaviour
         newNode.image = newVisualizedNode.gameObject;
         newNode.colors = newVisualizedNode.colors;
         newVisualizedNode.SetText(value.ToString("f0"));
+        newVisualizedNode.SetPosition(mainCam.ScreenToWorldPoint(Input.mousePosition));
         newVisualizedNode.graph = this;
         newVisualizedNode.node = newNode;
         return newNode;
@@ -63,6 +68,10 @@ public class VisualizedGraph : MonoBehaviour
     {
         GraphNode newNode = NewNode();
         graph.AddNode(newNode);
+    }
+    public void DeleteNode(GraphNode node)
+    {
+        graph.DeleteNode(node);
     }
     public bool AddEdge(VisualizedNode U, VisualizedNode V, GameObject edgeImage)
     {
