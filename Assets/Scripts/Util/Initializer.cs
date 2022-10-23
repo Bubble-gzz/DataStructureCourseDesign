@@ -7,8 +7,8 @@ public class Initializer : MonoBehaviour
     AnimationBuffer animationBuffer;
     public static int frameID;
     int count;
-    [SerializeField]
-    public float animationTimeScale = 1.0f;
+   // [SerializeField]
+   // public float animationTimeScale = 1.0f;
     void Awake()
     {
         Global.initializer = this;
@@ -23,6 +23,6 @@ public class Initializer : MonoBehaviour
     void Update()
     {
         frameID = (frameID + 1) % 1000;
-        Settings.animationTimeScale = this.animationTimeScale;
+        //Settings.animationTimeScale = this.animationTimeScale;
     }
 }
