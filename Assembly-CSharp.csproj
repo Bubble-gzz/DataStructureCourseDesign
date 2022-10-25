@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\Util\Animation\AnimationOrder.cs" />
      <Compile Include="Assets\Scripts\Elements\Graph\VisualizedGraph.cs" />
      <Compile Include="Assets\EdgeText.cs" />
+     <Compile Include="Assets\Message.cs" />
      <Compile Include="Assets\Scripts\Elements\Graph\legacy\Node_legacy.cs" />
      <Compile Include="Assets\Scripts\UI\NodePanel.cs" />
      <Compile Include="Assets\AnimationSpeedSlider.cs" />
@@ -61,6 +62,7 @@
      <Compile Include="Assets\Scripts\Elements\Graph\legacy\OneShotEffect.cs" />
      <Compile Include="Assets\EdgePanel.cs" />
      <Compile Include="Assets\Scripts\Elements\Graph\VisualizedNode.cs" />
+     <Compile Include="Assets\ObjectHandler.cs" />
      <Compile Include="Assets\Scripts\Util\Animation\AnimationBuffer.cs" />
      <Compile Include="Assets\Scripts\UI\MenuItem.cs" />
      <Compile Include="Assets\Scripts\Global\Settings.cs" />
@@ -85,7 +87,7 @@
      <Compile Include="Assets\Scripts\Elements\Graph\VisualizedEdge.cs" />
      <Compile Include="Assets\Scripts\UI\ScrollMenu.cs" />
      <Compile Include="Assets\Scripts\Util\Initializer.cs" />
-     <Compile Include="Assets\Message.cs" />
+     <Compile Include="Assets\EdgeArrow.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

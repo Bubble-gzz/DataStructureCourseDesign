@@ -212,7 +212,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: -588412973
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &4382443140219570838
@@ -635,6 +635,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootObject: {fileID: 6667535261260506045}
+  brandNew: 1
+  blockMouse: 1
+  hovering: 1
 --- !u!225 &4382443141602475082
 CanvasGroup:
   m_ObjectHideFlags: 0

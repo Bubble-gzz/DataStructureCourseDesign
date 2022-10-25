@@ -15,7 +15,7 @@ public class VisualizedGraph : MonoBehaviour
     Camera mainCam;
     void Awake()
     {
-        graph = new Graph(); 
+        graph = new Graph(100, true); 
         animationBuffer = GetComponent<AnimationBuffer>();
         graph.animationBuffer = animationBuffer;
         graph.image = gameObject;
@@ -73,9 +73,9 @@ public class VisualizedGraph : MonoBehaviour
     {
         graph.DeleteNode(node);
     }
-    public bool AddEdge(VisualizedNode U, VisualizedNode V, GameObject edgeImage)
+    public bool AddEdge(VisualizedNode U, VisualizedNode V, GameObject edgeImage, ref Edge edgeInfo)
     {
-        bool flag = graph.AddEdge(U.node.id, V.node.id, edgeImage);
+        bool flag = graph.AddEdge(U.node.id, V.node.id, ref edgeInfo, edgeImage );
         if (!flag) Debug.Log("repetitive edge or self-loop!");
         return flag;
     }

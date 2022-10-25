@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 7079264540643292855}
   - component: {fileID: 8048249654848418895}
   - component: {fileID: 1256548302506303401}
+  - component: {fileID: 2878180102635544402}
   m_Layer: 0
   m_Name: SeqElement
   m_TagString: Untagged
@@ -251,6 +252,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: 0
   tail: 0
+--- !u!61 &2878180102635544402
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3895644821360590943}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.25, y: 1.25}
+    newSize: {x: 12.8, y: 12.8}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.1, y: 1.1}
+  m_EdgeRadius: 0
 --- !u!1 &7122140941406757257
 GameObject:
   m_ObjectHideFlags: 0

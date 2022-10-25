@@ -8,16 +8,17 @@ public class VisualizedEdgePro : MonoBehaviour
     // Start is called before the first frame update
     LineRenderer dashedLine;
     public SpriteRenderer normalLine;
+    EdgeArrow arrow;
     List<Vector2> ends;
     Camera mainCam;
     [SerializeField]
     public List<Color> colors = new List<Color>();
     //bool playingDrawAnimation;
-    enum State{
+    public enum State{
         Hover,
         Drawn
     }
-    State state;
+    public State state;
     public List<GameObject> nodes;
     AnimationBuffer animationBuffer;
     SpriteRenderer sprite;
@@ -25,6 +26,13 @@ public class VisualizedEdgePro : MonoBehaviour
     Canvas canvas;
     GameObject textObject;
     public Edge info;
+    [SerializeField]
+    float arrowOffset = 0.9f;
+    [SerializeField]
+    float edgeOffset;
+    [SerializeField]
+
+    GameObject startPivot, endPivot;
     void Awake()
     {
         dashedLine = transform.Find("DashedLine").GetComponent<LineRenderer>();
@@ -43,6 +51,12 @@ public class VisualizedEdgePro : MonoBehaviour
 
         sprite = normalLine.GetComponent<SpriteRenderer>();
         sprite.enabled = false;
+
+        arrow = transform.Find("Arrow").gameObject.GetComponent<EdgeArrow>();
+        arrow.root = this;
+        arrow.gameObject.AddComponent<ChangeColorAnimator>();
+        arrow.gameObject.AddComponent<PopAnimator>();
+        
         textObject = transform.Find("TextObject").gameObject;
         canvas = textObject.transform.Find("Canvas").GetComponent<Canvas>();
         canvas.enabled = false;
@@ -91,13 +105,28 @@ public class VisualizedEdgePro : MonoBehaviour
         {
             dashedLine.SetPosition(i, ends[i]);
         }
-        RefreshNormalLine(ends[0], ends[1]);
+        RefreshLine(ends[0], ends[1]);
     }
-    void RefreshNormalLine(Vector2 start, Vector2 end)
+    void RefreshLine(Vector2 start, Vector2 end)
     {
+        Vector2 dir = (end - start).normalized;
+        Vector2 dir_90 = Quaternion.Euler(0, 0, 90) * dir;
+        if (info != null)
+        {
+            if (info.HasReverseEdge()) {
+                start += dir_90 * edgeOffset;
+                end += dir_90 * edgeOffset;
+                dir = (end - start).normalized;
+            }
+        }
+
         transform.position = (start + end) / 2;
-        normalLine.transform.right = (end - start).normalized;
+        //startPivot.transform.position = start;
+        //endPivot.transform.position = end;
+        
+        normalLine.transform.right = dir;
         float scaleY = normalLine.transform.lossyScale.y;
+        arrow.RefreshPos(start, end);
         SetGlobalScale(normalLine.transform, new Vector2((end - start).magnitude, scaleY));
     }
     void SetGlobalScale(Transform transform, Vector2 globalScale)
@@ -125,7 +154,7 @@ public class VisualizedEdgePro : MonoBehaviour
         VisualizedNode U = nodes[0].GetComponent<VisualizedNode>();
         VisualizedNode V = nodes[1].GetComponent<VisualizedNode>();
         //Debug.Log("U:" + U + "V:" + V);
-        if (!U.graph.AddEdge(U, V, gameObject)) return false;
+        if (!U.graph.AddEdge(U, V, gameObject, ref info)) return false;
         
         state = State.Drawn;
         RefreshEnds();
@@ -144,7 +173,7 @@ public class VisualizedEdgePro : MonoBehaviour
         while (1 - progress > Time.deltaTime * speed)
         {
             progress += Time.deltaTime * speed;
-            RefreshNormalLine(start, Vector2.Lerp(start, end, progress));
+            RefreshLine(start, Vector2.Lerp(start, end, progress));
             yield return null;
         }
         dashedLine.enabled = false;

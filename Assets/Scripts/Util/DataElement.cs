@@ -24,7 +24,11 @@ using System.Collections.Generic;
         {
             if (image == null) image = this.image;
             if (image == null) return ;
-            animationBuffer.Add(new ChangeColorAnimatorInfo(image, colors[colorType], animated));
+            ChangeColorAnimator[] animators = image.GetComponentsInChildren<ChangeColorAnimator>();
+            foreach(var animator in animators)
+            {
+                animationBuffer.Add(new ChangeColorAnimatorInfo(animator.gameObject, colors[colorType], animated));
+            }
         }
         public void Highlight(bool pop, int colorType, bool widthOnly = false, GameObject image = null)
         {

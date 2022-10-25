@@ -15,6 +15,7 @@ public class VisualizedEdge : MonoBehaviour
         Drawn
     }
     State state;
+    Edge edge;
     public List<GameObject> nodes;
     void Awake()
     {
@@ -87,7 +88,7 @@ public class VisualizedEdge : MonoBehaviour
         VisualizedNode U = nodes[0].GetComponent<VisualizedNode>();
         VisualizedNode V = nodes[1].GetComponent<VisualizedNode>();
         //Debug.Log("U:" + U + "V:" + V);
-        if (!U.graph.AddEdge(U, V, gameObject)) return false;
+        if (!U.graph.AddEdge(U, V, gameObject, ref edge)) return false;
         
         state = State.Drawn;
         RefreshEnds();

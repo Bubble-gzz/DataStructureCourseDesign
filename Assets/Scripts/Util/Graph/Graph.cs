@@ -41,6 +41,7 @@ using UnityEngine;
     public class Edge : DataElement
     {
         public GraphNode startNode, endNode;
+        public Graph graph;
         public float length {
             set { this.value = value; }
             get { return this.value; }
@@ -64,6 +65,10 @@ using UnityEngine;
             startNode = _startNode;
             endNode = _endNode;
             length = _length;
+        }
+        public bool HasReverseEdge()
+        {
+            return graph.HasReverseEdge(this);
         }
     }
     public class Graph
@@ -179,10 +184,7 @@ using UnityEngine;
                 Console.WriteLine("Cannot find such a node in the graph!(index = {0})", index);
                 return;
             }
-            Console.WriteLine("Delete Node: {0} successfully.", nodes[index].name);
-            nodes[index].graph = null;
-            DiscardIndex(index);
-            nodes[index] = null;
+            DeleteNode(nodes[index]);
         }
         public void DeleteNode(GraphNode node)
         {
@@ -208,6 +210,7 @@ using UnityEngine;
                         if (edge.endNode == node)
                         {
                             if (lastEdge != null) lastEdge.nextEdge = edge.nextEdge;
+                            if (directed) edge.Destroy(true);
                         }
                         else {
                             lastEdge = edge;
@@ -237,7 +240,7 @@ using UnityEngine;
             Console.WriteLine();
         }
 
-        private bool MyAddEdge(int i, int j, GameObject edgeImage, float dist = 0)
+        private bool MyAddEdge(int i, int j, ref Edge edgeInfo, GameObject edgeImage, float dist = 0)
         {
             if (nodes[i] == null || nodes[j] == null)
             {
@@ -252,6 +255,8 @@ using UnityEngine;
             g[i, j] = true;
             d[i, j] = dist;
             Edge newEdge = new Edge(nodes[i], nodes[j], dist);
+
+            newEdge.graph = this;
             newEdge.image = edgeImage;
             edgeImage.GetComponent<VisualizedEdgePro>().info = newEdge;
             newEdge.normalLineImage = edgeImage.GetComponent<VisualizedEdgePro>().normalLine.gameObject;
@@ -260,12 +265,20 @@ using UnityEngine;
             newEdge.colors = edgeImage.GetComponent<VisualizedEdgePro>().colors;
             newEdge.nextEdge = nodes[i].firstEdge;
             newEdge.UpdateValue(dist);
+            edgeInfo = newEdge;
             nodes[i].firstEdge = newEdge;
             edgeCount++;
             return true;
         }
-
-        public bool AddEdge(int i, int j, GameObject edgeImage = null, float dist = 0)
+        public bool HasReverseEdge(Edge edge)
+        {
+            if (!directed) return false;
+            int u = edge.startNode.id, v = edge.endNode.id;
+            if (u < 0 || u >= size) return false;
+            if (v < 0 || v >= size) return false;
+            return g[v, u];
+        }
+        public bool AddEdge(int i, int j, ref Edge edgeInfo, GameObject edgeImage = null, float dist = 0)
         {
             if (nodes[i] == null || nodes[j] == null)
             {
@@ -278,8 +291,8 @@ using UnityEngine;
                 return false;
             }
             bool status = true;
-            status &= MyAddEdge(i, j, edgeImage, dist);
-            if (!directed) status &= MyAddEdge(j, i, edgeImage, dist);
+            status &= MyAddEdge(i, j, ref edgeInfo, edgeImage, dist);
+            if (!directed) status &= MyAddEdge(j, i, ref edgeInfo, edgeImage, dist);
             return status;
         }
         
@@ -362,7 +375,7 @@ using UnityEngine;
             if (pointer == null) return;
             animationBuffer.Add(new PopAnimatorInfo(pointer, PopAnimator.Type.Disappear));
         }
-        public void DFS(GraphNode startNode)
+        public void ResetColors()
         {
             for (int i = 0; i < size; i++)
                 if (nodes[i] != null) {
@@ -371,6 +384,10 @@ using UnityEngine;
                     for (Edge edge = nodes[i].firstEdge; edge != null; edge = edge.nextEdge)
                         edge.SetColor(Palette.Normal);
                 }
+        }
+        public void DFS(GraphNode startNode)
+        {
+            ResetColors();
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)
                     vis[i, j] = false;
@@ -398,7 +415,7 @@ using UnityEngine;
 
                 edge.Highlight(true, Palette.Emphasize, true, edge.normalLineImage);
                 vis[cur.id, edge.endNode.id] = true;
-                vis[edge.endNode.id, cur.id] = true;
+                if (!directed) vis[edge.endNode.id, cur.id] = true;
                 
                 if (!edge.endNode.visited)
                 {

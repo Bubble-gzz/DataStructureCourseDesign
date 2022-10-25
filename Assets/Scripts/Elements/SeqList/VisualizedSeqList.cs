@@ -34,7 +34,6 @@ public class VisualizedSeqList : MonoBehaviour
         debugCount = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         list.x = transform.position.x;
@@ -73,7 +72,6 @@ public class VisualizedSeqList : MonoBehaviour
     {
         SeqElement newElement = NewElement(value);
         list.Append(newElement);
-        //Debug.Log(newElement.pos);
     }
     void Insert(int pos, float value = 0)
     {
