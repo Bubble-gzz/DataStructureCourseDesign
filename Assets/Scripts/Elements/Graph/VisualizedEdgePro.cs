@@ -146,18 +146,18 @@ public class VisualizedEdgePro : MonoBehaviour
             if (Input.GetMouseButton(1) || !flag) Destroy(gameObject);
         }
     }
-    bool Draw()
+    public bool Draw(float value = 0)
     {
         if (Global.selectedNode == null) return false;
         if (Global.selectedNode == nodes[0]) return false; // no self-loop
         nodes[1] = Global.selectedNode;
         VisualizedNode U = nodes[0].GetComponent<VisualizedNode>();
         VisualizedNode V = nodes[1].GetComponent<VisualizedNode>();
-        //Debug.Log("U:" + U + "V:" + V);
-        if (!U.graph.AddEdge(U, V, gameObject, ref info)) return false;
+        if (!U.graph.AddEdge(U, V, gameObject, ref info, value)) return false;
         
         state = State.Drawn;
         RefreshEnds();
+        RefreshPos();
         dashedLine.enabled = false;
         animationBuffer.Add(new PopAnimatorInfo(normalLine.gameObject, PopAnimator.Type.Appear));
         animationBuffer.Add(new PopAnimatorInfo(textObject, PopAnimator.Type.Appear));

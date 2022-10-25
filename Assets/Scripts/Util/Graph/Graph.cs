@@ -3,6 +3,8 @@ using System.IO;
 using System.Runtime.InteropServices;
 using DataStructureCourseDesign.SeqListSpace;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
     public class GraphNode : DataElement
     {
@@ -70,6 +72,11 @@ using UnityEngine;
         {
             return graph.HasReverseEdge(this);
         }
+        override public void UpdateValue(float value)
+        {
+            base.UpdateValue(value);
+            graph.UpdateEdgeValue(this, value);   
+        }
     }
     public class Graph
     {
@@ -132,6 +139,7 @@ using UnityEngine;
             if (index == -1) return false;
             newNode.id = index;
             newNode.animationBuffer = this.animationBuffer;
+            Debug.Log("newNode.animationBuffer:" + newNode.animationBuffer);
             if (string.IsNullOrEmpty(newNode.name))
                 newNode.name = newNode.id.ToString();
             Console.WriteLine("Add new node: " + newNode.name);
@@ -142,7 +150,12 @@ using UnityEngine;
             
             return true;
         }
-
+        public void UpdateEdgeValue(Edge edge, float value)
+        {
+            int u = edge.startNode.id, v = edge.endNode.id;
+            d[u, v] = value;
+            if (directed) d[v, u] = value;
+        }
         public GraphNode GetNode(int index)
         {
             if (index < 0 || index >= size)
@@ -640,4 +653,62 @@ using UnityEngine;
             }
             return endNode.minDist;
         }
+    
+        public GraphData ConvertToData()
+        {
+            GraphData res = new GraphData();
+            res.size = this.size;
+            res.directed = this.directed;
+            res.nodeRegistered = new bool[this.size];
+            res.names = new string[this.size];
+            res.values = new float[this.size];
+            res.pos = new Vector2[this.size];
+
+            for (int i = 0; i < size; i++)
+                if (nodes[i] == null) {
+                    res.nodeRegistered[i] = false;
+                    res.names[i] = "";
+                }
+                else {
+                    res.nodeRegistered[i] = true;
+                    res.names[i] = nodes[i].name;
+                    res.values[i] = nodes[i].value;
+                    res.pos[i] = new Vector2(nodes[i].x, nodes[i].y);
+                }
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
+                    if (g[i, j]) res.edges.Add(new EdgeData(i, j, d[i, j]));
+            return res;
+        }
+        public string ConvertToJsonData()
+        {
+            GraphData data = ConvertToData();
+            string res = JsonUtility.ToJson(data);
+            return res;
+        }
+        public void BuildFromJson(string jsonData)
+        {
+            GraphData data = JsonUtility.FromJson<GraphData>(jsonData);
+        }
+    }
+    [Serializable]
+    public class EdgeData{
+        public int u, v;
+        public float value;
+        public EdgeData(int _u, int _v, float _value)
+        {
+            this.u = _u;
+            this.v = _v;
+            this.value = _value;
+        }
+    }
+    public class GraphData{
+        public int size;
+        public bool directed;
+        public bool[] nodeRegistered;
+        public string[] names;
+        public float[] values;
+        public Vector2[] pos;
+        public List<EdgeData> edges = new List<EdgeData>();
+
     }

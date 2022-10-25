@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class VisualizedSeqList : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class VisualizedSeqList : MonoBehaviour
     GameObject visualizedPointerPrefab;
     int debugCount;
     AnimationBuffer animationBuffer;
-
+    string listName = "sampleList";
     void Start()
     {
         list = new SeqList(); 
@@ -55,7 +56,15 @@ public class VisualizedSeqList : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Sort();
+            SaveData();//Sort();
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            Debug.Log(list.ConvertToJsonData());
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadData(listName);
         }
     }
     SeqElement NewElement(float value = 0)
@@ -85,5 +94,29 @@ public class VisualizedSeqList : MonoBehaviour
     void Sort()
     {
         list.Sort();
+    }
+    public void SaveData()
+    {
+        string jsonData = list.ConvertToJsonData();
+        string path = Application.dataPath + listName + ".data";
+        File.WriteAllText(path, jsonData);
+    }
+    public void LoadData(string listName)
+    {
+        string path = Application.dataPath + listName + ".data";
+        string jsonData = File.ReadAllText(path);
+        BuildFromJson(jsonData);
+    }
+    public void BuildFromJson(string jsonData)
+    {
+        SeqListData data = JsonUtility.FromJson<SeqListData>(jsonData);
+        UpdataPos(data.pos);
+        list.BuildFromJson(jsonData);
+        foreach (var elem in data.elems) Append(elem);
+    
+    }
+    void UpdataPos(Vector2 pos)
+    {
+        transform.position = pos;
     }
 }

@@ -67,4 +67,8 @@ public class VisualizedNode : MonoBehaviour
     {
         graph.DeleteNode(node);
     }
+    public VisualizedEdgePro DragOutNewEdge()
+    {
+        return dragArea.DragOutNewEdge();
+    }
 }

@@ -42,7 +42,7 @@ using System.Collections.Generic;
             }
             SetColor(colorType);
         }
-        public void UpdateValue(float value)
+        virtual public void UpdateValue(float value)
         {
             this.value = value;
             if (image == null) return ;

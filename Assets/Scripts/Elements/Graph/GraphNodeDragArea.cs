@@ -60,9 +60,14 @@ public class GraphNodeDragArea : MonoBehaviour
         isDragging = true;
         if (Global.mouseMode == Global.MouseMode.AddEdge)
         {
-            VisualizedEdgePro newEdge = Instantiate(edgePrefab, root.graph.transform).GetComponent<VisualizedEdgePro>();
-            newEdge.nodes[0] = root.gameObject;
+            DragOutNewEdge();
         }
+    }
+    public VisualizedEdgePro DragOutNewEdge()
+    {
+        VisualizedEdgePro newEdge = Instantiate(edgePrefab, root.graph.transform).GetComponent<VisualizedEdgePro>();
+        newEdge.nodes[0] = root.gameObject;
+        return newEdge;
     }
     void OnMouseEnter()
     {

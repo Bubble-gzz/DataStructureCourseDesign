@@ -6,11 +6,14 @@ public class AnimationBuffer : MonoBehaviour{
     Queue<AnimationInfo> queue;
     [SerializeField]
     int head, tail;
-    void Start()
+    void Awake()
     {
         queue = new Queue<AnimationInfo>();
         head = 0;
         tail = -1;
+    }
+    void Start()
+    {
         StartCoroutine(Render());
     }
     IEnumerator Render()

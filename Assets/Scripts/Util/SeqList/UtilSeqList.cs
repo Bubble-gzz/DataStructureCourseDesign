@@ -75,7 +75,7 @@ using System.Runtime.InteropServices;
         private void Wait(float sec, bool useSetting = true)
         {
             animationBuffer.Add(new WaitAnimatorInfo(image, sec, useSetting));
-            Debug.Log("useSetting : " + useSetting + "  timeScale : " + Settings.animationTimeScale);
+//            Debug.Log("useSetting : " + useSetting + "  timeScale : " + Settings.animationTimeScale);
             //Wait(sec);
         }
         public void MoveFromTo(int i, int j)
@@ -420,5 +420,38 @@ using System.Runtime.InteropServices;
             QuickSort(l, mid - 1);
             QuickSort(mid + 1, r);
         }
-        
+        public SeqListData ConvertToData()
+        {
+            SeqListData res = new SeqListData();
+            res.count = this.count;
+            res.capacity = this.capacity;
+            res.isOrdered = this.isOrdered;
+            res.pos = image.transform.position;
+            for (int i = 0; i < count; i++)
+                res.elems.Add(array[i].value);
+            return res;
+        }
+        public string ConvertToJsonData()
+        {
+            SeqListData data = ConvertToData();
+            string res = JsonUtility.ToJson(data);
+            return res;
+        }
+        public void BuildFromJson(string jsonData)
+        {
+            SeqListData data = JsonUtility.FromJson<SeqListData>(jsonData);
+            this.count = 0;
+            this.capacity = data.capacity;
+            this.isOrdered = data.isOrdered;
+            this.x = data.pos.x;
+            this.y = data.pos.y;
+            this.array = new SeqElement[data.capacity];
+        }
+    }
+
+    class SeqListData{
+        public int count, capacity;
+        public bool isOrdered;
+        public Vector2 pos;
+        public List<float> elems = new List<float>();
     }
