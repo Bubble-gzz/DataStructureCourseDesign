@@ -66,7 +66,7 @@ MonoBehaviour:
   isMouseDown: 0
   edgePrefab: {fileID: 6123776191420405969, guid: e29a1f731ba96a4439de48c5412468eb, type: 3}
   panelPrefab: {fileID: 1096073873452312853, guid: e7db8bb3c58353e4d9e078b807878073, type: 3}
-  panelOffset: {x: 1.5, y: 1.5}
+  panelOffset: {x: 1.5, y: 1.5, z: -1}
 --- !u!1 &7875211444367458661
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +168,7 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0.9716981, g: 0.6530113, b: 0.19774447, a: 1}
   - {r: 0.26954174, g: 0.5260843, b: 1, a: 1}
+  - {r: 0.76616186, g: 0.25174183, b: 0.9339623, a: 1}
   initialText: 
   animationBuffer: {fileID: 0}
   dragArea: {fileID: 0}

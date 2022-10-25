@@ -49,6 +49,10 @@ public class VisualizedGraph : MonoBehaviour
         {
             Global.mouseMode = Global.MouseMode.DFS;
         }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Global.mouseMode = Global.MouseMode.BFS;
+        }
     }
 
     GraphNode NewNode(float value = 0)
@@ -86,5 +90,9 @@ public class VisualizedGraph : MonoBehaviour
     public void DFS(GraphNode startNode)
     {
         graph.DFS(startNode);
+    }
+    public void BFS(GraphNode startNode)
+    {
+        graph.BFS(startNode);
     }
 }

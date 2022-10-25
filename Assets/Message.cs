@@ -31,13 +31,13 @@ public class Message : UIPanel
     IEnumerator _BreathOnce()
     {
         breathing = true;
-        Debug.Log("Breath once");
+        //Debug.Log("Breath once");
         float progress = 0, speed = 0.8f;
         while (progress + speed * Time.deltaTime < 1)
         {
             progress += speed * Time.deltaTime;
             canvasGroup.alpha = 1 - Tween.SlowFastSlow(progress);
-            Debug.Log("alpha = " + canvasGroup.alpha);
+        //    Debug.Log("alpha = " + canvasGroup.alpha);
             if (fadingOut) yield break;
             yield return null;
         }

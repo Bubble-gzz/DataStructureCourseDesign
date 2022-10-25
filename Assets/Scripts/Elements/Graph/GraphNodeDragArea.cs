@@ -93,6 +93,11 @@ public class GraphNodeDragArea : MonoBehaviour
             root.DFS();
             return ;
         }
+        if (Global.mouseMode == Global.MouseMode.BFS)
+        {
+            root.BFS();
+            return ;
+        }
         root.animationBuffer.Add(new PopAnimatorInfo(root.gameObject, PopAnimator.Type.PopBack));
         GameObject newPanel = Instantiate(panelPrefab);
         newPanel.GetComponentInChildren<NodePanel>().node = root.gameObject;

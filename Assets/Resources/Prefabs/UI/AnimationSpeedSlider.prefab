@@ -111,7 +111,7 @@ MonoBehaviour:
   blockMouse: 1
   hovering: 0
   minSpeed: 0.5
-  maxSpeed: 8
+  maxSpeed: 3
 --- !u!225 &4184829631301840484
 CanvasGroup:
   m_ObjectHideFlags: 0

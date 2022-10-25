@@ -9,7 +9,7 @@ public class AnimationSpeedSlider : UIPanel
     Slider slider;
     TMP_Text value;
     [SerializeField]
-    float minSpeed = 0.5f, maxSpeed = 8f;
+    float minSpeed = 0.5f, maxSpeed = 2f;
     override protected void Awake()
     {
         base.Awake();

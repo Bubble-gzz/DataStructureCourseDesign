@@ -10,7 +10,8 @@ public class Global
     public enum MouseMode{
         AddEdge,
         Move,
-        DFS
+        DFS,
+        BFS
     }
     static public MouseMode mouseMode;
     static public bool mouseOverUI;

@@ -30,12 +30,16 @@ using System.Collections.Generic;
                 animationBuffer.Add(new ChangeColorAnimatorInfo(animator.gameObject, colors[colorType], animated));
             }
         }
-        public void Highlight(bool pop, int colorType, bool widthOnly = false, GameObject image = null)
+        public void Highlight(bool pop, int colorType, bool block = false, bool widthOnly = false, GameObject image = null)
         {
             if (image == null) image = this.image;            
             if (image == null) return ;
             PopAnimator.Type type = PopAnimator.Type.Emphasize;
-            if (pop) animationBuffer.Add(new PopAnimatorInfo(image, type));
+            if (pop) {
+                PopAnimatorInfo info = new PopAnimatorInfo(image, type);
+                info.block = block;
+                animationBuffer.Add(info);
+            }
             SetColor(colorType);
         }
         public void UpdateValue(float value)

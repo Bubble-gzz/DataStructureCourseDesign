@@ -59,6 +59,10 @@ public class VisualizedNode : MonoBehaviour
     {
         graph.DFS(node);
     }
+    public void BFS()
+    {
+        graph.BFS(node);
+    }
     public void Delete()
     {
         graph.DeleteNode(node);

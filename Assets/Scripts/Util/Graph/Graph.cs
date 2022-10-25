@@ -353,14 +353,16 @@ using UnityEngine;
             return true;
         }
         
-        private void Wait(float sec)
+        private void Wait(float sec, bool useSetting = true)
         {
-            animationBuffer.Add(new WaitAnimatorInfo(image, sec));
+            animationBuffer.Add(new WaitAnimatorInfo(image, sec, useSetting));
         }
-        void PointerAppear(GameObject pointer)
+        void PointerAppear(GameObject pointer, bool block = false)
         {
             if (pointer == null) return;
-            animationBuffer.Add(new PopAnimatorInfo(pointer, PopAnimator.Type.Appear));
+            PopAnimatorInfo info = new PopAnimatorInfo(pointer, PopAnimator.Type.Appear);
+            info.block = block;
+            animationBuffer.Add(info);
         }
         void ChangePointerPos(GameObject pointer, Vector2 newPos, bool animated = true)
         {
@@ -370,10 +372,12 @@ using UnityEngine;
             info.block = true;
             animationBuffer.Add(info);
         }
-        void PointerDisappear(GameObject pointer)
+        void PointerDisappear(GameObject pointer, bool block = false)
         {
             if (pointer == null) return;
-            animationBuffer.Add(new PopAnimatorInfo(pointer, PopAnimator.Type.Disappear));
+            PopAnimatorInfo info = new PopAnimatorInfo(pointer, PopAnimator.Type.Disappear);
+            info.block = block;
+            animationBuffer.Add(info);
         }
         public void ResetColors()
         {
@@ -403,6 +407,7 @@ using UnityEngine;
             cur.visited = true;
             ChangePointerPos(pointer_cur.gameObject, new Vector2(cur.x, cur.y));
             cur.Highlight(true, Palette.Emphasize);
+
             if (lastEdge != null) lastEdge.SetColor(Palette.Visited);
 
             Console.Write("[Node:{0}] ",cur.name);
@@ -413,7 +418,7 @@ using UnityEngine;
                 if (vis[cur.id, edge.endNode.id]) continue;
                 //if (edge.endNode == from) continue;
 
-                edge.Highlight(true, Palette.Emphasize, true, edge.normalLineImage);
+                edge.Highlight(true, Palette.Emphasize, false, true, edge.normalLineImage);
                 vis[cur.id, edge.endNode.id] = true;
                 if (!directed) vis[edge.endNode.id, cur.id] = true;
                 
@@ -437,26 +442,51 @@ using UnityEngine;
             Console.WriteLine();
             Console.Write("BFS: ");
             for (int i = 0; i < size; i++)
-                if (nodes[i] != null) nodes[i].visited = false;
+                if (nodes[i] != null) {
+                    nodes[i].visited = false;
+                    nodes[i].backTrace = null;
+                }
+            ResetColors();
+
+            ChangePointerPos(pointer_cur.gameObject, new Vector2(startNode.x, startNode.y), false);
+            PointerAppear(pointer_cur.gameObject);
+
             int head = 0, tail = 0, count = 1;
-            
             queue[head] = startNode;
             startNode.visited = true;
             while (count > 0)
             {
                 GraphNode cur = queue[head];
+                if (cur != startNode) PointerDisappear(pointer_cur.gameObject, true);
+                ChangePointerPos(pointer_cur.gameObject, new Vector2(cur.x, cur.y), false);
+                PointerAppear(pointer_cur.gameObject);
+                cur.Highlight(true, Palette.Current, true);
+                cur.backTrace?.Highlight(true, Palette.Visited, false, true, cur.backTrace.normalLineImage);
                 Console.Write("[Node:{0}] ", cur.name);
                 head = (head + 1) % size;
                 count--;
+                Wait(1f);
                 for (Edge edge = cur.firstEdge; edge != null; edge = edge.nextEdge)
+                {
+                    edge.Highlight(true, Palette.Emphasize, false, true, edge.normalLineImage);
                     if (!edge.endNode.visited)
                     {
                         edge.endNode.visited = true;
+                        edge.endNode.backTrace = edge;
                         tail = (tail + 1) % size;
                         count++;
                         queue[tail] = edge.endNode;
+                        edge.endNode.Highlight(true, Palette.Emphasize);
+                        Wait(1f);
                     }
+                    else {
+                        Wait(0.5f);
+                    }
+                }
+                cur.SetColor(Palette.Visited);
             }
+            Wait(1f);
+            PointerDisappear(pointer_cur.gameObject);
         }
 
         public enum MST_Algorithm
