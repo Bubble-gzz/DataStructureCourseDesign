@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Global
 {
@@ -18,4 +19,12 @@ public class Global
     static public Initializer initializer;
     static public bool pressEventConsumed;
     static public int debugCount;
+    static public VisualizedGraph curGraph;
+    static public bool loadGraphFromFiles;
+    static public string filePath;
+    static public string fileName;
+    static public void ChangeScene(string newSceneName)
+    {
+        SceneManager.LoadScene(newSceneName);
+    }
 }

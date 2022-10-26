@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using UnityEngine.Events;
 public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     // Start is called before the first frame update
@@ -19,6 +19,7 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField]
     protected bool hovering = true;
     protected bool fadingOut = false;
+    public UnityEvent panelClosed = new UnityEvent();
     protected virtual void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -42,6 +43,7 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     protected virtual void Update()
     {
+        //Debug.Log("rootObject " + rootObject);
         if (hovering)
         {
             if (Input.GetMouseButtonDown(0) && !mouseEntered && !brandNew)
@@ -93,6 +95,8 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             yield return null;
         }
         canvasGroup.alpha = 0;
+        panelClosed.Invoke();
         Destroy(rootObject);
+        if (mouseEntered && blockMouse) Global.mouseOverUI = false;
     }
 }

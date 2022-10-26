@@ -6,13 +6,12 @@ using TMPro;
 public class Message : UIPanel
 {
     // Start is called before the first frame update
-    bool breath, breathing;
+    bool breath = false , breathing;
     TMP_Text text;
     override protected void Awake()
     {
         base.Awake();
         hovering = false;
-        StartBreathing();
         text = transform.Find("Panel/Text").GetComponent<TMP_Text>();
     }
     override protected void Update()
@@ -20,11 +19,11 @@ public class Message : UIPanel
         base.Update();
         if (breath && !breathing) StartCoroutine(_BreathOnce());
     }
-    void StartBreathing()
+    public void StartBreathing()
     {
         breath = true;
     }
-    void StopBreathing()
+    public void StopBreathing()
     {
         breath = false;
     }
@@ -49,5 +48,20 @@ public class Message : UIPanel
     public void SetText(string newText)
     {
         text.text = newText;
+    }
+    public void Blink(bool destroyAfterBlink = true)
+    {
+        StartCoroutine(_Blink(destroyAfterBlink));
+    }
+    IEnumerator _Blink(bool destroyAfterBlink)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            canvasGroup.alpha = 0;
+            yield return new WaitForSeconds(0.1f);
+            canvasGroup.alpha = 1;
+            yield return new WaitForSeconds(0.1f);
+        }
+        if (destroyAfterBlink) Destroy(gameObject);
     }
 }

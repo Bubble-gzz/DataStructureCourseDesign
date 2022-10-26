@@ -17,7 +17,7 @@ public class WorldCanvas : MonoBehaviour
 
     void Update()
     {
-        ViewUpdate();
+        if (!Global.mouseOverUI) ViewUpdate();
     }
     void ViewUpdate()
     {

@@ -19,7 +19,6 @@ public class VisualizedGraph : MonoBehaviour
     {
         animationBuffer = GetComponent<AnimationBuffer>();
         gameObject.AddComponent<WaitAnimator>();
-        NewGraph(4, true);
     }
     void NewGraph(int size = 100, bool directed = false)
     {
@@ -34,6 +33,10 @@ public class VisualizedGraph : MonoBehaviour
     {
         mainCam = Global.mainCamera;
         Global.mouseMode = Global.MouseMode.AddEdge;
+        graphName = Global.fileName;
+        if (!Global.loadGraphFromFiles) NewGraph(15, true);
+        else LoadData(Global.filePath);
+        Global.curGraph = this;
     }
     // Update is called once per frame
     void Update()
@@ -60,10 +63,6 @@ public class VisualizedGraph : MonoBehaviour
         {
             Debug.Log(graph.ConvertToJsonData());
             SaveData();
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            LoadData(graphName);
         }
     }
 
@@ -120,8 +119,14 @@ public class VisualizedGraph : MonoBehaviour
     {
         graph.BFS(startNode);
     }
+    public void Clear()
+    {
+        foreach (Transform child in transform)
+            Destroy(child.gameObject);
+    }
     public void BuildFromJson(string jsonData)
     {
+        Clear();
         GraphData data = JsonUtility.FromJson<GraphData>(jsonData);
         NewGraph(data.size, data.directed);
         graph.BuildFromJson(jsonData);
@@ -149,9 +154,8 @@ public class VisualizedGraph : MonoBehaviour
         string path = root + graphName + ".data";
         File.WriteAllText(path, jsonData);
     }
-    public void LoadData(string graphName)
+    public void LoadData(string path)
     {
-        string path = Application.dataPath + "/GraphData/" + graphName + ".data";
         string jsonData = File.ReadAllText(path);
         BuildFromJson(jsonData);
     }

@@ -673,7 +673,7 @@ using System.Collections.Generic;
                     res.nodeRegistered[i] = true;
                     res.names[i] = nodes[i].name;
                     res.values[i] = nodes[i].value;
-                    res.pos[i] = new Vector2(nodes[i].x, nodes[i].y);
+                    res.pos[i] = nodes[i].image.gameObject.transform.localPosition;
                 }
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)

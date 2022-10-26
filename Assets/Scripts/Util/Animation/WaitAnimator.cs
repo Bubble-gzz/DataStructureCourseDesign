@@ -23,27 +23,22 @@ public class WaitAnimator : Animation
         bool useSetting = this.useSetting;
         float sec = this.sec;
         int debugCount = Global.debugCount++;
-        //Debug.Log("useSetting:" + useSetting);
-
         if (!useSetting) yield return new WaitForSeconds(sec);
         else {
             if (Settings.animationTimeScale < 0)
             {
                 Message message = Instantiate(messagePrefab).GetComponent<Message>();
+                message.StartBreathing();
                 while (true)
                 {
                     if (UserAction(debugCount)) {
                         Global.pressEventConsumed = true;
-                        /*Debug.Log("frame[" + Time.frameCount + "] thread: " +  debugCount 
-                        + "  Global.pressConsumed:" + Global.pressConsumed);*/
                         break;
                     }
                     yield return null;
                 }
-                //while (!UserAction()) yield return null;
                 Global.pressEventConsumed = true;
                 message.FadeOut();
-                //Debug.Log("frameCount = " + Time.frameCount);
             }
             else {
                 sec *= Settings.animationTimeScale;
