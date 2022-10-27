@@ -93,6 +93,7 @@ using System.Collections.Generic;
         private int edgeCount;
         bool[,] vis;
         public VisualizedPointer pointer_cur;
+        public Matrix adjacentMatrix;
         
         public Graph(int _size = 100, bool _directed = false)
         {
@@ -133,6 +134,16 @@ using System.Collections.Generic;
         void DiscardIndex(int index) {
             used[index] = false;
         }
+        public void RefreshMatrix()
+        {
+            if (adjacentMatrix == null) return;
+            int maxValidSize;
+            for (maxValidSize = size; maxValidSize > 1; maxValidSize--)
+                if (nodes[maxValidSize - 1] != null) break;
+            if (maxValidSize < 5) adjacentMatrix.fixPanelSize = false;
+            else adjacentMatrix.fixPanelSize = true;
+            adjacentMatrix.Refresh(maxValidSize , maxValidSize, d);
+        }
         public bool AddNode(GraphNode newNode)
         {
             int index = GetNewIndex();
@@ -147,14 +158,18 @@ using System.Collections.Generic;
             nodes[index] = newNode;
             newNode.SetText(newNode.name);
             newNode.PopOut();
-            
+            RefreshMatrix();
             return true;
         }
         public void UpdateEdgeValue(Edge edge, float value)
         {
             int u = edge.startNode.id, v = edge.endNode.id;
             d[u, v] = value;
-            if (directed) d[v, u] = value;
+            if (adjacentMatrix != null) adjacentMatrix.ChangeText(u, v, value.ToString("f0"));
+            if (!directed) {
+                d[v, u] = value;
+                if (adjacentMatrix != null) adjacentMatrix.ChangeText(v, u, value.ToString("f0"));
+            }
         }
         public GraphNode GetNode(int index)
         {
@@ -239,6 +254,7 @@ using System.Collections.Generic;
                     g[i, j] = false;
                     d[i, j] = inf;
                 }
+            RefreshMatrix();
         }
 
         public void ListNodes()
@@ -281,6 +297,7 @@ using System.Collections.Generic;
             edgeInfo = newEdge;
             nodes[i].firstEdge = newEdge;
             edgeCount++;
+            RefreshMatrix();
             return true;
         }
         public bool HasReverseEdge(Edge edge)
@@ -323,6 +340,7 @@ using System.Collections.Generic;
                     else lastEdge.nextEdge = edge.nextEdge;
                     Console.WriteLine("Delete the edge from [Node:{0}] to [Node:{1}]", nodes[i].name, nodes[j].name);
                     edgeCount--;
+                    RefreshMatrix();
                     return true;
                 }
 
@@ -347,6 +365,7 @@ using System.Collections.Generic;
                 if (edge.endNode == nodes[j])
                 {
                     edge.length = newLength;
+                    RefreshMatrix();
                     return true;
                 }
 

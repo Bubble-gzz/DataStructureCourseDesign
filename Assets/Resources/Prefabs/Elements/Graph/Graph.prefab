@@ -46,8 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualizedNodePrefab: {fileID: 7875211444367458661, guid: e80a4e4a839c0c24bba9932cef24f010, type: 3}
   visualizedPointerPrefab: {fileID: 6790114855102505723, guid: a36b71458079af341940f8b0cb994db3, type: 3}
-  minViewSize: 0.5
-  maxViewSize: 1
+  adjacentMatrixPrefab: {fileID: 2687654411198017701, guid: 6c7b91dcc8b9f5a418705e84a31213a0, type: 3}
 --- !u!114 &6085958087057706602
 MonoBehaviour:
   m_ObjectHideFlags: 0

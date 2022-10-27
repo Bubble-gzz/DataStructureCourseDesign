@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
 
 public class VisualizedGraph : MonoBehaviour
 {
@@ -12,9 +13,14 @@ public class VisualizedGraph : MonoBehaviour
     GameObject visualizedNodePrefab;
     [SerializeField]
     GameObject visualizedPointerPrefab;
+    [SerializeField]
+    GameObject adjacentMatrixPrefab;
+    Matrix adjacentMatrix;
     //int debugCount;
     AnimationBuffer animationBuffer;
     Camera mainCam;
+    [SerializeField]
+    Button matrixOnButton, matrixOffButton;
     void Awake()
     {
         animationBuffer = GetComponent<AnimationBuffer>();
@@ -37,6 +43,16 @@ public class VisualizedGraph : MonoBehaviour
         if (!Global.loadGraphFromFiles) NewGraph(15, true);
         else LoadData(Global.filePath);
         Global.curGraph = this;
+        
+        GameObject adjacentMatrixObject = Instantiate(adjacentMatrixPrefab);
+        adjacentMatrix = adjacentMatrixObject.GetComponentInChildren<Matrix>();
+        UIPanel panel = adjacentMatrixObject.GetComponentInChildren<UIPanel>();
+        panel.appearOnCreate = false;
+        panel.destroyOnFadeOut = false;
+        matrixOnButton?.onClick.AddListener(panel.FadeIn);
+        matrixOffButton?.onClick.AddListener(panel.FadeOut);
+        graph.adjacentMatrix = adjacentMatrix;
+        graph.RefreshMatrix();
     }
     // Update is called once per frame
     void Update()

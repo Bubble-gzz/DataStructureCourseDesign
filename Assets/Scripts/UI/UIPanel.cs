@@ -19,6 +19,7 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField]
     protected bool hovering = true;
     protected bool fadingOut = false;
+    public bool appearOnCreate = true, destroyOnFadeOut = true;
     public UnityEvent panelClosed = new UnityEvent();
     protected virtual void Awake()
     {
@@ -30,7 +31,7 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         canvasGroup.alpha = 0;
         mouseEntered = false;
         StartCoroutine(BrandNewCountDown());
-        FadeIn();
+        if (appearOnCreate) FadeIn();
     }
 
     // Update is called once per frame
@@ -69,6 +70,8 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     IEnumerator _FadeIn()
     {
+        Canvas canvas = rootObject.GetComponentInChildren<Canvas>();
+        if (canvas != null) canvas.enabled = true;
         float progress = 0, speed = 5f;
         canvasGroup.alpha = progress;
         while (progress + speed * Time.deltaTime < 1)
@@ -96,7 +99,11 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         canvasGroup.alpha = 0;
         panelClosed.Invoke();
-        Destroy(rootObject);
+        
+        Canvas canvas = rootObject.GetComponentInChildren<Canvas>();
+        if (canvas != null) canvas.enabled = false;
+
+        if (destroyOnFadeOut) Destroy(rootObject);
         if (mouseEntered && blockMouse) Global.mouseOverUI = false;
     }
 }
