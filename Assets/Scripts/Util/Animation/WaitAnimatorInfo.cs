@@ -11,6 +11,7 @@ public class WaitAnimatorInfo : AnimationInfo
         this.gameObject = _gameObject;
         this.sec = _sec;
         this.useSetting = _useSetting;
+        Global.waitingEventCount++;
     }
     public override void Invoke()
     {

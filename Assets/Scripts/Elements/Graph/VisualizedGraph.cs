@@ -21,6 +21,14 @@ public class VisualizedGraph : MonoBehaviour
     Camera mainCam;
     [SerializeField]
     Button matrixOnButton, matrixOffButton;
+    [SerializeField]
+    GameObject messagePrefab;
+    Message curMessage;
+    GameObject algorithmPanel;
+   
+    [SerializeField]
+    GameObject algorithmPanelUndirected, algorithmPanelDirected;
+    
     void Awake()
     {
         animationBuffer = GetComponent<AnimationBuffer>();
@@ -53,10 +61,14 @@ public class VisualizedGraph : MonoBehaviour
         matrixOffButton?.onClick.AddListener(panel.FadeOut);
         graph.adjacentMatrix = adjacentMatrix;
         graph.RefreshMatrix();
+
     }
     // Update is called once per frame
     void Update()
     {
+        if (graph.directed) algorithmPanel = algorithmPanelDirected;
+        else algorithmPanel = algorithmPanelUndirected;
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             AddNode();
@@ -66,19 +78,6 @@ public class VisualizedGraph : MonoBehaviour
             if (Global.mouseMode == Global.MouseMode.Move)
                 Global.mouseMode = Global.MouseMode.AddEdge;
             else Global.mouseMode = Global.MouseMode.Move;
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            Global.mouseMode = Global.MouseMode.DFS;
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Global.mouseMode = Global.MouseMode.BFS;
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Debug.Log(graph.ConvertToJsonData());
-            SaveData();
         }
     }
 
@@ -127,13 +126,31 @@ public class VisualizedGraph : MonoBehaviour
     {
         graph.DeleteEdge(U.node.id, V.node.id);
     }
+    void WaitUntilAlgorithmFinished()
+    {
+        StartCoroutine(_WaitUntilAlgorithmFinished());
+    }
+    IEnumerator _WaitUntilAlgorithmFinished()
+    {
+        Global.mouseMode = Global.MouseMode.AddEdge;
+        while (true)
+        {
+            if (Global.waitingEventCount <= 0) break;
+            yield return null;
+        }
+        graph.ResetStatus();
+    }
     public void DFS(GraphNode startNode)
     {
+        curMessage?.FadeOut();
         graph.DFS(startNode);
+        WaitUntilAlgorithmFinished();
     }
     public void BFS(GraphNode startNode)
     {
+        curMessage?.FadeOut();
         graph.BFS(startNode);
+        WaitUntilAlgorithmFinished();
     }
     public void Clear()
     {
@@ -174,5 +191,27 @@ public class VisualizedGraph : MonoBehaviour
     {
         string jsonData = File.ReadAllText(path);
         BuildFromJson(jsonData);
+    }
+    public void OnClickedDFS()
+    {
+        Global.mouseMode = Global.MouseMode.DFS;
+        ChooseStartPointHint();
+    }
+    public void OnClickedBFS()
+    {
+        Global.mouseMode = Global.MouseMode.BFS;
+        ChooseStartPointHint();
+    }
+    void ChooseStartPointHint()
+    {
+        curMessage = Instantiate(messagePrefab).GetComponent<Message>();
+        curMessage.SetText("Please choose a node as the starting point...");
+        curMessage.StartBreathing();
+        algorithmPanel.GetComponentInChildren<UIPanel>().FadeOut();
+    }
+    public void ShowAlgorithmPanel()
+    {
+        algorithmPanel.GetComponentInChildren<UIPanel>().FadeIn();
+        if (adjacentMatrix != null) adjacentMatrix.GetComponentInChildren<UIPanel>().FadeOut();
     }
 }

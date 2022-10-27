@@ -11,3 +11,13 @@ public class GraphSaveButton : SaveButton
         Global.curGraph.SaveData();
     }
 }
+
+public class TreeNode{
+    public int data;
+    public TreeNode parent, left, right;
+    GameObject visualizedNodeObject;
+    public TreeNode(int data)
+    {
+        this.data = data;
+    }
+}

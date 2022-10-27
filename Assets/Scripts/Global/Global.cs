@@ -23,6 +23,7 @@ public class Global
     static public bool loadGraphFromFiles;
     static public string filePath;
     static public string fileName;
+    static public int waitingEventCount;
     static public void ChangeScene(string newSceneName)
     {
         SceneManager.LoadScene(newSceneName);

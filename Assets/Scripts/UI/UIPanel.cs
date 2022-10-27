@@ -11,7 +11,6 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField]
     GameObject rootObject;
     bool mouseEntered;
-    [SerializeField]
 
     bool brandNew = true;
     [SerializeField]
@@ -21,16 +20,17 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     protected bool fadingOut = false;
     public bool appearOnCreate = true, destroyOnFadeOut = true;
     public UnityEvent panelClosed = new UnityEvent();
+    [SerializeField]
+    bool visibleState;
     protected virtual void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
     }
     protected virtual void Start()
     {
-        //transform.parent.GetComponent<Canvas>().worldCamera = Global.mainCamera.GetComponent<Camera>();
         canvasGroup.alpha = 0;
         mouseEntered = false;
-        StartCoroutine(BrandNewCountDown());
+        visibleState = false;
         if (appearOnCreate) FadeIn();
     }
 
@@ -66,6 +66,8 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     public void FadeIn()
     {
+        if (visibleState) return;
+        StartCoroutine(BrandNewCountDown());
         StartCoroutine(_FadeIn());
     }
     IEnumerator _FadeIn()
@@ -81,9 +83,11 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             yield return null;
         }
         canvasGroup.alpha = 1;
+        visibleState = true;
     }
     public void FadeOut()
     {
+        if (!visibleState) return;
         StartCoroutine(_FadeOut());
     }
     IEnumerator _FadeOut()
@@ -105,5 +109,7 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         if (destroyOnFadeOut) Destroy(rootObject);
         if (mouseEntered && blockMouse) Global.mouseOverUI = false;
+        brandNew = true;
+        visibleState = false;
     }
 }

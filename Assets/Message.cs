@@ -55,13 +55,15 @@ public class Message : UIPanel
     }
     IEnumerator _Blink(bool destroyAfterBlink)
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 5; i++)
         {
             canvasGroup.alpha = 0;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.07f);
             canvasGroup.alpha = 1;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.07f);
         }
-        if (destroyAfterBlink) Destroy(gameObject);
+        yield return new WaitForSeconds(0.4f);
+        if (destroyAfterBlink) FadeOut();
+       // if (destroyAfterBlink) Destroy(gameObject);
     }
 }

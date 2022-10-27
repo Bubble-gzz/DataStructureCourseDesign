@@ -12,7 +12,7 @@ public class WaitAnimator : Animation
     {
         messagePrefab = Resources.Load<GameObject>("Prefabs/UI/Message");
     }
-    bool UserAction(int debugCount = 0)
+    bool UserAction()
     {
         if (Global.pressEventConsumed) return false;
         return Input.anyKeyDown;
@@ -22,16 +22,15 @@ public class WaitAnimator : Animation
         WaitAnimatorInfo info = this.info;
         bool useSetting = this.useSetting;
         float sec = this.sec;
-        int debugCount = Global.debugCount++;
-        if (!useSetting) yield return new WaitForSeconds(sec);
+        if (!useSetting && sec > 0) yield return new WaitForSeconds(sec);
         else {
-            if (Settings.animationTimeScale < 0)
+            if (Settings.animationTimeScale < 0 || sec < 0)
             {
                 Message message = Instantiate(messagePrefab).GetComponent<Message>();
                 message.StartBreathing();
                 while (true)
                 {
-                    if (UserAction(debugCount)) {
+                    if (UserAction()) {
                         Global.pressEventConsumed = true;
                         break;
                     }
@@ -46,6 +45,7 @@ public class WaitAnimator : Animation
             }
         }
         info.completed = true;
+        Global.waitingEventCount--;
         yield return null;
     }
 }

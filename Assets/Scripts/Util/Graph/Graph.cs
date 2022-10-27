@@ -87,7 +87,7 @@ using System.Collections.Generic;
         private bool[] used;
 
         private bool[,] g;
-        private bool directed;
+        public bool directed;
         private float[,] d;
         private int size;
         private int edgeCount;
@@ -411,7 +411,7 @@ using System.Collections.Generic;
             info.block = block;
             animationBuffer.Add(info);
         }
-        public void ResetColors()
+        public void ResetStatus()
         {
             for (int i = 0; i < size; i++)
                 if (nodes[i] != null) {
@@ -423,7 +423,7 @@ using System.Collections.Generic;
         }
         public void DFS(GraphNode startNode)
         {
-            ResetColors();
+            ResetStatus();
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)
                     vis[i, j] = false;
@@ -432,6 +432,7 @@ using System.Collections.Generic;
             ChangePointerPos(pointer_cur.gameObject, new Vector2(startNode.x, startNode.y), false);
             PointerAppear(pointer_cur.gameObject);
             MyDFS(startNode, null);
+            Wait(-1);
             PointerDisappear(pointer_cur.gameObject);
         }
         private void MyDFS(GraphNode cur, Edge lastEdge)
@@ -478,7 +479,7 @@ using System.Collections.Generic;
                     nodes[i].visited = false;
                     nodes[i].backTrace = null;
                 }
-            ResetColors();
+            ResetStatus();
 
             ChangePointerPos(pointer_cur.gameObject, new Vector2(startNode.x, startNode.y), false);
             PointerAppear(pointer_cur.gameObject);
@@ -519,6 +520,7 @@ using System.Collections.Generic;
             }
             Wait(1f);
             PointerDisappear(pointer_cur.gameObject);
+            Wait(-1);
         }
 
         public enum MST_Algorithm
