@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
     class SeqElement : DataElement
-    {        public SeqList list;
+    {   
+        public SeqList list;
         public int pos;
         private const int Inf = (int)2e9;
         public SeqElement()
@@ -189,7 +190,10 @@ using System.Runtime.InteropServices;
             Console.Write("Delete({0}) ", pos);
 #endif
             if (!IsPositionValid(pos)) return;
-            if (destroy) array[pos].Destroy();
+            if (destroy) {
+                array[pos].image.GetComponentInChildren<VisualizedSeqElement>().alive = false;
+                array[pos].Destroy();
+            }
             Wait(0.2f, false);
             for (int i = pos; i < count - 1; i++)
             {

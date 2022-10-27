@@ -70,24 +70,28 @@ public class VisualizedSeqList : MonoBehaviour
     SeqElement NewElement(float value = 0)
     {
         SeqElement newElement = new SeqElement();
-        GameObject newVisualizedElement = Instantiate(visualizedSeqElementPrefab, transform);
+        VisualizedSeqElement newVisualizedElement = 
+        Instantiate(visualizedSeqElementPrefab, transform).GetComponent<VisualizedSeqElement>();
         newElement.value = value;
-        newElement.image = newVisualizedElement;
-        newElement.colors = newVisualizedElement.GetComponent<VisualizedSeqElement>().colors;
-        newVisualizedElement.GetComponent<VisualizedSeqElement>().SetText(value.ToString("f0"));
+        newElement.image = newVisualizedElement.gameObject;
+        newElement.colors = newVisualizedElement.colors;
+
+        newVisualizedElement.SetText(value.ToString("f0"));
+        newVisualizedElement.info = newElement;
+        newVisualizedElement.list = this;
         return newElement;
     }
-    void Append(float value = 0)
+    public void Append(float value = 0)
     {
         SeqElement newElement = NewElement(value);
         list.Append(newElement);
     }
-    void Insert(int pos, float value = 0)
+    public void Insert(int pos, float value = 0)
     {
         SeqElement newElement = NewElement(value);
         list.Insert(pos, newElement);            
     }
-    void Delete(int pos, bool destroy = true)
+    public void Delete(int pos, bool destroy = true)
     {
         list.Delete(pos, destroy);
     }
