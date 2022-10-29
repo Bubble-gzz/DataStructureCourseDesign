@@ -149,17 +149,17 @@ using System.Runtime.InteropServices;
             count++;
         }
 
-        public void Insert(int pos, SeqElement newElement)
+        public void Insert(int pos, SeqElement newElement, bool delay = true)
         {
             #if LogInfo
                 Console.Write("Insert( {0}, {1}) ", pos, newElement.value);
             #endif
             if (!RoomAvailable()) return;
             if (!IsPositionValid(pos)) return;
-            for (int i = count; i > pos; i--)
+            for (int i = count + 1; i > pos; i--)
             {
                 MoveFromTo(i-1, i);
-                Wait(0.07f, false);
+                if (delay) Wait(0.07f, false);
             }
             array[pos] = newElement;
             
@@ -195,7 +195,7 @@ using System.Runtime.InteropServices;
                 array[pos].Destroy();
             }
             Wait(0.2f, false);
-            for (int i = pos; i < count - 1; i++)
+            for (int i = pos; i < count; i++)
             {
                 MoveFromTo(i + 1, i);
                 Wait(0.07f, false);

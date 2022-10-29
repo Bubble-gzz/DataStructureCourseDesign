@@ -128,6 +128,7 @@ public class VisualizedGraph : MonoBehaviour
     }
     void WaitUntilAlgorithmFinished()
     {
+        Global.mouseMode = Global.MouseMode.AddEdge;
         StartCoroutine(_WaitUntilAlgorithmFinished());
     }
     IEnumerator _WaitUntilAlgorithmFinished()

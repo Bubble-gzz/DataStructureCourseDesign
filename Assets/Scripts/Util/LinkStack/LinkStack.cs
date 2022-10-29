@@ -2,12 +2,10 @@
     using System;
     using System.Threading;
 
-    public class StackElement
+    public class StackElement : DataElement
     {
         public LinkStack stack;
         public int level;
-        public bool exist;
-        public int value;
         public StackElement below;
         
 

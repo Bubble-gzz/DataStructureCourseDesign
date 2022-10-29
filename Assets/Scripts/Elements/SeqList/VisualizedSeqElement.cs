@@ -6,13 +6,19 @@ class VisualizedSeqElement : MonoBehaviour
 {
     [SerializeField]
     public List<Color> colors = new List<Color>();
-    bool isGhost = false;
     public bool alive = true;
     public enum ColorType{
         Normal,
         Pivot,
         Pointed
     }
+    enum Type{
+        Normal,
+        Ghost,
+        AppendButton
+    }
+    [SerializeField]
+    Type type;
     public string initialText;
     protected TMP_Text text;
     protected SpriteRenderer sprite;
@@ -42,7 +48,7 @@ class VisualizedSeqElement : MonoBehaviour
     }
     void Start()
     {
-        if (!isGhost) myCollider = transform.Find("OperateArea").GetComponentInChildren<MyCollider>();
+        if (type != Type.Ghost) myCollider = transform.Find("OperateArea").GetComponentInChildren<MyCollider>();
         else myCollider = transform.Find("GhostArea").GetComponent<MyCollider>();
         myCollider.onMouseEnter.AddListener(MyOnMouseEnter);
         myCollider.onMouseExit.AddListener(MyOnMouseExit);
@@ -55,7 +61,7 @@ class VisualizedSeqElement : MonoBehaviour
     void MyOnMouseEnter()
     {
         if (!alive) return;
-        if (isGhost) 
+        if (type == Type.Ghost) 
         {
 
         }
@@ -67,7 +73,7 @@ class VisualizedSeqElement : MonoBehaviour
     void MyOnMouseExit()
     {
         if (!alive) return;
-        if (isGhost)
+        if (type == Type.Ghost)
         {
 
         }
@@ -78,7 +84,7 @@ class VisualizedSeqElement : MonoBehaviour
     }
     void MyOnMouseClick()
     {
-        if (isGhost) return;
+        if (type == Type.Ghost) return;
         GameObject newPanel = Instantiate(panelPrefab);
         newPanel.GetComponentInChildren<ElementPanel>().element = gameObject;
         newPanel.transform.position = transform.position + panelOffset;

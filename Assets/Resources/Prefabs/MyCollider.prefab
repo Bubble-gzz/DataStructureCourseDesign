@@ -102,3 +102,12 @@ MonoBehaviour:
   onMouseExit:
     m_PersistentCalls:
       m_Calls: []
+  onMouseDown:
+    m_PersistentCalls:
+      m_Calls: []
+  onMouseClick:
+    m_PersistentCalls:
+      m_Calls: []
+  onMouseUp:
+    m_PersistentCalls:
+      m_Calls: []
