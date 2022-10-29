@@ -387,9 +387,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3836346128930809945}
-        m_TargetAssemblyTypeName: NodePanel, Assembly-CSharp
-        m_MethodName: Delete
+      - m_Target: {fileID: 5529495075632279548}
+        m_TargetAssemblyTypeName: ElementPanel, Assembly-CSharp
+        m_MethodName: OnDelete
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5529495075632279548}
+        m_TargetAssemblyTypeName: UIPanel, Assembly-CSharp
+        m_MethodName: FadeOut
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -429,8 +441,7 @@ GameObject:
   - component: {fileID: 8025500634699216542}
   - component: {fileID: 8025500634699216608}
   - component: {fileID: 8025500634699216609}
-  - component: {fileID: 8025500634699216611}
-  - component: {fileID: 3836346128930809945}
+  - component: {fileID: 5529495075632279548}
   - component: {fileID: 8025500634699216610}
   m_Layer: 5
   m_Name: Panel
@@ -497,7 +508,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8025500634699216611
+--- !u!114 &5529495075632279548
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -506,27 +517,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8025500634699216543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ad3d045424a15047bec90514c793c62, type: 3}
+  m_Script: {fileID: 11500000, guid: 702cc574629ac6448bcea5978f728802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rootObject: {fileID: 1096073873452312853}
-  brandNew: 1
   blockMouse: 1
   hovering: 1
---- !u!114 &3836346128930809945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8025500634699216543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 286c4c10dfd1e4b4f90081877d7ca0c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  node: {fileID: 0}
-  panel: {fileID: 8025500634699216611}
+  appearOnCreate: 1
+  destroyOnFadeOut: 1
+  panelClosed:
+    m_PersistentCalls:
+      m_Calls: []
+  visibleState: 0
+  element: {fileID: 0}
 --- !u!225 &8025500634699216610
 CanvasGroup:
   m_ObjectHideFlags: 0

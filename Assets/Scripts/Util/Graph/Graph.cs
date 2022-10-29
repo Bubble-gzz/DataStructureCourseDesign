@@ -9,8 +9,7 @@ using System.Collections.Generic;
     public class GraphNode : DataElement
     {
         public string name;
-        public int id;
-        
+
         public Graph graph;
         public Edge firstEdge;
         public Edge backTrace;

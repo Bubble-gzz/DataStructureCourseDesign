@@ -25,12 +25,12 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     protected virtual void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
-    }
-    protected virtual void Start()
-    {
         canvasGroup.alpha = 0;
         mouseEntered = false;
         visibleState = false;
+    }
+    protected virtual void Start()
+    {
         if (appearOnCreate) FadeIn();
     }
 
@@ -87,11 +87,12 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     public void FadeOut()
     {
-        if (!visibleState) return;
+        if (!visibleState && !destroyOnFadeOut) return;
         StartCoroutine(_FadeOut());
     }
     IEnumerator _FadeOut()
     {
+        Debug.Log("Message" + Global.debugCount + " FadeOut");
         float progress = 1, speed = 5f;
         fadingOut = true;
         canvasGroup.alpha = progress;

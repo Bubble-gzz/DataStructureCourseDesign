@@ -38,6 +38,7 @@
   <ItemGroup>
      <Compile Include="Assets\VisualizedLinkStack.cs" />
      <Compile Include="Assets\Scripts\UI\Text\FloatingText.cs" />
+     <Compile Include="Assets\Scripts\Elements\LinkStack\VisualizedStackElement.cs" />
      <Compile Include="Assets\Scripts\Util\Animation\ChangeColorAnimator.cs" />
      <Compile Include="Assets\Scripts\UI\Panel\UIPanel.cs" />
      <Compile Include="Assets\Scripts\Global\Global.cs" />
@@ -58,7 +59,6 @@
      <Compile Include="Assets\Scripts\UI\Text\Message.cs" />
      <Compile Include="Assets\Scripts\Elements\Graph\legacy\Node_legacy.cs" />
      <Compile Include="Assets\Scripts\Elements\Matrix.cs" />
-     <Compile Include="Assets\Scripts\UI\Panel\NodePanel.cs" />
      <Compile Include="Assets\Scripts\UI\AnimationSpeedSlider.cs" />
      <Compile Include="Assets\Scripts\Debug\TestCollider.cs" />
      <Compile Include="Assets\Scripts\Util\Graph\Graph.cs" />
@@ -67,7 +67,6 @@
      <Compile Include="Assets\Scripts\Util\DataElement.cs" />
      <Compile Include="Assets\Scripts\UI\Button\ChangeSceneButton.cs" />
      <Compile Include="Assets\Scripts\Elements\Graph\legacy\OneShotEffect.cs" />
-     <Compile Include="Assets\Scripts\UI\Panel\EdgePanel.cs" />
      <Compile Include="Assets\Scripts\Elements\Graph\VisualizedNode.cs" />
      <Compile Include="Assets\Scripts\UI\Button\GraphSaveButton.cs" />
      <Compile Include="Assets\Scripts\Elements\ObjectHandler.cs" />
@@ -98,12 +97,11 @@
      <Compile Include="Assets\Scripts\Util\Animation\WaitAnimator.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\FileEntry.cs" />
      <Compile Include="Assets\Scripts\Util\MyMath.cs" />
+     <Compile Include="Assets\Scripts\Elements\VisualizedElement.cs" />
      <Compile Include="Assets\Scripts\Elements\Graph\EdgeArrow.cs" />
      <Compile Include="Assets\Scripts\Elements\Graph\VisualizedEdge.cs" />
      <Compile Include="Assets\Scripts\UI\Menu\ScrollMenu.cs" />
      <Compile Include="Assets\Scripts\Util\Initializer.cs" />
-     <Compile Include="Assets\Scripts\Elements\LinkStack\VisualizedStackElement.cs" />
-     <Compile Include="Assets\Scripts\Elements\VisualizedElement.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

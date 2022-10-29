@@ -105,7 +105,7 @@ public class GraphNodeDragArea : MonoBehaviour
         }
         root.animationBuffer.Add(new PopAnimatorInfo(root.gameObject, PopAnimator.Type.PopBack));
         GameObject newPanel = Instantiate(panelPrefab);
-        newPanel.GetComponentInChildren<NodePanel>().node = root.gameObject;
+        newPanel.GetComponentInChildren<ElementPanel>().element = root;
         newPanel.transform.position = transform.position + (Vector3)panelOffset;
     }
     void OnMouseDown()

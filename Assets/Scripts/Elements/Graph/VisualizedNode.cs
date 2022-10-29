@@ -2,54 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class VisualizedNode : MonoBehaviour
+public class VisualizedNode : VisualizedElement
 {
     [SerializeField]
-    public List<Color> colors = new List<Color>();
     public string initialText;
-    protected TMP_Text text;
-    protected SpriteRenderer sprite;
-    protected Canvas canvas;
-    public AnimationBuffer animationBuffer;
     public GraphNodeDragArea dragArea;
     Camera mainCam;
     public VisualizedGraph graph;
-    public GraphNode node;
     Initializer initializer;
-    void Awake()
+    override protected void Awake()
     {
-        Transform child = transform.Find("Canvas/Text");
-        text = child.GetComponent<TMP_Text>();
-        sprite = GetComponent<SpriteRenderer>();
-        sprite.enabled = false;
-        canvas = transform.Find("Canvas").GetComponent<Canvas>();
-        canvas.enabled = false;
-        animationBuffer = gameObject.AddComponent<AnimationBuffer>();
-        gameObject.AddComponent<UpdatePosAnimator>();
-        gameObject.AddComponent<ChangeColorAnimator>();
-        gameObject.AddComponent<ChangeTextAnimator>();
-        gameObject.AddComponent<PopAnimator>();
-        gameObject.AddComponent<SelfDestroyAnimator>();
-        gameObject.AddComponent<WaitAnimator>();
+        base.Awake();
+        appearOnCreate = false;
+        interactable = false;
     }
-    void Start()
+    override protected void Start()
     {
         initializer = Global.initializer;
     }
     void Update()
     {
-        if (node != null)
+        if (info != null)
         {
-            node.x = transform.localPosition.x;
-            node.y = transform.localPosition.y;
+            info.x = transform.localPosition.x;
+            info.y = transform.localPosition.y;
         }
         sprite.enabled = true;
-    }
-    public void SetText(string newText)
-    {
-        text.text = newText;
-        mainCam = Global.mainCamera;
-        //transform.position = (Vector2)mainCam.ScreenToWorldPoint(Input.mousePosition);
     }
     public void SetPosition(Vector2 newPos)
     {
@@ -57,15 +35,15 @@ public class VisualizedNode : MonoBehaviour
     }
     public void DFS()
     {
-        graph.DFS(node);
+        graph.DFS((GraphNode)info);
     }
     public void BFS()
     {
-        graph.BFS(node);
+        graph.BFS((GraphNode)info);
     }
-    public void Delete()
+    override public void OnDelete()
     {
-        graph.DeleteNode(node);
+        graph.DeleteNode((GraphNode)info);
     }
     public VisualizedEdgePro DragOutNewEdge()
     {

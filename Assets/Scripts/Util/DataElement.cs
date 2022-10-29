@@ -10,6 +10,7 @@ using System.Collections.Generic;
         public GameObject image;
         public AnimationBuffer animationBuffer;
         public List<Color> colors;
+        public int id;
 
         virtual public Vector2 Position() {
             return new Vector2(x, y); 

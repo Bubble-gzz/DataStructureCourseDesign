@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
 public class ElementPanel : UIPanel
 {
-    public GameObject element;
+    public VisualizedElement element;
     override protected void Awake()
     {
         base.Awake();
-
     }
     public void OnValueChanged(string newText)
     {
@@ -17,16 +15,15 @@ public class ElementPanel : UIPanel
         try{
             if (newText == "") newValue = 0;
             else newValue = float.Parse(newText);
-            element.GetComponent<VisualizedSeqElement>().info.UpdateValue(newValue);
+            element.info.UpdateValue(newValue);
         }
         catch (Exception e)
         {
-            Debug.Log(e);
+            Debug.Log("Invalid Input Error : " + e);
         }
     }
-    public void OnDelete()
+    virtual public void OnDelete()
     {
-        element.GetComponent<VisualizedSeqElement>().OnDelete();
+        element.OnDelete();
     }
-    
 }

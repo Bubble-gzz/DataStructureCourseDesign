@@ -28,7 +28,7 @@ public class NormalLine : MonoBehaviour
         GameObject newPanel = Instantiate(edgePanelPrefab);
         //VisualizedEdgePro edge = root.GetComponent<VisualizedEdgePro>();
         //Debug.Log(edge.nodes[0].transform.position + " -> " + edge.nodes[1].transform.position);
-        newPanel.GetComponentInChildren<EdgePanel>().edge = root;
+        newPanel.GetComponentInChildren<ElementPanel>().element = root.GetComponent<VisualizedEdgePro>();
         newPanel.transform.position = (Vector2)transform.position + panelOffset;
     }
 }

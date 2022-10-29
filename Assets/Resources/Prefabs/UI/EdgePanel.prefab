@@ -511,9 +511,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4401033277049541792}
-        m_TargetAssemblyTypeName: EdgePanel, Assembly-CSharp
-        m_MethodName: Delete
+      - m_Target: {fileID: 4260337186876233739}
+        m_TargetAssemblyTypeName: ElementPanel, Assembly-CSharp
+        m_MethodName: OnDelete
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4260337186876233739}
+        m_TargetAssemblyTypeName: UIPanel, Assembly-CSharp
+        m_MethodName: FadeOut
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -553,9 +565,8 @@ GameObject:
   - component: {fileID: 4382443141602475062}
   - component: {fileID: 4382443141602475080}
   - component: {fileID: 4382443141602475081}
-  - component: {fileID: 4382443141602475083}
+  - component: {fileID: 4260337186876233739}
   - component: {fileID: 4382443141602475082}
-  - component: {fileID: 4401033277049541792}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -622,7 +633,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4382443141602475083
+--- !u!114 &4260337186876233739
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -631,13 +642,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4382443141602475063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ad3d045424a15047bec90514c793c62, type: 3}
+  m_Script: {fileID: 11500000, guid: 702cc574629ac6448bcea5978f728802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rootObject: {fileID: 6667535261260506045}
-  brandNew: 1
   blockMouse: 1
   hovering: 1
+  appearOnCreate: 1
+  destroyOnFadeOut: 1
+  panelClosed:
+    m_PersistentCalls:
+      m_Calls: []
+  visibleState: 0
+  element: {fileID: 0}
 --- !u!225 &4382443141602475082
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -650,20 +667,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &4401033277049541792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4382443141602475063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4633d8f92140fe4c9dea1d1e68f2f9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  edge: {fileID: 0}
-  panel: {fileID: 4382443141602475083}
 --- !u!1 &4560696807603887175
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,8 +824,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4401033277049541792}
-        m_TargetAssemblyTypeName: EdgePanel, Assembly-CSharp
+      - m_Target: {fileID: 4260337186876233739}
+        m_TargetAssemblyTypeName: ElementPanel, Assembly-CSharp
         m_MethodName: OnValueChanged
         m_Mode: 0
         m_Arguments:

@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class VisualizedEdgePro : MonoBehaviour
+public class VisualizedEdgePro : VisualizedElement
 {
     // Start is called before the first frame update
     LineRenderer dashedLine;
     public SpriteRenderer normalLine;
     EdgeArrow arrow;
     List<Vector2> ends;
-    Camera mainCam;
     [SerializeField]
-    public List<Color> colors = new List<Color>();
     //bool playingDrawAnimation;
     public enum State{
         Hover,
@@ -20,12 +18,7 @@ public class VisualizedEdgePro : MonoBehaviour
     }
     public State state;
     public List<GameObject> nodes;
-    AnimationBuffer animationBuffer;
-    SpriteRenderer sprite;
-    TMP_Text text;
-    Canvas canvas;
     GameObject textObject;
-    public Edge info;
     [SerializeField]
     float arrowOffset = 0.9f;
     [SerializeField]
@@ -33,8 +26,9 @@ public class VisualizedEdgePro : MonoBehaviour
     [SerializeField]
 
     GameObject startPivot, endPivot;
-    void Awake()
+    override protected void Awake()
     {
+        interactable = false;
         dashedLine = transform.Find("DashedLine").GetComponent<LineRenderer>();
         dashedLine.positionCount = 2;
         dashedLine.enabled = true;
@@ -74,10 +68,6 @@ public class VisualizedEdgePro : MonoBehaviour
         textObject.AddComponent<PopAnimator>();
         textObject.AddComponent<SelfDestroyAnimator>();
     }
-    void Start()
-    {
-        mainCam = Global.mainCamera;
-    }
 
     void Update()
     {
@@ -113,7 +103,7 @@ public class VisualizedEdgePro : MonoBehaviour
         Vector2 dir_90 = Quaternion.Euler(0, 0, 90) * dir;
         if (info != null)
         {
-            if (info.HasReverseEdge()) {
+            if (((Edge)info).HasReverseEdge()) {
                 start += dir_90 * edgeOffset;
                 end += dir_90 * edgeOffset;
                 dir = (end - start).normalized;
@@ -153,7 +143,8 @@ public class VisualizedEdgePro : MonoBehaviour
         nodes[1] = Global.selectedNode;
         VisualizedNode U = nodes[0].GetComponent<VisualizedNode>();
         VisualizedNode V = nodes[1].GetComponent<VisualizedNode>();
-        if (!U.graph.AddEdge(U, V, gameObject, ref info, value)) return false;
+        Edge edge = (Edge)info;
+        if (!U.graph.AddEdge(U, V, gameObject, ref edge, value)) return false;
         
         state = State.Drawn;
         RefreshEnds();
@@ -179,7 +170,7 @@ public class VisualizedEdgePro : MonoBehaviour
         dashedLine.enabled = false;
         //playingDrawAnimation = false;
     }
-    public void Delete()
+    override public void OnDelete()
     {
         VisualizedNode U = nodes[0].GetComponent<VisualizedNode>();
         VisualizedNode V = nodes[1].GetComponent<VisualizedNode>();

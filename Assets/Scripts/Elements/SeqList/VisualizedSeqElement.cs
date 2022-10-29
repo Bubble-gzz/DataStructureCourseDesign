@@ -9,7 +9,6 @@ class VisualizedSeqElement : VisualizedElement
         Pivot,
         Pointed
     }
-    public SeqElement info;
     public VisualizedSeqList list;
     override protected void Awake()
     {
@@ -18,6 +17,6 @@ class VisualizedSeqElement : VisualizedElement
     }
     override public void OnDelete()
     {
-        list.Delete(info.pos, true);
+        list.Delete(( (SeqElement)info ).pos, true);
     }
 }

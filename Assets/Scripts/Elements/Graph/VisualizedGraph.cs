@@ -91,7 +91,7 @@ public class VisualizedGraph : MonoBehaviour
         newVisualizedNode.SetText(value.ToString("f0"));
         newVisualizedNode.SetPosition(mainCam.ScreenToWorldPoint(Input.mousePosition));
         newVisualizedNode.graph = this;
-        newVisualizedNode.node = newNode;
+        newVisualizedNode.info = newNode;
         return newNode;
     }
     GraphNode NewNode(Vector2 pos, float value = 0)
@@ -104,7 +104,7 @@ public class VisualizedGraph : MonoBehaviour
         newVisualizedNode.SetText(value.ToString("f0"));
         newVisualizedNode.SetPosition(pos);
         newVisualizedNode.graph = this;
-        newVisualizedNode.node = newNode;
+        newVisualizedNode.info = newNode;
         return newNode;
     }
     public void AddNode()
@@ -118,13 +118,13 @@ public class VisualizedGraph : MonoBehaviour
     }
     public bool AddEdge(VisualizedNode U, VisualizedNode V, GameObject edgeImage, ref Edge edgeInfo, float value = 0)
     {
-        bool flag = graph.AddEdge(U.node.id, V.node.id, ref edgeInfo, edgeImage, value);
+        bool flag = graph.AddEdge(U.info.id, V.info.id, ref edgeInfo, edgeImage, value);
         if (!flag) Debug.Log("repetitive edge or self-loop!");
         return flag;
     }
     public void DeleteEdge(VisualizedNode U, VisualizedNode V)
     {
-        graph.DeleteEdge(U.node.id, V.node.id);
+        graph.DeleteEdge(U.info.id, V.info.id);
     }
     void WaitUntilAlgorithmFinished()
     {

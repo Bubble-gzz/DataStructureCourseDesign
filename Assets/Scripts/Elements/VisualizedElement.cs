@@ -29,6 +29,8 @@ public class VisualizedElement : MonoBehaviour
     protected bool interactable = true;
     [SerializeField]
     protected bool appearOnCreate = false;
+    public DataElement info;
+    protected Camera mainCam;
     virtual protected void Awake()
     {
         Transform child = transform.Find("Canvas/Text");
@@ -51,6 +53,7 @@ public class VisualizedElement : MonoBehaviour
     }
     virtual protected void Start()
     {
+        mainCam = Global.mainCamera;
         if (type != Type.Ghost) {
             if (interactable) myCollider = transform.Find("OperateArea").GetComponentInChildren<MyCollider>();
             //Debug.Log("operateArea : " + myCollider);
@@ -95,7 +98,7 @@ public class VisualizedElement : MonoBehaviour
         if (!alive) return;
         if (type == Type.Ghost) return;
         GameObject newPanel = Instantiate(panelPrefab);
-        newPanel.GetComponentInChildren<ElementPanel>().element = gameObject;
+        newPanel.GetComponentInChildren<ElementPanel>().element = this;
         newPanel.transform.position = transform.position + panelOffset;
     }
     virtual public void OnDelete()
