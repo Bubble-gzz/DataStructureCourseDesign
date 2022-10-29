@@ -7,7 +7,6 @@ public class VisualizedNode : VisualizedElement
     [SerializeField]
     public string initialText;
     public GraphNodeDragArea dragArea;
-    Camera mainCam;
     public VisualizedGraph graph;
     Initializer initializer;
     override protected void Awake()
@@ -40,6 +39,10 @@ public class VisualizedNode : VisualizedElement
     public void BFS()
     {
         graph.BFS((GraphNode)info);
+    }
+    public void Dijkstra()
+    {
+        graph.Dijkstra((GraphNode)info);
     }
     override public void OnDelete()
     {

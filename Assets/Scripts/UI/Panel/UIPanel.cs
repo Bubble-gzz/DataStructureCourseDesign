@@ -92,7 +92,7 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     IEnumerator _FadeOut()
     {
-        Debug.Log("Message" + Global.debugCount + " FadeOut");
+        //Debug.Log("Message" + Global.debugCount + " FadeOut");
         float progress = 1, speed = 5f;
         fadingOut = true;
         canvasGroup.alpha = progress;

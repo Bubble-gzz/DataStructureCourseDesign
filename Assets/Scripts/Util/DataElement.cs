@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
  public class DataElement
     {
+        const float inf = (float)1e9 - 0.0001f;
         public float value;
         public bool exist;
         public object myObject;
@@ -47,7 +48,7 @@ using System.Collections.Generic;
         {
             this.value = value;
             if (image == null) return ;
-            animationBuffer.Add(new ChangeTextAnimatorInfo(image, value.ToString("f0")));
+            animationBuffer.Add(new ChangeTextAnimatorInfo(image, value >= inf ? "-" : value.ToString("f0")));
         }
         public void SetText(string newText, bool animated = false)
         {

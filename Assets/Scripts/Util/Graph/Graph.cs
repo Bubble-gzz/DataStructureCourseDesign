@@ -15,20 +15,19 @@ using System.Collections.Generic;
         public Edge backTrace;
         
         public bool flag;
-        public float weight;
 
         public bool visited {
             set { flag = value;  }
             get { return flag;  }
         }
         public float minDist {
-            set { weight = value; }
-            get { return weight; }
+            set { this.value = value; }
+            get { return this.value; }
         }
         
         public float minWeight {
-            set { weight = value; }
-            get { return weight; }
+            set { this.value = value; }
+            get { return this.value; }
         }
 
         public GraphNode(string _name = "")
@@ -37,7 +36,12 @@ using System.Collections.Generic;
             x = y = 0;
             firstEdge = null;
         }
-        
+        public void UpdateName(string newName)
+        {
+            name = newName;
+            if (image == null) return ;
+            animationBuffer.Add(new ChangeTextAnimatorInfo(image, newName));
+        }
     }
     public class Edge : DataElement
     {
@@ -418,6 +422,7 @@ using System.Collections.Generic;
                     nodes[i].SetColor(Palette.Normal);
                     for (Edge edge = nodes[i].firstEdge; edge != null; edge = edge.nextEdge)
                         edge.SetColor(Palette.Normal);
+                    nodes[i].UpdateName(nodes[i].name);
                 }
         }
         public void DFS(GraphNode startNode)
@@ -633,17 +638,20 @@ using System.Collections.Generic;
         }
         float Dijkstra(GraphNode startNode, GraphNode endNode)
         {
+            ResetStatus();
             for (int i = 0; i < size; i++)
                 if (nodes[i] != null)
                 {
+                    nodes[i].UpdateValue(inf);
                     for (Edge edge = nodes[i].firstEdge; edge != null; edge = edge.nextEdge)
                         edge.selected = false;
-                    nodes[i].minDist = inf;
                     nodes[i].visited = false;
                     nodes[i].backTrace = null;
                 }
+            startNode.UpdateValue(0);
+            ChangePointerPos(pointer_cur.gameObject, new Vector2(startNode.x, startNode.y), false);
+            PointerAppear(pointer_cur.gameObject, true);
 
-            startNode.minDist = 0;
             while (true)
             {
                 float minDist = inf;
@@ -657,7 +665,15 @@ using System.Collections.Generic;
                         }
 
                 if (cur == null) break;
+                if (cur != startNode)
+                {
+                    PointerDisappear(pointer_cur.gameObject, true);
+                    ChangePointerPos(pointer_cur.gameObject, new Vector2(cur.x, cur.y), false);
+                    PointerAppear(pointer_cur.gameObject, false);
+                }
                 cur.visited = true;
+                cur.Highlight(true, Palette.Current);
+                Wait(1f);
                 if (cur.backTrace != null)
                     cur.backTrace.selected = true;
                 for (Edge edge = cur.firstEdge; edge != null; edge = edge.nextEdge)
@@ -666,12 +682,23 @@ using System.Collections.Generic;
                         GraphNode otherNode = edge.endNode;
                         if (cur.minDist + edge.length < otherNode.minDist)
                         {
-                            otherNode.minDist = cur.minDist + edge.length;
+                            otherNode.Highlight(true, Palette.Update);
+                            edge.Highlight(false, Palette.BestEdge, false, true);
+                            otherNode.UpdateValue(cur.minDist + edge.length);
+                            otherNode.backTrace?.SetColor(Palette.VisitedEdge);
                             otherNode.backTrace = edge;
                         }
+                        else edge.Highlight(false, Palette.VisitedEdge, false, true);
+                        Wait(1f);
+                        otherNode.SetColor(Palette.Emphasize);
                     }
+                cur.SetColor(Palette.Visited);
+                Wait(1f);
             }
-            return endNode.minDist;
+            PointerDisappear(pointer_cur.gameObject);
+            Wait(-1);
+            if (endNode != null)  return endNode.minDist;
+            return 0;
         }
     
         public GraphData ConvertToData()

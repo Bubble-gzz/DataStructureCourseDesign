@@ -12,7 +12,8 @@ public class Global
         AddEdge,
         Move,
         DFS,
-        BFS
+        BFS,
+        Dijkstra
     }
     static public MouseMode mouseMode;
     static public bool mouseOverUI;

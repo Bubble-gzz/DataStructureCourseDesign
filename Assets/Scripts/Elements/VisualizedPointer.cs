@@ -11,7 +11,7 @@ public class VisualizedPointer : MonoBehaviour
     protected TMP_Text text;
     void Awake()
     {
-        animationBuffer = gameObject.AddComponent<AnimationBuffer>();
+        //animationBuffer = gameObject.AddComponent<AnimationBuffer>();
         canvas = transform.Find("Canvas").GetComponent<Canvas>();
         text = transform.Find("Canvas/Text").GetComponent<TMP_Text>();
         canvas.enabled = false;

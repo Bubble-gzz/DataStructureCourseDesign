@@ -153,6 +153,13 @@ public class VisualizedGraph : MonoBehaviour
         graph.BFS(startNode);
         WaitUntilAlgorithmFinished();
     }
+    public void Dijkstra(GraphNode startNode)
+    {
+        curMessage?.FadeOut();
+        //Debug.Log("Dijkstra startNode : " + startNode);
+        graph.ShortestPath(startNode, null);
+        WaitUntilAlgorithmFinished();
+    }
     public void Clear()
     {
         foreach (Transform child in transform)
@@ -201,6 +208,11 @@ public class VisualizedGraph : MonoBehaviour
     public void OnClickedBFS()
     {
         Global.mouseMode = Global.MouseMode.BFS;
+        ChooseStartPointHint();
+    }
+    public void OnClickedDijkstra()
+    {
+        Global.mouseMode = Global.MouseMode.Dijkstra;
         ChooseStartPointHint();
     }
     void ChooseStartPointHint()

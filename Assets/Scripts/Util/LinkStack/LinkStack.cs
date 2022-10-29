@@ -119,7 +119,7 @@
             }
             topElement = topElement.below;
             count--;
-            Wait(0.3f);
+            Wait(0.24f, false);
             pointer_top.ChangePos(CalcPos(count - 1));
             return result;
         }

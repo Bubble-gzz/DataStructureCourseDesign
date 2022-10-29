@@ -12,6 +12,7 @@ public class PopAnimatorInfo : AnimationInfo
     }
     public override void Invoke()
     {
+        //Debug.Log("Invoke gameObject : " + gameObject);
         PopAnimator animator = gameObject.GetComponent<PopAnimator>();
         animator.info = this;
         if (animator == null) {

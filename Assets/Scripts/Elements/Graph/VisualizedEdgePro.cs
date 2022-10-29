@@ -19,8 +19,7 @@ public class VisualizedEdgePro : VisualizedElement
     public State state;
     public List<GameObject> nodes;
     GameObject textObject;
-    [SerializeField]
-    float arrowOffset = 0.9f;
+    //float arrowOffset = 0.9f;
     [SerializeField]
     float edgeOffset;
     [SerializeField]
