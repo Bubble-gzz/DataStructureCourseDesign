@@ -1,14 +1,14 @@
 ﻿#define LogInfo
     using System;
     using System.Threading;
+    using UnityEngine;
 
     public class StackElement : DataElement
     {
         public LinkStack stack;
         public int level;
         public StackElement below;
-        
-
+    
         public StackElement()
         {
             value = 0;
@@ -18,24 +18,54 @@
             level = 0;
         }
 
-        public StackElement(int _value)
+        public StackElement(int _value, int _level = 0)
         {
-            value = _value;
+            this.value = _value;
+            this.level = _level;
             below = null;
             exist = true;
             stack = null;
-            level = 0;
+
+        }
+        override public Vector2 Position() {
+            Debug.Log("stack.pos : " + stack.pos);
+            return new Vector2(stack.pos.x, stack.pos.y + stack.interval * level);
+        }
+        public void UpdatePos(bool animated = true)
+        {
+            if (image == null) return ;
+            stack.animationBuffer.Add(new UpdatePosAnimatorInfo(image, Position(), animated));
         }
         public void Print()
         {
             Console.Write(value);
+        }
+        public static bool operator < (StackElement A, StackElement B)
+        {
+            return A.value < B.value;
+        }
+        public static bool operator <= (StackElement A, StackElement B)
+        {
+            return A.value <= B.value;
+        }
+        public static bool operator >= (StackElement A, StackElement B)
+        {
+            return A.value >= B.value;
+        }
+        public static bool operator > (StackElement A, StackElement B)
+        {
+            return A.value > B.value;
         }
     }
     public class LinkStack
     {
         private StackElement topElement;
         private int count, capacity;
-
+        public Vector2 pos;
+        public float interval = 1f;
+        public VisualizedPointer pointer_top;
+        public AnimationBuffer animationBuffer;
+        public GameObject image;
         public enum PrintOption
         {
             Short,
@@ -74,7 +104,10 @@
             }
 
             StackElement result = topElement;
-            if (destroy) result.exist = false;
+            if (destroy) {
+                result.exist = false;
+                result.Destroy();
+            }
             topElement = topElement.below;
             count--;
             return result;
@@ -101,7 +134,10 @@
             newElement.stack = this;
             newElement.level = count;
             newElement.below = topElement;
+            newElement.animationBuffer = this.animationBuffer;
             topElement = newElement;
+            newElement.UpdatePos();
+            newElement.PopOut();
             count++;
         }
 

@@ -12,7 +12,7 @@ using System.Collections.Generic;
         public List<Color> colors;
 
         virtual public Vector2 Position() {
-            return new Vector2(0, 0); 
+            return new Vector2(x, y); 
         }
         public void PopOut(GameObject image = null)
         {

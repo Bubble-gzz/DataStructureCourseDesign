@@ -53,7 +53,7 @@ public class VisualizedElement : MonoBehaviour
     {
         if (type != Type.Ghost) {
             if (interactable) myCollider = transform.Find("OperateArea").GetComponentInChildren<MyCollider>();
-            Debug.Log("operateArea : " + myCollider);
+            //Debug.Log("operateArea : " + myCollider);
         }
         else myCollider = transform.Find("GhostArea").GetComponent<MyCollider>();
         if (interactable) {
