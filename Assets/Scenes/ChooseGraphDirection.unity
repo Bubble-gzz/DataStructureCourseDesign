@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Load From Files
+  m_text: Directed Graph
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 26ef4ab77691bf54ab03bf407111ea9b, type: 2}
   m_sharedMaterial: {fileID: -301280492185613149, guid: 26ef4ab77691bf54ab03bf407111ea9b, type: 2}
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Graph
+  m_text: Undirected Graph
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 26ef4ab77691bf54ab03bf407111ea9b, type: 2}
   m_sharedMaterial: {fileID: -301280492185613149, guid: 26ef4ab77691bf54ab03bf407111ea9b, type: 2}
@@ -637,7 +637,7 @@ GameObject:
   - component: {fileID: 1418274872}
   - component: {fileID: 1418274871}
   m_Layer: 5
-  m_Name: LoadFromFiles
+  m_Name: Directed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -685,8 +685,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9339623, g: 0.72375226, b: 0.1812541, a: 1}
-    m_PressedColor: {r: 0.8584906, g: 0.57160735, b: 0.08561764, a: 1}
+    m_HighlightedColor: {r: 0.44145378, g: 0.93333334, b: 0.18039215, a: 1}
+    m_PressedColor: {r: 0.0031531227, g: 0.5849056, b: 0.065714724, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -709,15 +709,15 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 812583440}
         m_TargetAssemblyTypeName: ChooseGraphLogic, Assembly-CSharp
-        m_MethodName: LoadGraphFromFiles
-        m_Mode: 1
+        m_MethodName: CreateNewGraph
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Graph
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1418274872
 MonoBehaviour:
@@ -770,7 +770,7 @@ GameObject:
   - component: {fileID: 1901618329}
   - component: {fileID: 1901618328}
   m_Layer: 5
-  m_Name: NewGraph
+  m_Name: Undirected
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -794,7 +794,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -300, y: 0}
-  m_SizeDelta: {x: 400, y: 200}
+  m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1901618328
 MonoBehaviour:
@@ -843,7 +843,7 @@ MonoBehaviour:
       - m_Target: {fileID: 812583440}
         m_TargetAssemblyTypeName: ChooseGraphLogic, Assembly-CSharp
         m_MethodName: CreateNewGraph
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

@@ -10,7 +10,7 @@ public class EdgeArrow : MonoBehaviour
     public VisualizedEdgePro root;
     void Start()
     {
-        
+        if (!Global.curGraph.graph.directed) GetComponent<SpriteRenderer>().enabled = false;
     }
 
     // Update is called once per frame

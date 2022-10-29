@@ -22,6 +22,7 @@ public class Global
     static public int debugCount;
     static public VisualizedGraph curGraph;
     static public bool loadGraphFromFiles;
+    static public bool newGraphDirected;
     static public string filePath;
     static public string fileName;
     static public int waitingEventCount;

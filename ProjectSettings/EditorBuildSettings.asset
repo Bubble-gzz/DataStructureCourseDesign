@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Graph.unity
     guid: bf0074beb6b66d34fa84e1744ca112d7
+  - enabled: 1
+    path: Assets/Scenes/ChooseGraphDirection.unity
+    guid: 0040a6d76b14d284f940a00be265b886
+  - enabled: 1
+    path: Assets/Scenes/LinkStack.unity
+    guid: 258fa093d37fc59449e536502b0e74be
   m_configObjects: {}

@@ -495,7 +495,9 @@ using System.Collections.Generic;
                     nodes[i].backTrace = null;
                 }
             ResetStatus();
-
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
+                    vis[i, j] = false;
             ChangePointerPos(pointer_cur.gameObject, new Vector2(startNode.x, startNode.y), false);
             PointerAppear(pointer_cur.gameObject);
 
@@ -515,7 +517,11 @@ using System.Collections.Generic;
                 count--;
                 Wait(1f);
                 for (Edge edge = cur.firstEdge; edge != null; edge = edge.nextEdge)
+                if (!vis[edge.startNode.id, edge.endNode.id])
                 {
+                    vis[edge.startNode.id, edge.endNode.id] = true;
+                    if (!directed) vis[edge.endNode.id, edge.startNode.id] = true;
+
                     edge.Highlight(true, Palette.Emphasize, false, true, edge.normalLineImage);
                     if (!edge.endNode.visited)
                     {

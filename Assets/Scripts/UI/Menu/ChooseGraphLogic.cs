@@ -43,6 +43,11 @@ public class ChooseGraphLogic : MonoBehaviour
     public void CreateNewGraphWithName(string graphName)
     {
         Global.fileName = graphName;
+        sceneSwitcher.OnLeaveScene("ChooseGraphDirection");
+    }
+    public void CreateNewGraph(bool isDirected)
+    {
+        Global.newGraphDirected = isDirected;
         sceneSwitcher.OnLeaveScene("Graph");
     }
 }

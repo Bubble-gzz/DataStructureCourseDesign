@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class VisualizedGraph : MonoBehaviour
 {
     // Start is called before the first frame update
-    Graph graph;
+    public Graph graph;
     string graphName = "sampleGraph";
     [SerializeField]
     GameObject visualizedNodePrefab;
@@ -48,7 +48,7 @@ public class VisualizedGraph : MonoBehaviour
         mainCam = Global.mainCamera;
         Global.mouseMode = Global.MouseMode.AddEdge;
         graphName = Global.fileName;
-        if (!Global.loadGraphFromFiles) NewGraph(15, true);
+        if (!Global.loadGraphFromFiles) NewGraph(50, Global.newGraphDirected);
         else LoadData(Global.filePath);
         Global.curGraph = this;
         

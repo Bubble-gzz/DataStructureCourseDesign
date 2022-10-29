@@ -12,10 +12,16 @@ public class VisualizedLinkStack : MonoBehaviour
     int debugCount;
     AnimationBuffer animationBuffer;
     string stackName = "sampleStack";
+    Camera mainCam;
+    [SerializeField]
+    Vector2 sidePos;
     void Start()
     {
+        mainCam = Global.mainCamera;
+
         animationBuffer = gameObject.AddComponent<AnimationBuffer>();
         gameObject.AddComponent<WaitAnimator>();
+        gameObject.AddComponent<UpdatePosAnimator>();
 
         stack = new LinkStack(); 
         stack.animationBuffer = animationBuffer;
@@ -25,7 +31,7 @@ public class VisualizedLinkStack : MonoBehaviour
         stack.pointer_top = Instantiate(visualizedPointerPrefab, transform).GetComponent<VisualizedPointer>();
         stack.pointer_top.SetText("top");
         stack.pointer_top.animationBuffer = animationBuffer;
-        stack.pointer_top.offset = new Vector2(-1.2f, 0);
+        stack.pointer_top.offset = new Vector2(1.2f, 0);
         stack.pointer_top.transform.localScale = new Vector2(0.7f, 0.7f);
         stack.pointer_top.ChangePos(stack.CalcPos(0), false);
         stack.pointer_top.Appear();
@@ -65,10 +71,19 @@ public class VisualizedLinkStack : MonoBehaviour
     }
     public void Pop()
     {
-        Debug.Log("Pop : " + stack.Pop()?.value);
+        stack.Pop();
+        //Debug.Log("Pop : " + stack.Pop()?.value);
     }
     void UpdataPos(Vector2 pos)
     {
         transform.position = pos;
+    }
+    public void PrepareForAlgorithm()
+    {
+        animationBuffer.Add(new UpdatePosAnimatorInfo(gameObject, mainCam.ScreenToWorldPoint(sidePos)));
+    }
+    public void BracketCheck(string s)
+    {
+        Debug.Log("Bracket Check ready to start, input = " + s);
     }
 }
