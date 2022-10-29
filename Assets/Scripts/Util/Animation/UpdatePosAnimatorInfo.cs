@@ -6,11 +6,13 @@ public class UpdatePosAnimatorInfo : AnimationInfo
 {
     Vector2 target;
     bool animated;
-    public UpdatePosAnimatorInfo(GameObject _gameObject, Vector2 _target, bool _animated = true)
+    bool local = false;
+    public UpdatePosAnimatorInfo(GameObject _gameObject, Vector2 _target, bool _animated = true, bool _local = false)
     {
         this.gameObject = _gameObject;
         this.target = _target;
         this.animated = _animated;
+        this.local = _local;
     }
     public override void Invoke()
     {
@@ -23,6 +25,7 @@ public class UpdatePosAnimatorInfo : AnimationInfo
         animator.target = target;
         animator.animated = animated;
         animator.block = block;
+        animator.local = local;
         animator.Invoke();
     }
 }

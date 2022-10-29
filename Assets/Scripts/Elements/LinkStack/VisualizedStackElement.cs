@@ -11,10 +11,10 @@ public class VisualizedStackElement : VisualizedElement
         Pivot,
         Pointed
     }
-    public StackElement info;
     public VisualizedLinkStack stack;
     override protected void Awake()
     {
         base.Awake();
+        panelOffset = new Vector3(2, 0, -1);
     }
 }

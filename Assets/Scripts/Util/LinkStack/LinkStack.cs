@@ -28,7 +28,7 @@
 
         }
         override public Vector2 Position() {
-            Debug.Log("stack.pos : " + stack.pos);
+            //Debug.Log("stack.pos : " + stack.pos);
             return new Vector2(stack.pos.x, stack.pos.y + stack.interval * level);
         }
         public void UpdatePos(bool animated = true)
@@ -62,7 +62,7 @@
         private StackElement topElement;
         private int count, capacity;
         public Vector2 pos;
-        public float interval = 1f;
+        public float interval = 0.7f;
         public VisualizedPointer pointer_top;
         public AnimationBuffer animationBuffer;
         public GameObject image;
@@ -84,6 +84,10 @@
             capacity = size;
             topElement = null;
         }
+        public Vector2 CalcPos(int level) {
+            //Debug.Log("stack.pos : " + stack.pos);
+            return new Vector2(pos.x, pos.y + interval * level);
+        }
 
         public bool IsEmpty() {
             return count < 1;
@@ -92,6 +96,11 @@
         public bool IsFull() {
             return count >= capacity;
         }
+        private void Wait(float sec, bool useSetting = true)
+        {
+            animationBuffer.Add(new WaitAnimatorInfo(image, sec, useSetting));
+        }
+
         public StackElement Pop(bool destroy = true)
         {
 #if LogInfo
@@ -110,6 +119,8 @@
             }
             topElement = topElement.below;
             count--;
+            Wait(0.3f);
+            pointer_top.ChangePos(CalcPos(count - 1));
             return result;
         }
 
@@ -139,6 +150,7 @@
             newElement.UpdatePos();
             newElement.PopOut();
             count++;
+            pointer_top.ChangePos(CalcPos(count - 1));
         }
 
         public int Size()

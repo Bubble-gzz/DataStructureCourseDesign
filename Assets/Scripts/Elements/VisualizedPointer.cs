@@ -7,7 +7,7 @@ public class VisualizedPointer : MonoBehaviour
 {
     public Canvas canvas;
     public Vector2 offset;
-    AnimationBuffer animationBuffer;
+    public AnimationBuffer animationBuffer;
     protected TMP_Text text;
     void Awake()
     {
@@ -26,5 +26,24 @@ public class VisualizedPointer : MonoBehaviour
     {
         //Debug.Log(newText);
         text.text = newText;
+    }
+
+    public void Appear(bool block = false)
+    {
+        PopAnimatorInfo info = new PopAnimatorInfo(gameObject, PopAnimator.Type.Appear);
+        info.block = block;
+        animationBuffer.Add(info);
+    }
+    public void ChangePos(Vector2 newPos, bool animated = true, bool local = false)
+    {
+        UpdatePosAnimatorInfo info = new UpdatePosAnimatorInfo(gameObject, newPos + offset, animated, local);
+        info.block = true;
+        animationBuffer.Add(info);
+    }
+    public void Disappear(bool block = false)
+    {
+        PopAnimatorInfo info = new PopAnimatorInfo(gameObject, PopAnimator.Type.Disappear);
+        info.block = block;
+        animationBuffer.Add(info);
     }
 }
