@@ -13,6 +13,7 @@ using System.Collections.Generic;
         public Graph graph;
         public Edge firstEdge;
         public Edge backTrace;
+        public int indgr;
         
         public bool flag;
 
@@ -41,6 +42,16 @@ using System.Collections.Generic;
             name = newName;
             if (image == null) return ;
             animationBuffer.Add(new ChangeTextAnimatorInfo(image, newName));
+        }
+        public void UpdateRank(int newRank)
+        {
+            if (image == null) return ;
+            string newText;
+            if (newRank == 1) newText = "1st";
+            else if (newRank == 2) newText = "2nd";
+            else if (newRank == 3) newText = "3rd";
+            else newText = newRank.ToString() + "th";
+            animationBuffer.Add(new ChangeTextAnimatorInfo(image, newText));            
         }
     }
     public class Edge : DataElement
@@ -701,6 +712,67 @@ using System.Collections.Generic;
             return 0;
         }
     
+        public void TopologicalSort()
+        {
+            if (!directed) {
+                Debug.Log("Cannot run Topological Sort on undirected graph.");
+                return;
+            }
+            Queue<GraphNode> que = new Queue<GraphNode>();
+            for (int i = 0; i < size; i++)
+                if (nodes[i] != null) {
+                    nodes[i].visited = false;
+                    nodes[i].backTrace = null;
+                    nodes[i].indgr = 0;
+                }
+            ResetStatus();
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
+                if (g[i, j]) nodes[j].indgr++;
+            for (int i = 0; i < size; i++)
+                if (nodes[i] != null)
+                {
+                    nodes[i].UpdateValue(nodes[i].indgr);
+                    if (nodes[i].indgr == 0)
+                        que.Enqueue(nodes[i]);
+                }
+            bool firstStep = true;
+            int curRank = 0;
+            while (que.Count > 0)
+            {
+                GraphNode cur = que.Dequeue();
+                if (!firstStep) PointerDisappear(pointer_cur.gameObject, true);
+                else firstStep = false;
+                ChangePointerPos(pointer_cur.gameObject, new Vector2(cur.x, cur.y), false);
+                PointerAppear(pointer_cur.gameObject, false);
+                cur.Highlight(true, Palette.Current);
+                curRank++;
+                cur.UpdateRank(curRank);
+                Wait(1f);
+                for (Edge edge = cur.firstEdge; edge != null; edge = edge.nextEdge)
+                {
+                    GraphNode otherNode = edge.endNode;
+                    edge.SetColor(Palette.Current);
+                    Wait(0.5f);
+                    otherNode.indgr--;
+                    edge.SetColor(Palette.HidedEdge);
+                    otherNode.Highlight(true, Palette.Update);
+                    otherNode.UpdateValue(otherNode.indgr);
+                    if (otherNode.indgr == 0)
+                    {
+                        Wait(0.5f);
+                        que.Enqueue(otherNode);
+                        otherNode.Highlight(true, Palette.Emphasize);
+                    }
+                    Wait(1f);
+                    if (otherNode.indgr > 0) otherNode.SetColor(Palette.Normal);
+                }
+                cur.SetColor(Palette.Normal);
+            }
+            PointerDisappear(pointer_cur.gameObject, true);
+            Wait(-1);
+            ResetStatus();
+        }
         public GraphData ConvertToData()
         {
             GraphData res = new GraphData();

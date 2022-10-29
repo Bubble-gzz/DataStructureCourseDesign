@@ -215,6 +215,11 @@ public class VisualizedGraph : MonoBehaviour
         Global.mouseMode = Global.MouseMode.Dijkstra;
         ChooseStartPointHint();
     }
+    public void OnClickedTopologicalSort()
+    {
+        graph.TopologicalSort();
+        WaitUntilAlgorithmFinished();
+    }
     void ChooseStartPointHint()
     {
         curMessage = Instantiate(messagePrefab).GetComponent<Message>();

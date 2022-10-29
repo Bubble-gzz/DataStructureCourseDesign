@@ -409,7 +409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootObject: {fileID: 484243281}
-  blockMouse: 1
+  blockMouse: 0
   hovering: 1
   appearOnCreate: 0
   destroyOnFadeOut: 0
@@ -1808,7 +1808,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 575259166}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1526894960}
+        m_TargetAssemblyTypeName: VisualizedGraph, Assembly-CSharp
+        m_MethodName: OnClickedTopologicalSort
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &575259166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5863,7 +5875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootObject: {fileID: 7368858268157417290}
-  blockMouse: 1
+  blockMouse: 0
   hovering: 1
   appearOnCreate: 0
   destroyOnFadeOut: 0

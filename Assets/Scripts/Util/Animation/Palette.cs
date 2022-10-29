@@ -8,4 +8,5 @@ class Palette{
     public const int Update = 4;
     public const int BestEdge = 4;
     public const int VisitedEdge = 2;
+    public const int HidedEdge = 5;
 }
