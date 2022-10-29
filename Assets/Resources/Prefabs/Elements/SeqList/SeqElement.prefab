@@ -145,7 +145,6 @@ GameObject:
   - component: {fileID: 3416829491802731999}
   - component: {fileID: 7079264540643292855}
   - component: {fileID: 8048249654848418895}
-  - component: {fileID: 1256548302506303401}
   m_Layer: 0
   m_Name: SeqElement
   m_TagString: Untagged
@@ -237,23 +236,12 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0.9245283, g: 0.6482958, b: 0.26664293, a: 1}
   - {r: 0.22303307, g: 0.52713096, b: 0.9245283, a: 1}
+  alive: 1
+  type: 0
   initialText: 
   animationBuffer: {fileID: 0}
+  list: {fileID: 0}
   panelPrefab: {fileID: 2669082140364599436, guid: 4924c141fb8bfe249934f97fb07f591f, type: 3}
---- !u!114 &1256548302506303401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3895644821360590943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bf3563bbf9f5414ba257f9018dd0f7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  head: 0
-  tail: 0
 --- !u!1 &7122140941406757257
 GameObject:
   m_ObjectHideFlags: 0
