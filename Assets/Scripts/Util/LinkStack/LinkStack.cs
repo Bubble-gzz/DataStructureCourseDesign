@@ -101,7 +101,7 @@
             animationBuffer.Add(new WaitAnimatorInfo(image, sec, useSetting));
         }
 
-        public StackElement Pop(bool destroy = true)
+        public StackElement Pop(float delay = 0.24f, bool destroy = true)
         {
 #if LogInfo
             Console.Write("Pop  ");        
@@ -115,12 +115,13 @@
             StackElement result = topElement;
             if (destroy) {
                 result.exist = false;
+                result.image.GetComponent<VisualizedStackElement>().alive = false;
                 result.Destroy();
             }
             topElement = topElement.below;
             count--;
-            Wait(0.24f, false);
-            pointer_top.ChangePos(CalcPos(count - 1));
+            Wait(delay, false);
+            pointer_top.ChangePos(CalcPos(count - 1), false, true);
             return result;
         }
 
@@ -129,7 +130,7 @@
             #if LogInfo
                 Console.Write("Clear  ");        
             #endif
-            while (!IsEmpty()) Pop();
+            while (!IsEmpty()) Pop(0.1f);
         }
         public void Push(StackElement newElement)
         {
@@ -150,7 +151,7 @@
             newElement.UpdatePos();
             newElement.PopOut();
             count++;
-            pointer_top.ChangePos(CalcPos(count - 1));
+            pointer_top.ChangePos(CalcPos(count - 1), false);
         }
 
         public int Size()

@@ -20,6 +20,7 @@ public class SelfDestroyAnimatorInfo : AnimationInfo
             Debug.Log("Animator does not exist!\n");
             return;
         }
+        animator.block = block;
         animator.animated = animated;
         animator.widthOnly = widthOnly;
         animator.Invoke();

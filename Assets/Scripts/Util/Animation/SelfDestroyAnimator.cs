@@ -12,8 +12,9 @@ class SelfDestroyAnimator : Animation
     {
         bool animated = this.animated;
         bool widthOnly = this.widthOnly;
+        bool block = this.block;
         SelfDestroyAnimatorInfo info = this.info;
-        info.completed = true;
+        if (!block) info.completed = true;
         PopAnimator[] popAnimators;
         if (gameObject.GetComponent<PopAnimator>())
         {
@@ -23,10 +24,12 @@ class SelfDestroyAnimator : Animation
         foreach(PopAnimator popAnimator in popAnimators)
         {
             PopAnimatorInfo popAnimatorInfo = new PopAnimatorInfo(popAnimator.gameObject, PopAnimator.Type.Disappear);
+            popAnimatorInfo.block = block;
             objectAnimationBuffer.Add(popAnimatorInfo);
         }
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
+        if (block) info.completed = true;
         yield break;
     }
 }

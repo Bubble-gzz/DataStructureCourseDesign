@@ -34,10 +34,10 @@ public class VisualizedPointer : MonoBehaviour
         info.block = block;
         animationBuffer.Add(info);
     }
-    public void ChangePos(Vector2 newPos, bool animated = true, bool local = false)
+    public void ChangePos(Vector2 newPos, bool block = true, bool animated = true, bool local = false)
     {
         UpdatePosAnimatorInfo info = new UpdatePosAnimatorInfo(gameObject, newPos + offset, animated, local);
-        info.block = true;
+        info.block = block;
         animationBuffer.Add(info);
     }
     public void Disappear(bool block = false)

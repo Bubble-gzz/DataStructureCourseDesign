@@ -33,7 +33,7 @@ public class VisualizedLinkStack : MonoBehaviour
         stack.pointer_top.animationBuffer = animationBuffer;
         stack.pointer_top.offset = new Vector2(1.2f, 0);
         stack.pointer_top.transform.localScale = new Vector2(0.7f, 0.7f);
-        stack.pointer_top.ChangePos(stack.CalcPos(0), false);
+        stack.pointer_top.ChangePos(stack.CalcPos(0), false, false);
         stack.pointer_top.Appear();
         debugCount = 0;
     }
@@ -80,7 +80,16 @@ public class VisualizedLinkStack : MonoBehaviour
     }
     public void PrepareForAlgorithm()
     {
-        animationBuffer.Add(new UpdatePosAnimatorInfo(gameObject, mainCam.ScreenToWorldPoint(sidePos)));
+        StartCoroutine(_PrepareForAlgorithm());
+
+    }
+    IEnumerator _PrepareForAlgorithm()
+    {
+        UpdatePosAnimatorInfo info = new UpdatePosAnimatorInfo(gameObject, mainCam.ScreenToWorldPoint(sidePos));
+        info.block = true;
+        animationBuffer.Add(info);
+        while (!info.completed) yield return null;
+        stack.Clear();
     }
     public void BracketCheck(string s)
     {
