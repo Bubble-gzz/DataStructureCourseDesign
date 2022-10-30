@@ -11,15 +11,23 @@ public class VisualizedSeqList : MonoBehaviour
     GameObject visualizedSeqElementPrefab;
     [SerializeField]
     GameObject visualizedPointerPrefab;
+    [SerializeField]
+    GameObject appendButtonPrefab;
     int debugCount;
     AnimationBuffer animationBuffer;
     string listName = "sampleList";
+    [SerializeField]
+    float defaultInterval = 0.3f;
+    [SerializeField]
+    bool hasAppendButton = true;
     void Start()
     {
         list = new SeqList(); 
         animationBuffer = GetComponent<AnimationBuffer>();
         list.animationBuffer = animationBuffer;
         list.image = gameObject;
+        list.x = transform.position.x;
+        list.y = transform.position.y;
         
         list.pointer_i = Instantiate(visualizedPointerPrefab, transform).GetComponent<VisualizedPointer>();
         list.pointer_i.SetText("i");
@@ -33,6 +41,19 @@ public class VisualizedSeqList : MonoBehaviour
         list.pointer_r.SetText("r");
 
         debugCount = 0;
+
+        if (hasAppendButton) {
+            SeqElement newElement = new SeqElement();
+            VisualizedSeqElement newVisualizedElement = 
+            Instantiate(appendButtonPrefab, transform).GetComponent<VisualizedSeqElement>();
+            newElement.image = newVisualizedElement.gameObject;
+            newElement.colors = newVisualizedElement.colors;
+
+            newVisualizedElement.SetText("+");
+            newVisualizedElement.info = newElement;
+            newVisualizedElement.list = this;
+            list.Append(newElement, false);
+        }
     }
 
     void Update()
@@ -83,8 +104,7 @@ public class VisualizedSeqList : MonoBehaviour
     }
     public void Append(float value = 0)
     {
-        SeqElement newElement = NewElement(value);
-        list.Append(newElement);
+        Insert(list.Size(), value);
     }
     public void Insert(int pos, float value = 0)
     {

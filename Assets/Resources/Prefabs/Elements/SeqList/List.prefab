@@ -171,6 +171,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualizedSeqElementPrefab: {fileID: 3895644821360590943, guid: 109ee9115c3cb114fb6834d4c098928e, type: 3}
   visualizedPointerPrefab: {fileID: 6790114855102505723, guid: a36b71458079af341940f8b0cb994db3, type: 3}
+  appendButtonPrefab: {fileID: 373224526877673183, guid: 0af827f01e8024f4aaf0608b81466ac2, type: 3}
+  defaultInterval: 0.3
+  hasAppendButton: 1
 --- !u!114 &8442002894844085265
 MonoBehaviour:
   m_ObjectHideFlags: 0

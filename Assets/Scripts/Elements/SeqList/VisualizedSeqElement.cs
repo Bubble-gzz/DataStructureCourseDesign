@@ -19,4 +19,16 @@ class VisualizedSeqElement : VisualizedElement
     {
         list.Delete(( (SeqElement)info ).pos, true);
     }
+    override protected void MyOnMouseClick()
+    {
+        if (!alive) return;
+        if (type == Type.Ghost) return;
+        if (type == Type.AppendButton) {
+            list.Append();
+            return;
+        }
+        GameObject newPanel = Instantiate(panelPrefab);
+        newPanel.GetComponentInChildren<ElementPanel>().element = this;
+        newPanel.transform.position = transform.position + panelOffset;
+    }
 }

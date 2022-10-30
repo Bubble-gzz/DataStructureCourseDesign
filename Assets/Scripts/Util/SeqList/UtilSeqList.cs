@@ -122,7 +122,7 @@ using System.Runtime.InteropServices;
 
         private bool IsPositionValid(int pos)
         {
-            if (pos < 0 || pos >= count)
+            if (pos < 0 || pos > count)
             {
                 Console.WriteLine("Exception: Position is out of range! It should be in [{0},{1})",0,count);
                 return false;
@@ -138,7 +138,7 @@ using System.Runtime.InteropServices;
             Wait(delay, false);
             newElement.PopOut();
         }
-        public void Append(SeqElement newElement)
+        public void Append(SeqElement newElement, bool countIn = true)
         {
 #if LogInfo
             Console.Write("Append({0}) ", newElement.value);
@@ -146,7 +146,7 @@ using System.Runtime.InteropServices;
             if (!RoomAvailable()) return;
             array[count] = newElement;
             AddElement(newElement, count, 0.03f);
-            count++;
+            if (countIn) count++;
         }
 
         public void Insert(int pos, SeqElement newElement, bool delay = true)
