@@ -6,6 +6,12 @@ using System.IO;
 public class VisualizedSeqList : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField]
+    Color selectedColor, hoveringColor;
+    bool selected;
+    public ListLayOutManager layoutManager;
+    [SerializeField]
+    public bool selectable;
     public SeqList list;
     [SerializeField]
     GameObject visualizedSeqElementPrefab;
@@ -21,11 +27,13 @@ public class VisualizedSeqList : MonoBehaviour
     [SerializeField]
     bool hasAppendButton = true;
     public bool freezeInsertButton;
+    MyCollider myCollider;
     void Awake()
     {
         list = new SeqList(); 
         animationBuffer = gameObject.AddComponent<AnimationBuffer>();
         gameObject.AddComponent<WaitAnimator>();
+        gameObject.AddComponent<UpdatePosAnimator>();
         gameObject.AddComponent<SelfDestroyAnimator>();
         list.animationBuffer = animationBuffer;
         list.image = gameObject;
@@ -41,13 +49,20 @@ public class VisualizedSeqList : MonoBehaviour
         list.pointer_l.SetText("l");
         list.pointer_r = Instantiate(visualizedPointerPrefab, transform).GetComponent<VisualizedPointer>();
         list.pointer_r.SetText("r");
-
+        myCollider = GetComponentInChildren<MyCollider>();
         debugCount = 0;
+        selected = false;
         freezeInsertButton = false;
     }
     void Start()
     {
+        myCollider.SetColor(new Color(0,0,0,0));
         //Debug.Log("SeqList animationBuffer : " + animationBuffer.Name);
+        StartCoroutine(_CreateAppendButton());
+    }
+    IEnumerator _CreateAppendButton()
+    {
+        yield return new WaitForSeconds(0.4f);
         if (hasAppendButton) {
             SeqElement newElement = new SeqElement();
             VisualizedSeqElement newVisualizedElement = 
@@ -61,12 +76,13 @@ public class VisualizedSeqList : MonoBehaviour
             newVisualizedElement.interval = defaultInterval;
             list.Append(newElement, false);
         }
-    }
 
+    }
     void Update()
     {
         list.x = transform.position.x;
         list.y = transform.position.y;
+
         /*
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -114,7 +130,7 @@ public class VisualizedSeqList : MonoBehaviour
     }
     public void OnClickAppend()
     {
-        Append();
+        Append(Random.Range(0,100));
     }
     public SeqElement Append(float value = 0)
     {
@@ -134,7 +150,7 @@ public class VisualizedSeqList : MonoBehaviour
     {
         list.RefreshPos();
     }
-    void Sort()
+    public void Sort()
     {
         list.Sort();
     }
@@ -175,5 +191,36 @@ public class VisualizedSeqList : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         animationBuffer.Add(new SelfDestroyAnimatorInfo(gameObject));
+    }
+    public void OnMouseEnter()
+    {
+        if (!selectable) return;
+        Global.mouseOverSeqListBar = true;
+        if (selected) return;
+        myCollider.SetColor(hoveringColor);
+    }
+    public void OnMouseClick()
+    {
+        if (!selectable) return;
+        if (selected)
+        {
+            selected = false;
+            OnMouseEnter();
+            return;
+        }
+        myCollider.SetColor(selectedColor);
+        selected = true;
+        layoutManager.SelectList(this);
+    }
+    public void OnMouseExit()
+    {
+        if (!selectable) return;
+        Global.mouseOverSeqListBar = false;
+        if (selected) return;
+        HideBar();
+    }
+    public void HideBar()
+    {
+        myCollider.SetColor(new Color(1,1,1,0));
     }
 }

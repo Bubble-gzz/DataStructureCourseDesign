@@ -21,10 +21,12 @@ public class MyCollider : MonoBehaviour
     public UnityEvent onMouseDown = new UnityEvent();
     public UnityEvent onMouseClick = new UnityEvent();
     public UnityEvent onMouseUp = new UnityEvent();
+    AnimationBuffer animationBuffer;
     
     void Awake()
     {
-        
+        animationBuffer = gameObject.AddComponent<AnimationBuffer>();
+        gameObject.AddComponent<ChangeColorAnimator>();
     }
     void Start()
     {
@@ -36,6 +38,7 @@ public class MyCollider : MonoBehaviour
     void Update()
     {
         lastMouseOver = mouseOver;
+        if (Global.mouseOverUI) return;
         mouseOver = CheckMouseOver();
         CheckMouseInOut();
         CheckMouseDown();
@@ -43,7 +46,6 @@ public class MyCollider : MonoBehaviour
     }
     bool CheckMouseOver()
     {
-        
         width = gameObject.transform.localScale.x;
         height = gameObject.transform.localScale.y;
         radius = gameObject.transform.localScale.x;
@@ -75,7 +77,7 @@ public class MyCollider : MonoBehaviour
     {
         if (!Input.GetMouseButtonUp(0)) return;
         onMouseUp.Invoke();
-        if (mouseOver && mouseDown && (CurMousePos() - lastClickPos).magnitude < 0.01f)
+        if (mouseOver && mouseDown && (CurMousePos() - lastClickPos).magnitude < 0.1f)
         {
             onMouseClick.Invoke();
         }
@@ -93,5 +95,9 @@ public class MyCollider : MonoBehaviour
     Vector2 CurMousePos()
     {
         return mainCam.ScreenToWorldPoint(Input.mousePosition);
+    }
+    public void SetColor(Color newColor)
+    {
+        animationBuffer.Add(new ChangeColorAnimatorInfo(gameObject, newColor));
     }
 }

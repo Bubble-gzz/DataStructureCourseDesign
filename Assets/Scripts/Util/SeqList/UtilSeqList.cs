@@ -150,17 +150,17 @@ using System.Runtime.InteropServices;
             newElement.animationBuffer = this.animationBuffer;
             //Debug.Log("SeqElement animationBuffer : " + animationBuffer.Name);
             newElement.UpdatePos(pos, false);
-            Wait(delay, false);
+            if (delay >= 0) Wait(delay, false);
             newElement.PopOut();
         }
-        public void Append(SeqElement newElement, bool countIn = true)
+        public void Append(SeqElement newElement, bool countIn = true, float delay = 0.03f)
         {
 #if LogInfo
             Console.Write("Append({0}) ", newElement.value);
 #endif
             if (!RoomAvailable()) return;
             array[count] = newElement;
-            AddElement(newElement, count, 0.03f);
+            AddElement(newElement, count, delay);
             if (countIn) count++;
         }
 

@@ -17,6 +17,7 @@ public class Global
     }
     static public MouseMode mouseMode;
     static public bool mouseOverUI;
+    static public bool mouseOverSeqListBar;
     static public Initializer initializer;
     static public bool pressEventConsumed;
     static public int debugCount;

@@ -74,12 +74,17 @@ public class VisualizedElement : MonoBehaviour
             myCollider.onMouseClick.AddListener(MyOnMouseClick);
         }
     }
+    virtual protected void Update()
+    {
+
+    }
     public void SetText(string newText)
     {
         text.text = newText;
     }
     virtual protected void MyOnMouseEnter()
     {
+        if (Global.mouseOverUI || Global.mouseOverSeqListBar) return;
         if (!alive) return;
         if (type == Type.Ghost) 
         {
@@ -96,6 +101,7 @@ public class VisualizedElement : MonoBehaviour
     }
     virtual protected void MyOnMouseExit()
     {
+        if (Global.mouseOverUI || Global.mouseOverSeqListBar) return;
         if (!alive) return;
         if (type == Type.Ghost)
         {
@@ -120,6 +126,7 @@ public class VisualizedElement : MonoBehaviour
     }
     virtual protected void MyOnMouseClick()
     {
+        if (Global.mouseOverUI) return;
         if (!alive) return;
         if (type == Type.Ghost) return;
         GameObject newPanel = Instantiate(panelPrefab);

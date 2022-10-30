@@ -13,6 +13,7 @@ class VisualizedSeqElement : VisualizedElement
     FloatingAround triangleU, triangleD;
     VisualizedSeqElement root;
     bool freezeExitCheck;
+    Vector2 listLastPos;
     override protected void Awake()
     {
         base.Awake();
@@ -32,6 +33,14 @@ class VisualizedSeqElement : VisualizedElement
             insertButton.root = this;
             insertButton.list = list;
         }
+        listLastPos = list.transform.position;
+    }
+    override protected void Update()
+    {
+        base.Update();
+        Vector2 listCurPos = list.transform.position;
+        //transform.position += (Vector3) (listCurPos - listLastPos);
+        listLastPos = listCurPos;
     }
     override public void OnDelete()
     {
@@ -39,6 +48,7 @@ class VisualizedSeqElement : VisualizedElement
     }
     override protected void OnInsertButtonEnter()
     {
+        if (Global.mouseOverUI || Global.mouseOverSeqListBar) return;
         if (list.freezeInsertButton) return;
         triangleU.Appear();
         triangleD.Appear();
@@ -60,6 +70,7 @@ class VisualizedSeqElement : VisualizedElement
     }
     override protected void MyOnMouseClick()
     {
+        if (Global.mouseOverUI || Global.mouseOverSeqListBar) return;
         if (!alive) return;
         if (root != null && !root.alive) return;
         if (type == Type.Ghost) return;
@@ -67,11 +78,11 @@ class VisualizedSeqElement : VisualizedElement
             Debug.Log("root.info : " + root.info + "   list : " + list);
             root.interval = 0.3f;
             StartCoroutine(_FreezeExitCheck());
-            list.Insert(((SeqElement)(root.info)).pos);
+            list.Insert(((SeqElement)(root.info)).pos, Random.Range(0, 100));
             return ;
         }
         if (type == Type.AppendButton) {
-            list.Append();
+            list.Append(Random.Range(0, 100));
             return;
         }
         GameObject newPanel = Instantiate(panelPrefab);
