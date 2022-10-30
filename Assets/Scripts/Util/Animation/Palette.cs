@@ -11,4 +11,9 @@ class Palette{
     public const int HidedEdge = 5;
     public const int Error = 3;
     public const int Correct = 4;
+    public const int Wall = 0;
+    public const int Water = 1;
+    public const int CurrentWall = 2;
+    public const int WallInStack = 3;
+    public const int UselessWall = 4;
 }

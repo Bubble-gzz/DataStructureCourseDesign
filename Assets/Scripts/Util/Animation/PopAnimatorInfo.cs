@@ -14,6 +14,7 @@ public class PopAnimatorInfo : AnimationInfo
     {
         //Debug.Log("Invoke gameObject : " + gameObject);
         PopAnimator animator = gameObject.GetComponent<PopAnimator>();
+        Debug.Log("debugCount : " + Global.debugCount);
         animator.info = this;
         if (animator == null) {
             Debug.Log("Animator does not exist!\n");

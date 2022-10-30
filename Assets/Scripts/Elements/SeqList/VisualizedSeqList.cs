@@ -67,24 +67,26 @@ public class VisualizedSeqList : MonoBehaviour
     {
         list.x = transform.position.x;
         list.y = transform.position.y;
+        /*
         if (Input.GetKeyDown(KeyCode.A))
         {
             Append(Random.Range(1,50));
-            debugCount++;
+            //debugCount++;
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
             Insert(1, Random.Range(1,50));
-            debugCount++;
+            //debugCount++;
         }
-        
+
         if (Input.GetKeyDown(KeyCode.D))
         {
             Delete(0);
         }
+        */
         if (Input.GetKeyDown(KeyCode.S))
         {
-            SaveData();//Sort();
+            Sort();
         }
         if (Input.GetKeyDown(KeyCode.J))
         {

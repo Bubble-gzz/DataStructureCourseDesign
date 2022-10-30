@@ -9,6 +9,7 @@
         public int level;
         public StackElement below;
         public int bracketID;
+        public int wallPos, height;
     
         public StackElement()
         {
@@ -36,7 +37,7 @@
         {
             if (image == null) return ;
             stack.animationBuffer.Add(new UpdatePosAnimatorInfo(image, Position(), animated));
-            Debug.Log("UpdatePos : " + Position());
+            //Debug.Log("UpdatePos : " + Position());
         }
         public void Print()
         {

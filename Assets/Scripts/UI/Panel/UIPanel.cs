@@ -31,6 +31,7 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     protected virtual void Start()
     {
+        canvasGroup.blocksRaycasts = false;
         if (appearOnCreate) FadeIn();
     }
 
@@ -72,6 +73,7 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     IEnumerator _FadeIn()
     {
+        canvasGroup.blocksRaycasts = true;
         Canvas canvas = rootObject.GetComponentInChildren<Canvas>();
         if (canvas != null) canvas.enabled = true;
         float progress = 0, speed = 5f;
@@ -93,6 +95,7 @@ public class UIPanel: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     IEnumerator _FadeOut()
     {
         //Debug.Log("Message" + Global.debugCount + " FadeOut");
+        canvasGroup.blocksRaycasts = false;
         float progress = 1, speed = 5f;
         fadingOut = true;
         canvasGroup.alpha = progress;

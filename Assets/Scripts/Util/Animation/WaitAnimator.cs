@@ -42,8 +42,8 @@ public class WaitAnimator : Animation
                 }
                 Global.pressEventConsumed = true;
                 message.FadeOut();
-                Debug.Log("Message " + Global.debugCount + " FadeOut" );
-                Global.debugCount++;
+                //Debug.Log("Message " + Global.debugCount + " FadeOut" );
+               // Global.debugCount++;
             }
             else {
                 sec *= Settings.animationTimeScale;

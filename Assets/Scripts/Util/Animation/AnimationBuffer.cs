@@ -27,7 +27,7 @@ public class AnimationBuffer : MonoBehaviour{
             }
             AnimationInfo info = queue.Peek();
             //Debug.Log("animation : " + Global.debugCount);
-            Global.debugCount++;
+            //Global.debugCount++;
             info.Invoke();
             while (!info.completed) yield return null;
             //if (gameObject.GetComponent<VisualizedGraph>() != null)
