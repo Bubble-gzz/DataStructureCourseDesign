@@ -12,7 +12,8 @@ public class VisualizedElement : MonoBehaviour
     public enum Type{
         Normal,
         Ghost,
-        AppendButton
+        AppendButton,
+        InsertButton
     }
     [SerializeField]
     protected Type type;
@@ -31,6 +32,7 @@ public class VisualizedElement : MonoBehaviour
     protected bool appearOnCreate = false;
     public DataElement info;
     protected Camera mainCam;
+    public float interval, size;
     virtual protected void Awake()
     {
         Transform child = transform.Find("Canvas/Text");
@@ -76,6 +78,10 @@ public class VisualizedElement : MonoBehaviour
         {
 
         }
+        else if (type == Type.InsertButton)
+        {
+            OnInsertButtonEnter();
+        }
         else {
             animationBuffer.Add(new PopAnimatorInfo(gameObject, PopAnimator.Type.PopOut));
    
@@ -88,9 +94,21 @@ public class VisualizedElement : MonoBehaviour
         {
 
         }
+        else if (type == Type.InsertButton)
+        {
+            OnInsertButtonExit();
+        }
         else {
             animationBuffer.Add(new PopAnimatorInfo(gameObject, PopAnimator.Type.PopBack));
         }
+
+    }
+    virtual protected void OnInsertButtonEnter()
+    {
+
+    }
+    virtual protected void OnInsertButtonExit()
+    {
 
     }
     virtual protected void MyOnMouseClick()

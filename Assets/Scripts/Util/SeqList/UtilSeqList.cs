@@ -36,15 +36,13 @@ using System.Runtime.InteropServices;
             return new SeqElement(-Inf);
         }
         override public Vector2 Position() {
-            return new Vector2(list.x + list.interval * pos, list.y);
+            return list.CalcPos(pos);
         }
         public void UpdatePos(int pos, bool order = true)
         {
             this.pos = pos;
-            x = list.x + list.interval * pos;
-            y = list.y;
             if (image == null) return ;
-            list.animationBuffer.Add(new UpdatePosAnimatorInfo(image, new Vector2(x, y), order));
+            list.animationBuffer.Add(new UpdatePosAnimatorInfo(image, Position(), order));
         }
         public static bool operator < (SeqElement A, SeqElement B)
         {
@@ -68,7 +66,7 @@ using System.Runtime.InteropServices;
         public bool isOrdered;
         private int count, capacity;
         private SeqElement[] array;
-        public float x, y, interval;
+        public float x, y;
         public AnimationBuffer animationBuffer;
         public GameObject image;
         public VisualizedPointer pointer_i, pointer_j, pointer_pivot, pointer_l, pointer_r;
@@ -78,6 +76,23 @@ using System.Runtime.InteropServices;
             animationBuffer.Add(new WaitAnimatorInfo(image, sec, useSetting));
 //            Debug.Log("useSetting : " + useSetting + "  timeScale : " + Settings.animationTimeScale);
             //Wait(sec);
+        }
+        public Vector2 CalcPos(int pos)
+        {
+            float x = this.x;
+            for (int i = 0; i <= pos; i++)
+            {
+                VisualizedSeqElement element = array[i].image.GetComponent<VisualizedSeqElement>();
+                x += element.interval;
+                if (i == pos) x += element.size * 0.5f;
+                else x += element.size;
+            }
+            return new Vector2(x, this.y);
+        }
+        public void RefreshPos()
+        {
+            for (int i = 0; i <= count; i++)
+                if (array[i] != null) array[i].UpdatePos(i);
         }
         public void MoveFromTo(int i, int j)
         {
@@ -98,7 +113,6 @@ using System.Runtime.InteropServices;
             array = new SeqElement[capacity + 1];
             count = 0;
             isOrdered = false;
-            interval = 1.5f;
         }
         public int Size()
         {

@@ -20,6 +20,7 @@ public class VisualizedSeqList : MonoBehaviour
     float defaultInterval = 0.3f;
     [SerializeField]
     bool hasAppendButton = true;
+    public bool freezeInsertButton;
     void Start()
     {
         list = new SeqList(); 
@@ -41,6 +42,7 @@ public class VisualizedSeqList : MonoBehaviour
         list.pointer_r.SetText("r");
 
         debugCount = 0;
+        freezeInsertButton = false;
 
         if (hasAppendButton) {
             SeqElement newElement = new SeqElement();
@@ -114,6 +116,10 @@ public class VisualizedSeqList : MonoBehaviour
     public void Delete(int pos, bool destroy = true)
     {
         list.Delete(pos, destroy);
+    }
+    public void RefreshPos()
+    {
+        list.RefreshPos();
     }
     void Sort()
     {
