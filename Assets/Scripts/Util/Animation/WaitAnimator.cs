@@ -8,6 +8,7 @@ public class WaitAnimator : Animation
     public bool useSetting;
     public WaitAnimatorInfo info;
     GameObject messagePrefab;
+    public string messageText;
     override protected void Awake()
     {
         messagePrefab = Resources.Load<GameObject>("Prefabs/UI/Message");
@@ -22,12 +23,15 @@ public class WaitAnimator : Animation
         WaitAnimatorInfo info = this.info;
         bool useSetting = this.useSetting;
         float sec = this.sec;
+        string messageText = this.messageText;
         if (!useSetting && sec > 0) yield return new WaitForSeconds(sec);
         else {
             if (Settings.animationTimeScale < 0 || sec < 0)
             {
                 Message message = Instantiate(messagePrefab).GetComponent<Message>();
+                if (messageText != "") message.SetText(messageText);
                 message.StartBreathing();
+                Debug.Log("Message " + Global.debugCount + " Appear" );
                 while (true)
                 {
                     if (UserAction()) {
@@ -38,7 +42,7 @@ public class WaitAnimator : Animation
                 }
                 Global.pressEventConsumed = true;
                 message.FadeOut();
-                //Debug.Log("Message " + Global.debugCount + " FadeOut" );
+                Debug.Log("Message " + Global.debugCount + " FadeOut" );
                 Global.debugCount++;
             }
             else {

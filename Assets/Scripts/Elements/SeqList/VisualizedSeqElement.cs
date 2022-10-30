@@ -16,16 +16,11 @@ class VisualizedSeqElement : VisualizedElement
     override protected void Awake()
     {
         base.Awake();
-        interactable = true;
         if (type == Type.InsertButton)
         {
             triangleU = transform.Find("Triangle_U").GetComponent<FloatingAround>();
             triangleD = transform.Find("Triangle_D").GetComponent<FloatingAround>();
             freezeExitCheck = false;
-        }
-        else {
-            interval = 0.3f;
-            size = 1.2f;
         }
     }
     override protected void Start()
@@ -57,7 +52,7 @@ class VisualizedSeqElement : VisualizedElement
     {
         triangleU.Disappear();
         triangleD.Disappear();
-        if (!list.freezeInsertButton) root.interval = 0.3f;
+        if (!list.freezeInsertButton) root.interval = root._interval;
         myCollider.transform.localScale = new Vector2(0.3f, 1.2f);
         transform.localPosition = new Vector2(-0.8f, 0);
         if (!freezeExitCheck) list.RefreshPos();

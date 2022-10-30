@@ -244,8 +244,8 @@ MonoBehaviour:
   panelPrefab: {fileID: 2669082140364599436, guid: 4924c141fb8bfe249934f97fb07f591f, type: 3}
   interactable: 1
   appearOnCreate: 0
+  size: 1.2
   interval: 0
-  size: 0
   list: {fileID: 0}
 --- !u!1 &7122140941406757257
 GameObject:

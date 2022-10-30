@@ -6,7 +6,7 @@ using System.IO;
 public class VisualizedSeqList : MonoBehaviour
 {
     // Start is called before the first frame update
-    SeqList list;
+    public SeqList list;
     [SerializeField]
     GameObject visualizedSeqElementPrefab;
     [SerializeField]
@@ -14,22 +14,23 @@ public class VisualizedSeqList : MonoBehaviour
     [SerializeField]
     GameObject appendButtonPrefab;
     int debugCount;
-    AnimationBuffer animationBuffer;
+    public AnimationBuffer animationBuffer;
     string listName = "sampleList";
     [SerializeField]
     float defaultInterval = 0.3f;
     [SerializeField]
     bool hasAppendButton = true;
     public bool freezeInsertButton;
-    void Start()
+    void Awake()
     {
         list = new SeqList(); 
-        animationBuffer = GetComponent<AnimationBuffer>();
+        animationBuffer = gameObject.AddComponent<AnimationBuffer>();
+        gameObject.AddComponent<WaitAnimator>();
+        gameObject.AddComponent<SelfDestroyAnimator>();
         list.animationBuffer = animationBuffer;
         list.image = gameObject;
         list.x = transform.position.x;
         list.y = transform.position.y;
-        
         list.pointer_i = Instantiate(visualizedPointerPrefab, transform).GetComponent<VisualizedPointer>();
         list.pointer_i.SetText("i");
         list.pointer_j = Instantiate(visualizedPointerPrefab, transform).GetComponent<VisualizedPointer>();
@@ -43,7 +44,10 @@ public class VisualizedSeqList : MonoBehaviour
 
         debugCount = 0;
         freezeInsertButton = false;
-
+    }
+    void Start()
+    {
+        //Debug.Log("SeqList animationBuffer : " + animationBuffer.Name);
         if (hasAppendButton) {
             SeqElement newElement = new SeqElement();
             VisualizedSeqElement newVisualizedElement = 
@@ -54,6 +58,7 @@ public class VisualizedSeqList : MonoBehaviour
             newVisualizedElement.SetText("+");
             newVisualizedElement.info = newElement;
             newVisualizedElement.list = this;
+            newVisualizedElement.interval = defaultInterval;
             list.Append(newElement, false);
         }
     }
@@ -102,16 +107,22 @@ public class VisualizedSeqList : MonoBehaviour
         newVisualizedElement.SetText(value.ToString("f0"));
         newVisualizedElement.info = newElement;
         newVisualizedElement.list = this;
+        newVisualizedElement.interval = defaultInterval;
         return newElement;
     }
-    public void Append(float value = 0)
+    public void OnClickAppend()
     {
-        Insert(list.Size(), value);
+        Append();
     }
-    public void Insert(int pos, float value = 0)
+    public SeqElement Append(float value = 0)
+    {
+        return Insert(list.Size(), value);
+    }
+    public SeqElement Insert(int pos, float value = 0)
     {
         SeqElement newElement = NewElement(value);
-        list.Insert(pos, newElement);            
+        list.Insert(pos, newElement);  
+        return newElement;          
     }
     public void Delete(int pos, bool destroy = true)
     {
@@ -140,13 +151,27 @@ public class VisualizedSeqList : MonoBehaviour
     public void BuildFromJson(string jsonData)
     {
         SeqListData data = JsonUtility.FromJson<SeqListData>(jsonData);
-        UpdataPos(data.pos);
+        UpdatePos(data.pos);
         list.BuildFromJson(jsonData);
         foreach (var elem in data.elems) Append(elem);
     
     }
-    void UpdataPos(Vector2 pos)
+    public void UpdatePos(Vector2 pos)
     {
         transform.position = pos;
+        list.x = transform.position.x;
+        list.y = transform.position.y;
+    }
+    public void Destroy()
+    {
+        StartCoroutine(_Destory());
+    }
+    IEnumerator _Destory()
+    {
+        while (list.Size() > 0) {
+            list.Delete(0);
+            yield return new WaitForSeconds(0.1f);
+        }
+        animationBuffer.Add(new SelfDestroyAnimatorInfo(gameObject));
     }
 }

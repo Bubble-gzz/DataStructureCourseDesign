@@ -6,6 +6,7 @@ public class WaitAnimatorInfo : AnimationInfo
 {
     float sec;
     bool useSetting;
+    public string messageText = "";
     public WaitAnimatorInfo(GameObject _gameObject, float _sec, bool _useSetting = true)
     {
         this.gameObject = _gameObject;
@@ -21,6 +22,7 @@ public class WaitAnimatorInfo : AnimationInfo
             Debug.Log("Animator does not exist!\n");
             return;
         }
+        animator.messageText = messageText;
         animator.sec = sec;
         animator.useSetting = useSetting;
         animator.Invoke();

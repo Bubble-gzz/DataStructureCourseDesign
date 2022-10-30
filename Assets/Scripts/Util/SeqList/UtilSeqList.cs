@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-    class SeqElement : DataElement
+    public class SeqElement : DataElement
     {   
         public SeqList list;
         public int pos;
@@ -61,11 +61,11 @@ using System.Runtime.InteropServices;
             return A.value > B.value;
         }
     }
-    class SeqList
+    public class SeqList
     {
         public bool isOrdered;
         private int count, capacity;
-        private SeqElement[] array;
+        public SeqElement[] array;
         public float x, y;
         public AnimationBuffer animationBuffer;
         public GameObject image;
@@ -148,6 +148,7 @@ using System.Runtime.InteropServices;
         {
             newElement.list = this;
             newElement.animationBuffer = this.animationBuffer;
+            //Debug.Log("SeqElement animationBuffer : " + animationBuffer.Name);
             newElement.UpdatePos(pos, false);
             Wait(delay, false);
             newElement.PopOut();
@@ -467,7 +468,7 @@ using System.Runtime.InteropServices;
         }
     }
 
-    class SeqListData{
+    public class SeqListData{
         public int count, capacity;
         public bool isOrdered;
         public Vector2 pos;

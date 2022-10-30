@@ -171,6 +171,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualizedStackElementPrefab: {fileID: 5358034065730631250, guid: 50d10630c11beb342a6043259814d2e6, type: 3}
   visualizedPointerPrefab: {fileID: 6790114855102505723, guid: a36b71458079af341940f8b0cb994db3, type: 3}
+  bracketListPrefab: {fileID: 4892365462042479210, guid: 22ab2a823a8de1e47960e99949cd4506, type: 3}
+  sidePos: {x: 0, y: 0}
+  messagePrefab: {fileID: 6657180146421011261, guid: ddee03f51abd44240809181773c859c3, type: 3}
 --- !u!1001 &862412864757703365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -204,7 +207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6643398498930959863, guid: dfec952ed6186b6408b9ea692860aaa4, type: 3}
       propertyPath: onMouseClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Pop
+      value: OnClickedPop
       objectReference: {fileID: 0}
     - target: {fileID: 6643398498930959863, guid: dfec952ed6186b6408b9ea692860aaa4, type: 3}
       propertyPath: onMouseClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -290,7 +293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6643398498930959863, guid: dfec952ed6186b6408b9ea692860aaa4, type: 3}
       propertyPath: onMouseClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6643398498930959863, guid: dfec952ed6186b6408b9ea692860aaa4, type: 3}
       propertyPath: onMouseClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -302,7 +305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6643398498930959863, guid: dfec952ed6186b6408b9ea692860aaa4, type: 3}
       propertyPath: onMouseClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Push
+      value: OnClickedPush
       objectReference: {fileID: 0}
     - target: {fileID: 6643398498930959863, guid: dfec952ed6186b6408b9ea692860aaa4, type: 3}
       propertyPath: onMouseClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

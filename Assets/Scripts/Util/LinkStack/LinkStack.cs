@@ -8,6 +8,7 @@
         public LinkStack stack;
         public int level;
         public StackElement below;
+        public int bracketID;
     
         public StackElement()
         {
@@ -35,6 +36,7 @@
         {
             if (image == null) return ;
             stack.animationBuffer.Add(new UpdatePosAnimatorInfo(image, Position(), animated));
+            Debug.Log("UpdatePos : " + Position());
         }
         public void Print()
         {
@@ -132,7 +134,7 @@
             #endif
             while (!IsEmpty()) Pop(0.1f);
         }
-        public void Push(StackElement newElement)
+        public StackElement Push(StackElement newElement)
         {
             #if LogInfo
                     Console.Write("Push {0}  ", newElement.value);        
@@ -140,27 +142,29 @@
             if (IsFull())
             {
                 Console.WriteLine("Exception: The Stack is already full.");
-                return;
+                return null;
             }
 
             newElement.stack = this;
             newElement.level = count;
             newElement.below = topElement;
             newElement.animationBuffer = this.animationBuffer;
+            Debug.Log("StackElement animationBuffer : " + newElement.animationBuffer.Name);
             topElement = newElement;
             newElement.UpdatePos();
             newElement.PopOut();
             count++;
             pointer_top.ChangePos(CalcPos(count - 1), false);
+            return newElement;
         }
 
         public int Size()
         {
             return count;
         }
-        public void Push(int value)
+        public StackElement Push(int value)
         {
-            Push(new StackElement(value));
+            return Push(new StackElement(value));
         }
         public StackElement Top()
         {

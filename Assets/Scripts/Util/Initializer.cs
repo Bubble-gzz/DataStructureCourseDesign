@@ -7,9 +7,6 @@ public class Initializer : MonoBehaviour
     AnimationBuffer animationBuffer;
     public static int frameID;
     bool pressCoolingDown;
-    //int count;
-   // [SerializeField]
-   // public float animationTimeScale = 1.0f;
     void Awake()
     {
         Global.initializer = this;
@@ -25,10 +22,6 @@ public class Initializer : MonoBehaviour
     {
         frameID = (frameID + 1) % 1000;
         Global.pressEventConsumed = false;
-        //if (Global.pressEventConsumed && !pressCoolingDown)
-        //    StartCoroutine(PressCoolDown());
-        //Debug.Log("[frame:"+ Time.frameCount +"]");
-        //if (Input.anyKeyDown) Debug.Log("[frame:"+ Time.frameCount +"] anyKeyDown = true");
     }
     IEnumerator PressCoolDown()
     {

@@ -9,4 +9,6 @@ class Palette{
     public const int BestEdge = 4;
     public const int VisitedEdge = 2;
     public const int HidedEdge = 5;
+    public const int Error = 3;
+    public const int Correct = 4;
 }

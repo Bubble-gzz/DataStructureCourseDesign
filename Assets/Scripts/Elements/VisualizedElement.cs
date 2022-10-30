@@ -13,7 +13,8 @@ public class VisualizedElement : MonoBehaviour
         Normal,
         Ghost,
         AppendButton,
-        InsertButton
+        InsertButton,
+        Image
     }
     [SerializeField]
     protected Type type;
@@ -27,12 +28,15 @@ public class VisualizedElement : MonoBehaviour
     [SerializeField]
     protected GameObject panelPrefab;
     [SerializeField]
-    protected bool interactable = true;
+    protected bool interactable;
     [SerializeField]
     protected bool appearOnCreate = false;
     public DataElement info;
     protected Camera mainCam;
-    public float interval, size;
+    [SerializeField]
+    public float size;
+    public float interval;
+    protected float _interval, _size;
     virtual protected void Awake()
     {
         Transform child = transform.Find("Canvas/Text");
@@ -55,6 +59,9 @@ public class VisualizedElement : MonoBehaviour
     }
     virtual protected void Start()
     {
+        //Debug.Log("SeqElement AnimationBuffer : " + animationBuffer.Name);
+        _interval = interval;
+        _size = size;
         mainCam = Global.mainCamera;
         if (type != Type.Ghost) {
             if (interactable) myCollider = transform.Find("OperateArea").GetComponentInChildren<MyCollider>();

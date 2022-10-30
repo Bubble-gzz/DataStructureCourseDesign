@@ -197,14 +197,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 243dae0c3a1197044b2a178f567b54f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors: []
+  colors:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0.9622642, g: 0.60244036, b: 0.059655193, a: 1}
+  - {r: 0.9339623, g: 0.11957736, b: 0.11957736, a: 1}
+  - {r: 0.33600804, g: 0.8679245, b: 0.045618657, a: 1}
   alive: 1
   type: 0
   animationBuffer: {fileID: 0}
   panelOffset: {x: 0, y: 3, z: -1}
   panelPrefab: {fileID: 1632717905608582079, guid: a6a9dfbd177a8bb4ab500219a41e9572, type: 3}
-  interactable: 1
+  interactable: 0
   appearOnCreate: 0
+  size: 0
+  interval: 0
   stack: {fileID: 0}
 --- !u!1 &5358034066668223885
 GameObject:

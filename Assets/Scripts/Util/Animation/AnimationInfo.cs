@@ -9,6 +9,6 @@ public class AnimationInfo
     public bool block = false;
     public virtual void Invoke()
     {
-        
+
     } 
 }
