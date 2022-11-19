@@ -32,22 +32,21 @@ public class ChooseGraphLogic : MonoBehaviour
         Global.filePath = filePath;
         sceneSwitcher.OnLeaveScene("Graph");
     }
-    public void CreateNewGraph()
+    public void GoToNameGraph()
     {
-        sceneSwitcher.FadeOut();
-        GameObject newWizard = Instantiate(newGraphWizardPrefab);
-        newWizard.GetComponentInChildren<UIPanel>().FadeIn();
-        newWizard.GetComponentInChildren<UIPanel>().panelClosed.AddListener(sceneSwitcher.FadeIn);
-        newWizard.GetComponentInChildren<MyInputField>().inputFieldOK.AddListener(CreateNewGraphWithName);
-    }
-    public void CreateNewGraphWithName(string graphName)
-    {
-        Global.fileName = graphName;
-        sceneSwitcher.OnLeaveScene("ChooseGraphDirection");
+        sceneSwitcher.OnLeaveScene("NameGraph");
     }
     public void CreateNewGraph(bool isDirected)
     {
         Global.newGraphDirected = isDirected;
         sceneSwitcher.OnLeaveScene("Graph");
+    }
+    public void ReturnToMenu()
+    {
+        sceneSwitcher.OnLeaveScene("Entrance");
+    }
+    public void ReturnToChooseGraph()
+    {
+        sceneSwitcher.OnLeaveScene("ChooseGraph");
     }
 }

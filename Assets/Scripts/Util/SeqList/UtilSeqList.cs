@@ -71,6 +71,13 @@ using System.Runtime.InteropServices;
         public GameObject image;
         public VisualizedPointer pointer_i, pointer_j, pointer_pivot, pointer_l, pointer_r;
         bool noPointer;
+        public bool IsOrdered()
+        {
+            bool isOrdered = true;
+            for (int i = 1; i < count; i++)
+                if (array[i] < array[i - 1]) isOrdered = false;
+            return isOrdered;
+        }
         private void Wait(float sec, bool useSetting = true)
         {
             animationBuffer.Add(new WaitAnimatorInfo(image, sec, useSetting));
@@ -313,7 +320,7 @@ using System.Runtime.InteropServices;
             (array[i], array[j]) = (array[j], array[i]);
             array[i].UpdatePos(i); array[j].UpdatePos(j);
         }
-        public void UpdatePointerPos(VisualizedPointer pointer, Vector2 pos0, bool animated)
+        public void UpdatePointerPos(VisualizedPointer pointer, Vector2 pos0, bool animated = true)
         {
             if (noPointer) return;
             if (pointer == null) return;
@@ -333,7 +340,7 @@ using System.Runtime.InteropServices;
             if (pointer == null) return;
             animationBuffer.Add(new PopAnimatorInfo(pointer.gameObject, PopAnimator.Type.Disappear));
         }
-        private void WakeUpPointer(VisualizedPointer pointer, Vector2 offset, bool appear = true)
+        public void WakeUpPointer(VisualizedPointer pointer, Vector2 offset, bool appear = true)
         {
             if (noPointer) return;
             if (pointer == null) return;
@@ -366,6 +373,7 @@ using System.Runtime.InteropServices;
             PointerDisappear(pointer_pivot);
             PointerDisappear(pointer_l);
             PointerDisappear(pointer_r);
+            noPointer = false;
 
             isOrdered = true;
         }

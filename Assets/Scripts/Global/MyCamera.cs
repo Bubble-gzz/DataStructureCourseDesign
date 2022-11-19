@@ -18,4 +18,8 @@ public class MyCamera : MonoBehaviour
     void Update()
     {
     }
+    public void ExitApplication()
+    {
+        Application.Quit();
+    }
 }

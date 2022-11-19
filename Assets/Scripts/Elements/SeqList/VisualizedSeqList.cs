@@ -8,7 +8,7 @@ public class VisualizedSeqList : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField]
     Color selectedColor, hoveringColor;
-    bool selected;
+    public bool selected;
     public ListLayOutManager layoutManager;
     [SerializeField]
     public bool selectable;
@@ -56,7 +56,10 @@ public class VisualizedSeqList : MonoBehaviour
     }
     void Start()
     {
-        myCollider.SetColor(new Color(0,0,0,0));
+        if (myCollider != null)
+        {
+            if (myCollider.GetComponent<ChangeColorAnimator>() != null) myCollider.SetColor(new Color(0,0,0,0));
+        }
         //Debug.Log("SeqList animationBuffer : " + animationBuffer.Name);
         StartCoroutine(_CreateAppendButton());
     }
@@ -112,6 +115,10 @@ public class VisualizedSeqList : MonoBehaviour
         {
             LoadData(listName);
         }
+    }
+    public bool IsOrdered()
+    {
+        return list.IsOrdered();
     }
     SeqElement NewElement(float value = 0)
     {
@@ -204,12 +211,11 @@ public class VisualizedSeqList : MonoBehaviour
         if (!selectable) return;
         if (selected)
         {
-            selected = false;
+            layoutManager.UnSelectList(this);
             OnMouseEnter();
             return;
         }
         myCollider.SetColor(selectedColor);
-        selected = true;
         layoutManager.SelectList(this);
     }
     public void OnMouseExit()

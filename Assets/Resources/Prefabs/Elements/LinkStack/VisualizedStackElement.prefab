@@ -208,7 +208,7 @@ MonoBehaviour:
   animationBuffer: {fileID: 0}
   panelOffset: {x: 0, y: 3, z: -1}
   panelPrefab: {fileID: 1632717905608582079, guid: a6a9dfbd177a8bb4ab500219a41e9572, type: 3}
-  interactable: 0
+  interactable: 1
   appearOnCreate: 0
   size: 0
   interval: 0

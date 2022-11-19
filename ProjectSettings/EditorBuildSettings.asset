@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LinkStack.unity
     guid: 258fa093d37fc59449e536502b0e74be
+  - enabled: 1
+    path: Assets/Scenes/NameGraph.unity
+    guid: 1247da49d164376489189b734489c646
   m_configObjects: {}
